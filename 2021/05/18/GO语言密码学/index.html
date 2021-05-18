@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>Go语言密码学 | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    Go语言密码学
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">May 18, 2021&nbsp;&nbsp;22:49:38</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="GO语言密码学"><a href="#GO语言密码学" class="headerlink" title="GO语言密码学"></a>GO语言密码学</h1><p>推荐网站：<a target="_blank" rel="noopener" href="https://studygolang.com/pkgdoc">https://studygolang.com/pkgdoc</a></p>
+<h2 id="对称加密和非对称加密"><a href="#对称加密和非对称加密" class="headerlink" title="对称加密和非对称加密"></a>对称加密和非对称加密</h2><h3 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h3><ol>
+<li>秘钥数量：1个</li>
+<li>特点：<ol>
+<li>加密效率高</li>
+<li>双方使用的秘钥相同</li>
+</ol>
+</li>
+<li>安全性：相对于非对称加密安全性低</li>
+<li>使用情况：主流的加密方式</li>
+</ol>
+<h3 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h3><ol>
+<li>秘钥数量：2个<ol>
+<li>公钥：任何人都可以使用，用于加密</li>
+<li>私钥：只有自己持有，用于签名，可以证明私钥持有人发送的数据</li>
+</ol>
+</li>
+<li>特点：<ol>
+<li>公钥加密只有自己的私钥能解</li>
+<li>加解密效率低，一般不做大量数据使用</li>
+</ol>
+</li>
+<li>安全性：安全性高</li>
+<li>使用情况：<ol>
+<li>配合对称加密一起使用</li>
+<li>建立连接之初，先使用非对称加密协商对称加密的算法和秘钥</li>
+<li>然后使用对称加密进行后续的加解密</li>
+</ol>
+</li>
+</ol>
+<h3 id="编码和解码"><a href="#编码和解码" class="headerlink" title="编码和解码"></a>编码和解码</h3><ol>
+<li>程序在计算机内部的存储形式</li>
+<li>由字符转成二进制比特流的过程叫做编码</li>
+<li>由比特流转成可读字符的过程叫做解码</li>
+<li>加解密就是对比特流进行编码解码</li>
+</ol>
+<p>常见的编码方式</p>
+<ol>
+<li>gob包-&gt;go内置的编解码包</li>
+<li>html编码</li>
+<li>json编码</li>
+<li>binary包-&gt;go内置的编解码包</li>
+</ol>
+<h2 id="对称加密算法"><a href="#对称加密算法" class="headerlink" title="对称加密算法"></a>对称加密算法</h2><h3 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h3><ol>
+<li><p>当通信对象很多时会面临众多秘钥的有效管理问题</p>
+<ol start="2">
+<li>对于一个新的数据通信对象，秘钥怎样进行传输的问题 </li>
+</ol>
+</li>
+</ol>
+<p>解决方法：</p>
+<p>​    引入非对称加密</p>
+<h3 id="1-DES-Data-Encryption-Standard"><a href="#1-DES-Data-Encryption-Standard" class="headerlink" title="1. DES(Data Encryption Standard)"></a>1. DES(Data Encryption Standard)</h3><p>特点：</p>
+<ol>
+<li>不安全，不建议使用</li>
+<li>秘钥：8字节，64bit,但由于每7个bit就会设置一个校验位，所以实际长度位56bit</li>
+<li>加密时，会对明文进行分组，分组长度是8bytes，得到的密文也是8bytes为一组</li>
+</ol>
+<h3 id="2-3DES-Triple-Data-Encryption-Standard"><a href="#2-3DES-Triple-Data-Encryption-Standard" class="headerlink" title="2. 3DES(Triple Data Encryption Standard)"></a>2. 3DES(Triple Data Encryption Standard)</h3><p>特点:</p>
+<ol>
+<li><p>将DES重复三次得到的一种密码算法，但不是单纯的重复三次，加密过程是加密-&gt;解密-&gt;加密，解密时为了兼容以前的DES，以解密的形式进行加密。解密过程是解密-&gt;加密-&gt;解密</p>
+</li>
+<li><p>秘钥：8bytes*3=24bytes，如果秘钥1与秘钥2相同或者秘钥2与秘钥3相同，相当于DES，若秘钥1与秘钥3相同，是3DES-EDE2</p>
+<p>若3个秘钥都不相同，是3DES-EDE3</p>
+</li>
+<li><p>加密时，会对明文进行分组，分组长度是8bytes，得到的密文也是8bytes为一组，与DES相同</p>
+</li>
+<li><p>加密效率低</p>
+</li>
+</ol>
+<h3 id="3-AES-Advance-Encryption-Standard"><a href="#3-AES-Advance-Encryption-Standard" class="headerlink" title="3. AES(Advance Encryption Standard)"></a>3. AES(Advance Encryption Standard)</h3><p>特点：</p>
+<pre><code>1. 秘钥长度可在128、192、256bit三种进行选择
+2. 分组：16bytes
+3. 加密效率高
+</code></pre>
+<h3 id="五种分组模式"><a href="#五种分组模式" class="headerlink" title="五种分组模式"></a>五种分组模式</h3><p>加密算法可以和任何分组模式进行连接，只有对明文进行加密，才需要填充</p>
+<h4 id="1-ECB，电子密码本模式：不使用，淘汰"><a href="#1-ECB，电子密码本模式：不使用，淘汰" class="headerlink" title="1. ECB，电子密码本模式：不使用，淘汰"></a>1. ECB，电子密码本模式：不使用，淘汰</h4><p>特点：</p>
+<ol>
+<li>明文消息被分成固定大小的分组，块大小由加密算法决定，并且每个块被使用相同的方法单独加解密</li>
+<li>一旦有一个块被破解，那么所有的块都能使用相同的方法进行破解</li>
+<li>安全性差，适用于数据较小的情形，加密前需要把明文数据填充到块大小的整倍数</li>
+<li>加密效率高，加密不彻底，go语言不支持着这种模式</li>
+</ol>
+<h4 id="2-CBC，密文分组链接模式：常用，推荐使用"><a href="#2-CBC，密文分组链接模式：常用，推荐使用" class="headerlink" title="2.CBC，密文分组链接模式：常用，推荐使用"></a>2.CBC，密文分组链接模式：常用，推荐使用</h4><p>特点：</p>
+<pre><code>1. 先异或，再加密，模式中的每一个分组都要先和前一个分组加密后的数据进行异或操作，然后再加密，第一个数据块进行加密之前需要用初始化向量进行异或操作，初始化向量长度必须与分组长度相同
+2. 连续加密，无法并行处理，加密前需要把明文数据填充到块大小的整倍数
+3. 加密强度高
+</code></pre>
+<h4 id="3-CFB，密文反馈模式：偶尔使用"><a href="#3-CFB，密文反馈模式：偶尔使用" class="headerlink" title="3.CFB，密文反馈模式：偶尔使用"></a>3.CFB，密文反馈模式：偶尔使用</h4><p>特点：</p>
+<ol>
+<li>先加密，再异或，前一个分组的密文加密后和当前分组的明文异或操作生成当前分组的密文，同样需要初始化向量，初始化向量长度必须与分组长度相同</li>
+<li>连续加密，无法并行处理，没有直接对明文进行加密，所以不需要填充</li>
+<li>解密的时候，是对初始向量进行加密操作，这样才能得到同样的数据</li>
+</ol>
+<h4 id="4-OFB，输出反馈模式：偶尔使用"><a href="#4-OFB，输出反馈模式：偶尔使用" class="headerlink" title="4.OFB，输出反馈模式：偶尔使用"></a>4.OFB，输出反馈模式：偶尔使用</h4><p>特点：</p>
+<ol>
+<li>通过明文分组和密码算法的输出来进行异或的，是对初始向量的结果进行不断的加密，作为下一次的数据来源</li>
+<li>不需要进行数据填充</li>
+<li>解密的时候，是对初始向量进行不断的加密与密文分组异或得到明文分组</li>
+<li>不支持并行操作</li>
+</ol>
+<h4 id="5-CTR，计数器模式：建议使用"><a href="#5-CTR，计数器模式：建议使用" class="headerlink" title="5. CTR，计数器模式：建议使用"></a>5. CTR，计数器模式：建议使用</h4><p>特点：</p>
+<ol>
+<li>通过将逐次累加的计数器进行加密来生产密钥流的流密码</li>
+<li>流密码与明文分组进行异或得到密文分组</li>
+<li>解密的时候，是对计数器进行加密与密文分组异或得到明文分组</li>
+<li>当分组为16字节时，计数器前8个字节为随机数，这个值在加密的时候都是不同的，后8个字节为分组序号，会逐次累加</li>
+<li>加密解密并行操作，不需要字节填充，推荐使用</li>
+</ol>
+<h3 id="DES-CBC加密实现"><a href="#DES-CBC加密实现" class="headerlink" title="DES-CBC加密实现"></a>DES-CBC加密实现</h3><p>推荐网站：<a target="_blank" rel="noopener" href="https://studygolang.com/pkgdoc">https://studygolang.com/pkgdoc</a></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//输入明文，秘钥、输出密文</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">desCBCEncrypt</span><span class="params">(src,key []<span class="keyword">byte</span>)</span> []<span class="title">byte</span></span>&#123;</span><br><span class="line">	fmt.Printf(<span class="string">&quot;加密开始，输入的数据为:%s\n&quot;</span>,src)</span><br><span class="line">	<span class="comment">//创建并返回一个使用DES算法的cipher.Block接口。</span></span><br><span class="line">	block,err:=des.NewCipher(key)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//进行数据填充</span></span><br><span class="line">	src = paddingInfo(src,block.BlockSize())</span><br><span class="line">	<span class="comment">//引入CBC模式，返回一个密码分组链接模式的、底层用b加密的BlockMode接口</span></span><br><span class="line">	<span class="comment">//把一个元素的byte重复BlockSize次数</span></span><br><span class="line">	iv:=bytes.Repeat([]<span class="keyword">byte</span>(<span class="string">&quot;1&quot;</span>),block.BlockSize())</span><br><span class="line">	blockMode:=cipher.NewCBCEncrypter(block,iv)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//加密操作</span></span><br><span class="line">	blockMode.CryptBlocks(src<span class="comment">/*加密后的密文*/</span>,src<span class="comment">/*明文*/</span>)</span><br><span class="line">	fmt.Printf(<span class="string">&quot;加密结束，加密数据为:%x\n&quot;</span>,src)</span><br><span class="line">	<span class="keyword">return</span> src</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//填充函数,输入明文长度，分组长度，输出填充后的数据</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">paddingInfo</span><span class="params">(src []<span class="keyword">byte</span>,blockSize <span class="keyword">int</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	<span class="comment">//1. 得到明文长度</span></span><br><span class="line">	length:=<span class="built_in">len</span>(src)</span><br><span class="line">	<span class="comment">//2. 计算需要填充的数量</span></span><br><span class="line">	paddingNum:=blockSize-length%blockSize</span><br><span class="line">	<span class="comment">//3. 把填充的数值转换为字符</span></span><br><span class="line">	s1:=<span class="keyword">byte</span>(paddingNum)</span><br><span class="line">	<span class="comment">//4. 把字符拼成数组</span></span><br><span class="line">	s2:=bytes.Repeat([]<span class="keyword">byte</span>&#123;s1&#125;,paddingNum)<span class="comment">//[]byte&#123;&quot;5&quot;,&quot;5&quot;,&quot;5&quot;,&quot;5&quot;,&quot;5&quot;&#125;</span></span><br><span class="line">	<span class="comment">//5. 把数组追加到src后面返回新的数组</span></span><br><span class="line">	src=<span class="built_in">append</span>(src,s2...)</span><br><span class="line">	<span class="keyword">return</span> src</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	src:=[]<span class="keyword">byte</span>(<span class="string">&quot;123456789&quot;</span>)</span><br><span class="line">	key:=[]<span class="keyword">byte</span>(<span class="string">&quot;12345678&quot;</span>)</span><br><span class="line">	desCBCEncrypt(src,key)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">输出：</span></span><br><span class="line"><span class="comment">加密开始，输入的数据为:123456789</span></span><br><span class="line"><span class="comment">加密结束，加密数据为:6e8b7929826faede31c279ed4bc114cf</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="DES-CBC解密实现"><a href="#DES-CBC解密实现" class="headerlink" title="DES-CBC解密实现"></a>DES-CBC解密实现</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//输入密文、秘钥，得到明文</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">desCBCDecrypt</span><span class="params">(cipherData,key []<span class="keyword">byte</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	fmt.Printf(<span class="string">&quot;解密开始，需要解密的数据为:%x\n&quot;</span>,cipherData)</span><br><span class="line">	block,err:=des.NewCipher(key)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	iv:=bytes.Repeat([]<span class="keyword">byte</span>(<span class="string">&quot;1&quot;</span>),block.BlockSize())</span><br><span class="line">	blockMode:=cipher.NewCBCDecrypter(block,iv)</span><br><span class="line">	blockMode.CryptBlocks(cipherData,cipherData)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//解除填充</span></span><br><span class="line">	cipherData=unpaddingInfo(cipherData)</span><br><span class="line"></span><br><span class="line">	fmt.Printf(<span class="string">&quot;解密结束，解密的数据为:%s\n&quot;</span>,cipherData)</span><br><span class="line">	<span class="keyword">return</span> cipherData</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//解除填充函数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">unpaddingInfo</span><span class="params">(plainText []<span class="keyword">byte</span>)</span>  []<span class="title">byte</span></span> &#123;</span><br><span class="line">	<span class="comment">//1. 获取长度</span></span><br><span class="line">	length:=<span class="built_in">len</span>(plainText)</span><br><span class="line">	<span class="comment">//2. 获取最后一个字符</span></span><br><span class="line">	<span class="keyword">if</span> length ==<span class="number">0</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> []<span class="keyword">byte</span>&#123;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	lastByte:=plainText[length<span class="number">-1</span>]</span><br><span class="line">	<span class="comment">//3. 将字符转换成数字</span></span><br><span class="line">	unpaddingNum:=<span class="keyword">int</span>(lastByte)</span><br><span class="line">	<span class="comment">//4.切片需要的数据</span></span><br><span class="line">	<span class="keyword">return</span> plainText[:length-unpaddingNum]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">输出：</span></span><br><span class="line"><span class="comment">解密开始，需要解密的数据为:7bc99fdee71314ac971211e0b3b8fc71</span></span><br><span class="line"><span class="comment">解密结束，解密的数据为:夜行书生</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="AES-CTR加解密"><a href="#AES-CTR加解密" class="headerlink" title="AES-CTR加解密"></a>AES-CTR加解密</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">aesCTREncrypt</span><span class="params">(src,key []<span class="keyword">byte</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	fmt.Printf(<span class="string">&quot;加密开始，需要加密的数据为:%s\n&quot;</span>,src)</span><br><span class="line"></span><br><span class="line">	block,err:=aes.NewCipher(key)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	iv:=bytes.Repeat([]<span class="keyword">byte</span>(<span class="string">&quot;1&quot;</span>),block.BlockSize())</span><br><span class="line">	stream:=cipher.NewCTR(block,iv)</span><br><span class="line"></span><br><span class="line">	stream.XORKeyStream(src,src)</span><br><span class="line"></span><br><span class="line">	fmt.Printf(<span class="string">&quot;加密结束，加密数据为：%x\n&quot;</span>,src)</span><br><span class="line">	<span class="keyword">return</span> src</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">aesCTRDecrypt</span><span class="params">(cipherData,key []<span class="keyword">byte</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	fmt.Printf(<span class="string">&quot;解密开始，需要解密的数据为:%x\n&quot;</span>,cipherData)</span><br><span class="line">	block,err:=aes.NewCipher(key)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	iv:=bytes.Repeat([]<span class="keyword">byte</span>(<span class="string">&quot;1&quot;</span>),block.BlockSize())</span><br><span class="line">	stream:=cipher.NewCTR(block,iv)</span><br><span class="line"></span><br><span class="line">	stream.XORKeyStream(cipherData,cipherData)</span><br><span class="line"></span><br><span class="line">	fmt.Printf(<span class="string">&quot;加密结束，解密数据为：%s\n&quot;</span>,cipherData)</span><br><span class="line">	<span class="keyword">return</span> cipherData</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	src:=[]<span class="keyword">byte</span>(<span class="string">&quot;夜行书生&quot;</span>)</span><br><span class="line">	key:=[]<span class="keyword">byte</span>(<span class="string">&quot;1234567812345678&quot;</span>)</span><br><span class="line">	cipherData:=aesCTREncrypt(src,key)</span><br><span class="line">	aesCTRDecrypt(cipherData,key)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//加解密操作完全一致</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*输出：</span></span><br><span class="line"><span class="comment">加密开始，需要加密的数据为:夜行书生</span></span><br><span class="line"><span class="comment">加密结束，加密数据为：70547d09ab14352da487c0f6</span></span><br><span class="line"><span class="comment">解密开始，需要解密的数据为:70547d09ab14352da487c0f6</span></span><br><span class="line"><span class="comment">加密结束，解密数据为：夜行书生</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="非对称加密算法"><a href="#非对称加密算法" class="headerlink" title="非对称加密算法"></a>非对称加密算法</h2><h3 id="存在的问题-1"><a href="#存在的问题-1" class="headerlink" title="存在的问题"></a>存在的问题</h3><ol>
+<li>直接传递公钥，容易被截取</li>
+<li>放到固定的位置，容易被替换</li>
+</ol>
+<p>解决的办法：</p>
+<p>​    引入第三方认证机构，CA，它是一系列具有社会公信力的机构的总称，它们负责为厂商提供数字证书</p>
+<h3 id="常见使用场景"><a href="#常见使用场景" class="headerlink" title="常见使用场景"></a>常见使用场景</h3><ol>
+<li>加密通信：私钥加密，公钥解密</li>
+<li>https：验证服务器，数字证书，使用ca认证公钥</li>
+<li>签名：防止篡改，哈希+非对称加密</li>
+<li>网银U盾：验证client，U盾相当于私钥，公钥在服务器</li>
+<li>github ssh（secure shell）登录<ul>
+<li>ssh是一种网络协议，主要用于计算机之间的加密登录与数据传递</li>
+<li>ssh登录的时候没有ca认证，需要用户自己确认登录主机的指纹，点击yes后把远程主机的指纹存放到本地的know_hosts中，后续登录会跳过警告</li>
+<li>ssh-keygen -t rsa 演示</li>
+</ul>
+</li>
+</ol>
+<p>非对称加密使用公钥加密，使用私钥解密</p>
+<p>私钥：使用随机数按照一定的规则生成的，只有自己持有</p>
+<p>公钥：由私钥推导而来，任何人可以持有，公钥加密的数据只能被配套私钥解开</p>
+<h3 id="RSA生成私钥、公钥"><a href="#RSA生成私钥、公钥" class="headerlink" title="RSA生成私钥、公钥"></a>RSA生成私钥、公钥</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> privateKeyFile = <span class="string">&quot;./privateRSAKey.pem&quot;</span></span><br><span class="line"><span class="keyword">const</span> publicKeyFile = <span class="string">&quot;./publicRSAKey.pem&quot;</span></span><br><span class="line"><span class="comment">//分析需求：生成并保存私钥、公钥</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">generateKeyPair</span><span class="params">(bits <span class="keyword">int</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="comment">//生成私钥：</span></span><br><span class="line">	<span class="comment">//1. 使用RSA包</span></span><br><span class="line">	<span class="comment">//	//GenerateKey函数使用随机数据生成器random生成一对具有指定字位数的RSA密钥。</span></span><br><span class="line">	<span class="comment">//	func GenerateKey(random io.Reader, bits int) (priv *PrivateKey, err error)//会自己生成两个素数</span></span><br><span class="line">	<span class="comment">//	-参数1：随机数</span></span><br><span class="line">	<span class="comment">//	-参数2：秘钥长度</span></span><br><span class="line">	<span class="comment">//	-返回值：私钥</span></span><br><span class="line">	privateKey, err := rsa.GenerateKey(rand.Reader, bits)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//2. 对生成的私钥进行编码处理，X509，按照规则进行序列化处理</span></span><br><span class="line">	<span class="comment">//MarshalPKCS1PrivateKey将rsa私钥序列化为ASN.1 PKCS#1 DER编码。</span></span><br><span class="line"></span><br><span class="line">	priDerText:=x509.MarshalPKCS1PrivateKey(privateKey)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//3. 创建一个block结构，并填入BER编码数据</span></span><br><span class="line">	<span class="comment">//	type Block struct &#123;</span></span><br><span class="line">	<span class="comment">//    	Type    string            // 得自前言的类型（如&quot;RSA PRIVATE KEY&quot;）</span></span><br><span class="line">	<span class="comment">//    	Headers map[string]string // 可选的头项</span></span><br><span class="line">	<span class="comment">//    	Bytes   []byte            // 内容解码后的数据，一般是DER编码的ASN.1结构</span></span><br><span class="line">	<span class="comment">//	&#125;</span></span><br><span class="line"></span><br><span class="line">	block:=pem.Block&#123;</span><br><span class="line">		Type:    <span class="string">&quot;RSA PRIVATE KEY&quot;</span>,</span><br><span class="line">		Headers: <span class="literal">nil</span>,</span><br><span class="line">		Bytes:   priDerText,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//4. 将PEM格式Block数据写入磁盘文件</span></span><br><span class="line">	filehandler1,err:=os.Create(privateKeyFile)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> filehandler1.Close()</span><br><span class="line"></span><br><span class="line">	<span class="comment">//	func Encode(out io.Writer, b *Block) error</span></span><br><span class="line">	err=pem.Encode(filehandler1,&amp;block)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(<span class="string">&quot;私钥写入成功！\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//生成公钥：</span></span><br><span class="line">	<span class="comment">//1. 获取公钥，通过私钥获取</span></span><br><span class="line">	pubKey:=privateKey.PublicKey</span><br><span class="line">	<span class="comment">//2. 对生成的公钥进行编码处理，X509，按照规则进行序列化处理</span></span><br><span class="line">	pubKeyDerText:=x509.MarshalPKCS1PublicKey(&amp;pubKey)</span><br><span class="line">	<span class="comment">//3. 创建一个block结构，并填入BER编码数据</span></span><br><span class="line">	block=pem.Block&#123;</span><br><span class="line">		Type:    <span class="string">&quot;RSA PUBLIC KEY&quot;</span>,</span><br><span class="line">		Headers: <span class="literal">nil</span>,</span><br><span class="line">		Bytes:   pubKeyDerText,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//4. 将PEM格式Block数据写入磁盘文件</span></span><br><span class="line">	filehandler2,err:=os.Create(publicKeyFile)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> filehandler2.Close()</span><br><span class="line"></span><br><span class="line">	err=pem.Encode(filehandler2,&amp;block)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(<span class="string">&quot;公钥写入成功！\n&quot;</span>)</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="RSA加解密"><a href="#RSA加解密" class="headerlink" title="RSA加解密"></a>RSA加解密</h3><p>可以使用openssl生成公钥私钥</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -out rsa_private_key.pem  1024	#生成私钥，1024时秘钥长度，不指定长度默认2048位</span><br><span class="line">openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem	#生成公钥</span><br></pre></td></tr></table></figure>
+
+<p>加解密过程：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">密文=明文^E mod N #加密过程</span><br><span class="line">明文=密文^D mod N #解密过程</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>加密的数据都是明文对应的数字值</li>
+<li>对数值一次进行E或D次方处理</li>
+<li>对N取模</li>
+</ol>
+<p>加密时：公钥（E,N），由E和N组成公钥，E是encrypt（根据特定规则限定一个区间，在区间内随意选择），N是两个素数的乘积</p>
+<p>解密时：私钥（D,N），由D和N组成私钥，D时Decrypt，只有知道了时哪两个大素数，才能推出D</p>
+<p>算法描述：转载自：<a target="_blank" rel="noopener" href="http://bank.hexun.com/2009-06-24/118958531.html">http://bank.hexun.com/2009-06-24/118958531.html</a></p>
+<ol>
+<li>选择一对不同的、足够大的素数p，q。</li>
+<li>计算n=p*q。</li>
+<li>计算f(n)=(p-1)(q-1)，同时对p, q严加保密，不让任何人知道。</li>
+<li>找一个与f(n)互质的数e，且1&lt;e&lt;f(n)。</li>
+<li>计算d，使得d ≡e-1 mod f(n)，两边的同余运算相同，或者相当于(d*****e)%f(n)=1</li>
+<li>公钥KU=(e,n)，私钥KR=(d,n)。</li>
+</ol>
+<h4 id="1-公钥加密"><a href="#1-公钥加密" class="headerlink" title="1.公钥加密"></a>1.公钥加密</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> publicKeyFile = <span class="string">&quot;./publicRSAKey.pem&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">rsaPubEncrypt</span><span class="params">(fileName <span class="keyword">string</span>,src []<span class="keyword">byte</span>)</span> <span class="params">(error ,[]<span class="keyword">byte</span>)</span></span> &#123;</span><br><span class="line">	<span class="comment">//1. 通过公钥文件，读取公钥信息</span></span><br><span class="line">	info,err:=ioutil.ReadFile(fileName)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> err,<span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//2. pem.Decode，得到block中的der编码数据</span></span><br><span class="line">	block,_:=pem.Decode(info) <span class="comment">//返回值2rest是未解码完的数据</span></span><br><span class="line">	<span class="comment">//3. 解码der，得到公钥</span></span><br><span class="line">	derText:=block.Bytes</span><br><span class="line">	pubKey,err:=x509.ParsePKCS1PublicKey(derText)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> err,<span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//4. 公钥加密</span></span><br><span class="line">	<span class="comment">//EncryptPKCS1v15使用PKCS#1 v1.5规定的填充方案和RSA算法加密msg。信息不能超过((公共模数的长度)-11)字节。</span></span><br><span class="line">	<span class="comment">//func EncryptPKCS1v15(rand io.Reader, pub *PublicKey, msg []byte) (out []byte, err error)</span></span><br><span class="line">	cipherData,err:=rsa.EncryptPKCS1v15(rand.Reader,pubKey,src)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> err,<span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span>,cipherData</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-私钥解密"><a href="#2-私钥解密" class="headerlink" title="2.私钥解密"></a>2.私钥解密</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">rsaPriKeyDecrypt</span><span class="params">(fileName <span class="keyword">string</span>,cipherData []<span class="keyword">byte</span>)</span> <span class="params">(error,[]<span class="keyword">byte</span>)</span></span> &#123;</span><br><span class="line">	<span class="comment">//读取私钥文件</span></span><br><span class="line">	info,err:=ioutil.ReadFile(fileName)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> err,<span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	block,_:=pem.Decode(info)</span><br><span class="line"></span><br><span class="line">	derText:=block.Bytes</span><br><span class="line"></span><br><span class="line">	privateKey,err:=x509.ParsePKCS1PrivateKey(derText)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> err,<span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//私钥解密</span></span><br><span class="line">	<span class="comment">//DecryptPKCS1v15使用PKCS#1 v1.5规定的填充方案和RSA算法解密密文。</span></span><br><span class="line">	<span class="comment">//func DecryptPKCS1v15(rand io.Reader, priv *PrivateKey, ciphertext []byte) (out []byte, err error)</span></span><br><span class="line"></span><br><span class="line">	plainText,err:=rsa.DecryptPKCS1v15(rand.Reader,privateKey,cipherData)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> err,<span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span>,plainText</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-输出"><a href="#3-输出" class="headerlink" title="3.输出"></a>3.输出</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">加密成功，加密后的信息为 : 68590b1ce53a7a6958603ae3df5ee965f2d13fae0616a36b5c72def9e867c3a20d9b00a3ca33f8de82800448a642356b25791f9f6807281fc6b30f23b272502e5550799a12d683de8386d6dc69994b7d1fa70382d6e787199bc3600170c897c3e97c66b0ce0322e21baabeeaa242bad9cdf15163af27db8f42e2adafd951ed57</span><br><span class="line">解密成功，解密后的信息为 : 夜行书生</span><br></pre></td></tr></table></figure>
+
+<h3 id="ECC椭圆曲线"><a href="#ECC椭圆曲线" class="headerlink" title="ECC椭圆曲线"></a>ECC椭圆曲线</h3><p>golang中不支持ECC加解密，支持ECC签名</p>
+<p>-私钥：16（不是16G点）</p>
+<p>-公钥：G点和16G点组成</p>
+<h4 id="ECC公私钥创建"><a href="#ECC公私钥创建" class="headerlink" title="ECC公私钥创建"></a>ECC公私钥创建</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> PrivateKeyFile = <span class="string">&quot;./ECC/privateECCKey.pem&quot;</span></span><br><span class="line"><span class="keyword">const</span> PublicKeyFile = <span class="string">&quot;./ECC/publicECCKey.pem&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//生成公钥私钥</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">generateEccKeypair</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//1. 选择一个椭圆曲线（elliptic包）</span></span><br><span class="line">	curve := elliptic.P256()</span><br><span class="line">	<span class="comment">//2. 使用ecdsa包（椭圆曲线数字签名），创建私钥</span></span><br><span class="line">	<span class="comment">//GenerateKey函数生成一对公私钥/密钥对。</span></span><br><span class="line">	privateKey, err := ecdsa.GenerateKey(curve, rand.Reader)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//3. 使用x509进行编码</span></span><br><span class="line">	<span class="comment">//MarshalECPrivateKey将ecdsa私钥序列化为ASN.1 DER编码。</span></span><br><span class="line">	<span class="comment">//func MarshalECPrivateKey(key *ecdsa.PrivateKey) ([]byte, error)</span></span><br><span class="line">	derText1, err := x509.MarshalECPrivateKey(privateKey)</span><br><span class="line">	<span class="comment">//4. 写入pem.Block中</span></span><br><span class="line">	block1 := pem.Block&#123;</span><br><span class="line">		Type:    <span class="string">&quot;ECC PRIVATE KEY&quot;</span>,</span><br><span class="line">		Headers: <span class="literal">nil</span>,</span><br><span class="line">		Bytes:   derText1,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//5. pem.Encode</span></span><br><span class="line">	filehandler1, err := os.Create(PrivateKeyFile)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> filehandler1.Close()</span><br><span class="line">	pem.Encode(filehandler1, &amp;block1)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//获取公钥</span></span><br><span class="line">	publicKey := privateKey.PublicKey</span><br><span class="line">	<span class="comment">//MarshalPKIXPublicKey将公钥序列化为PKIX格式DER编码。</span></span><br><span class="line">	<span class="comment">//func MarshalPKIXPublicKey(pub interface&#123;&#125;) ([]byte, error)</span></span><br><span class="line">	derText2, err := x509.MarshalPKIXPublicKey(&amp;publicKey)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">	block2 := pem.Block&#123;</span><br><span class="line">		Type:    <span class="string">&quot;ECC PUBLIC KEY&quot;</span>,</span><br><span class="line">		Headers: <span class="literal">nil</span>,</span><br><span class="line">		Bytes:   derText2,</span><br><span class="line">	&#125;</span><br><span class="line">	filehandler2, err := os.Create(PublicKeyFile)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> filehandler2.Close()</span><br><span class="line">	pem.Encode(filehandler2, &amp;block2)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h2><p>可以对输入的内容生产一个唯一的数值</p>
+<ol>
+<li>输入内容不变，输出内容不变（散列值）</li>
+<li>输入内容有一点点改变，输出也会千差万别</li>
+<li>无论输入的内容大小是多少，生产的哈希长度相同</li>
+<li>哈希运算时对输入内容做指纹摘要，无法推回原文</li>
+</ol>
+<h3 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h3><p>Base64编码，是我们程序开发中经常使用到的编码方式，因为Base64编码的字符串更适合不同的平台，不同语言的传输。它是一种基于用64个可打印字符来表示二进制数据的表示方法，它通常用作存储、传输一些二进制数据编码方法。就是将二进制数据文本化（就是转成ASCLL码）</p>
+<p>作用：</p>
+<ol>
+<li>由于某些系统中只能使用ASCLL字符，Base64就是用来将非ASCLL字符的数据转换成ASCLL字符的一种方法</li>
+<li>对二进制文件进行文本化后的输出</li>
+<li>前后台交互时，经常使用base64，可以避免特殊字符传输错误</li>
+</ol>
+<h3 id="单向散列函数MD5"><a href="#单向散列函数MD5" class="headerlink" title="单向散列函数MD5"></a>单向散列函数MD5</h3><p>也是一个hash算法，不同于sha256的256位，md5是128位的</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用go包，有两种hash运算方式</span></span><br><span class="line"><span class="comment">//方式一:</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">md5Test1</span><span class="params">(info []<span class="keyword">byte</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	<span class="comment">//对多量数据进行MD5哈希运算</span></span><br><span class="line">	<span class="comment">//1. 创建一个哈希器</span></span><br><span class="line">	hasher:=md5.New()</span><br><span class="line">	io.WriteString(hasher,<span class="keyword">string</span>(info))<span class="comment">//类型断言</span></span><br><span class="line">	<span class="comment">//2. 执行Sum操作，得到哈希值</span></span><br><span class="line">	hash:=hasher.Sum(<span class="literal">nil</span>)</span><br><span class="line">	<span class="keyword">return</span> hash</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//方式二:</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">md5Test2</span><span class="params">(info []<span class="keyword">byte</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	hash:=md5.Sum(info)</span><br><span class="line">	<span class="keyword">return</span> hash[:]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SHA256"><a href="#SHA256" class="headerlink" title="SHA256"></a>SHA256</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fileName = <span class="string">&quot;D:/GoCode/go语言密码学/SHA256.go&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//直接传入内容</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sha256Test1</span><span class="params">(info []<span class="keyword">byte</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	hash:=sha256.Sum256(info)</span><br><span class="line">	<span class="keyword">return</span> hash[:]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用打开文件方式获取哈希</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sha256Test2</span><span class="params">()</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	<span class="comment">//1. open文件</span></span><br><span class="line">	file,err:=os.Open(fileName)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//2. 创建hash</span></span><br><span class="line">	hasher:=sha256.New()</span><br><span class="line">	<span class="comment">//3. copy句柄</span></span><br><span class="line">	_,err=io.Copy(hasher,file)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//4. hash sum操作</span></span><br><span class="line">	hash:=hasher.Sum(<span class="literal">nil</span>)</span><br><span class="line">	<span class="keyword">return</span> hash[:]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="消息认证码"><a href="#消息认证码" class="headerlink" title="消息认证码"></a>消息认证码</h2><p>如果接受方接收到了乱码，无法判断是否是原本的数据信息，需要使用消息认证码，它是一种确认完整性并进行认证的技术，是一种与密钥相关联的单向散列函数，取三个单词的首字母，简称为MAC</p>
+<ul>
+<li>保证数据未被篡改</li>
+<li>保证数据的来源</li>
+</ul>
+<h3 id="认证步骤"><a href="#认证步骤" class="headerlink" title="认证步骤"></a>认证步骤</h3><ol>
+<li>发送者事先与接收者共享密钥</li>
+<li>发送至根据请求信息和密钥计算MAC值</li>
+<li>发送者将请求信息和MAC值发送给接收者</li>
+<li>接收者根据请求信息和密钥计算MAC值</li>
+<li>两者的MAC值进行对比，如果一致则认证成功</li>
+</ol>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ol>
+<li>SWIFT（环球银行金融电信协会），曾经使用了消息认证码</li>
+<li>https，握手协议使用了消息认证码</li>
+<li>IPSec，IP协议的增强版，使用了消息认证码</li>
+</ol>
+<h3 id="HMAC"><a href="#HMAC" class="headerlink" title="HMAC"></a>HMAC</h3><p>是一种使用单向散列函数来构造消息认证码的方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//New函数返回一个采用hash.Hash作为底层hash接口、key作为密钥的HMAC算法的hash接口。</span></span><br><span class="line"><span class="comment">//func New(h func() hash.Hash, key []byte) hash.Hash</span></span><br><span class="line"><span class="comment">//-参数1：自己指定的哈希算法</span></span><br><span class="line"><span class="comment">//-参数2：密钥</span></span><br><span class="line"><span class="comment">//-返回值：哈希对象</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//比较两个MAC是否相同，而不会泄露对比时间信息。</span></span><br><span class="line"><span class="comment">//func Equal(mac1, mac2 []byte) bool</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//生成mac</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">generateHMAC</span><span class="params">(src []<span class="keyword">byte</span>,key []<span class="keyword">byte</span>)</span> []<span class="title">byte</span></span>  &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//1. 创建哈希器</span></span><br><span class="line">	hasher:=hmac.New(sha256.New,key)</span><br><span class="line">	<span class="comment">//2. 生成哈希值</span></span><br><span class="line">	hasher.Write(src)<span class="comment">//写入</span></span><br><span class="line">	mac:=hasher.Sum(<span class="literal">nil</span>)<span class="comment">//填充</span></span><br><span class="line">	<span class="keyword">return</span> mac</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//认证mac</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">verifyHMAC</span><span class="params">(src []<span class="keyword">byte</span>,mac1 []<span class="keyword">byte</span>,key []<span class="keyword">byte</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="comment">//1. 对端接收到的原信息</span></span><br><span class="line">	<span class="comment">//2. 对端接收到的mac</span></span><br><span class="line">	<span class="comment">//3. 对端计算本地mac值</span></span><br><span class="line"></span><br><span class="line">	hasher:=hmac.New(sha256.New,key)</span><br><span class="line"></span><br><span class="line">	hasher.Write(src)<span class="comment">//写入</span></span><br><span class="line">	mac2:=hasher.Sum(<span class="literal">nil</span>)<span class="comment">//填充</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//4. 对比两个mac值</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> hmac.Equal(mac1,mac2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h3><ol>
+<li>无法有效的配送密钥</li>
+<li>无法进行第三方证明</li>
+<li>无法防止发送方否认</li>
+</ol>
+<p>解决办法： 非对称加密的数字签名</p>
+<h2 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h2><h3 id="签名流程"><a href="#签名流程" class="headerlink" title="签名流程"></a>签名流程</h3><ol>
+<li><p>发送方对原文做哈希运算得到哈希值1</p>
+</li>
+<li><p>发送方用私钥对哈希值1进行加密签名</p>
+</li>
+<li><p>发送方将原文和私钥签名发送给接收方</p>
+</li>
+<li><p>接收方对接收到的原文进行哈希运算得到哈希值2</p>
+</li>
+<li><p>接收方用公钥解密签名得到哈希值1</p>
+</li>
+<li><p>接收方对哈希值1和哈希值2进行比较</p>
+</li>
+</ol>
+<p>因此：数字签名解决了消息认证码的问题</p>
+<ol>
+<li>不需要协商密钥</li>
+<li>任何人都持有公钥，都可以帮忙验证</li>
+<li>私钥只有发送方持有，无法否认</li>
+</ol>
+<h3 id="通过RSA进行数字签名"><a href="#通过RSA进行数字签名" class="headerlink" title="通过RSA进行数字签名"></a>通过RSA进行数字签名</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//私钥签名：</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">rsaSignData</span><span class="params">(fileName <span class="keyword">string</span>,src []<span class="keyword">byte</span>)</span> <span class="params">(error, []<span class="keyword">byte</span>)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//1. 提供私钥文件，解析出私钥的内容</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//读取私钥文件</span></span><br><span class="line">	info,err:=ioutil.ReadFile(fileName)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> err,<span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	block,_:=pem.Decode(info)</span><br><span class="line">	derText:=block.Bytes</span><br><span class="line">	privateKey,err:=x509.ParsePKCS1PrivateKey(derText)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> err,<span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//2. 使用私钥进行数字签名</span></span><br><span class="line">	<span class="comment">//SignPKCS1v15使用RSA PKCS#1 v1.5规定的RSASSA-PKCS1-V1_5-SIGN签名方案计算签名。</span></span><br><span class="line">	<span class="comment">//func SignPKCS1v15(rand io.Reader, priv *PrivateKey, hash crypto.Hash, hashed []byte) (s []byte, err error)</span></span><br><span class="line">	<span class="comment">//获取原文的哈希值</span></span><br><span class="line">	hash:=sha256.Sum256(src)</span><br><span class="line">	<span class="comment">//执行签名操作</span></span><br><span class="line">	signature,err:=rsa.SignPKCS1v15(rand.Reader,privateKey,crypto.SHA256,hash[:])</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> err,<span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span>,signature</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//公钥认证：</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">rsaVerifySignature</span><span class="params">(fileName <span class="keyword">string</span>,src []<span class="keyword">byte</span>,signature []<span class="keyword">byte</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//1. 通过公钥文件，读取公钥信息</span></span><br><span class="line">	info,err:=ioutil.ReadFile(fileName)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//2. pem.Decode，得到block中的der编码数据</span></span><br><span class="line">	block,_:=pem.Decode(info) <span class="comment">//返回值2:rest是未解码完的数据</span></span><br><span class="line">	<span class="comment">//3. 解码der，得到公钥</span></span><br><span class="line">	derText:=block.Bytes</span><br><span class="line">	pubKey,err:=x509.ParsePKCS1PublicKey(derText)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//2. 使用公钥进行数字签名认证</span></span><br><span class="line">	<span class="comment">//VerifyPKCS1v15认证RSA PKCS#1 v1.5签名。hashed是使用提供的hash参数对（要签名的）原始数据进行hash的结果。</span></span><br><span class="line">	<span class="comment">//func VerifyPKCS1v15(pub *PublicKey, hash crypto.Hash, hashed []byte, sig []byte) (err error)</span></span><br><span class="line">	<span class="comment">//获取原文的哈希值</span></span><br><span class="line">	hash:=sha256.Sum256(src)</span><br><span class="line">	err=rsa.VerifyPKCS1v15(pubKey,crypto.SHA256,hash[:],signature)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="通过ECC进行数字签名"><a href="#通过ECC进行数字签名" class="headerlink" title="通过ECC进行数字签名"></a>通过ECC进行数字签名</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> PrivateKeyFile = <span class="string">&quot;./ECC/privateECCKey.pem&quot;</span></span><br><span class="line"><span class="keyword">const</span> PublicKeyFile = <span class="string">&quot;./ECC/publicECCKey.pem&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//自定义签名结构</span></span><br><span class="line"><span class="keyword">type</span> Signature <span class="keyword">struct</span> &#123;</span><br><span class="line">	r *big.Int</span><br><span class="line">	s *big.Int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用私钥签名</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">eccSignData</span><span class="params">(filename <span class="keyword">string</span>,src []<span class="keyword">byte</span>)</span> <span class="params">(Signature,error)</span></span> &#123;</span><br><span class="line">	<span class="comment">//1. 读取私钥解码</span></span><br><span class="line">	info,err:=ioutil.ReadFile(filename)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">	block,_:=pem.Decode(info)</span><br><span class="line">	derText:=block.Bytes</span><br><span class="line">	privateKey,err:=x509.ParseECPrivateKey(derText)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//2. 对原文生成哈希值</span></span><br><span class="line">	hash:=sha256.Sum256(src)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//3. 使用私钥签名</span></span><br><span class="line">	<span class="comment">//使用私钥对任意长度的hash值（必须是较大信息的hash结果）进行签名，返回签名结果（一对大整数）。</span></span><br><span class="line">	<span class="comment">//func Sign(rand io.Reader, priv *PrivateKey, hash []byte) (r, s *big.Int, err error)</span></span><br><span class="line">	r,s,err:=ecdsa.Sign(rand.Reader,privateKey,hash[:])</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	sig:=Signature&#123;</span><br><span class="line">		r: r,</span><br><span class="line">		s: s,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> sig,<span class="literal">nil</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用公钥验证</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">eccVerifySign</span><span class="params">(filename <span class="keyword">string</span>,src []<span class="keyword">byte</span>,sig Signature)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="comment">//1. 读取公钥解码</span></span><br><span class="line">	info,err:=ioutil.ReadFile(filename)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">	block,_:=pem.Decode(info)</span><br><span class="line">	derText:=block.Bytes</span><br><span class="line">	publicKeyInterface,err:=x509.ParsePKIXPublicKey(derText)</span><br><span class="line">	publicKey,ok:=publicKeyInterface.(*ecdsa.PublicKey)<span class="comment">//断言</span></span><br><span class="line">	<span class="keyword">if</span> !ok&#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;断言失败，非ecdsa公钥&quot;</span>)</span><br><span class="line">		os.Exit(<span class="number">1</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//2. 对原文生成哈希值</span></span><br><span class="line">	hash:=sha256.Sum256(src)</span><br><span class="line">	<span class="comment">//3. 使用公钥验证</span></span><br><span class="line">	<span class="comment">//使用公钥验证hash值和两个大整数r、s构成的签名，并返回签名是否合法。</span></span><br><span class="line">	<span class="comment">//func Verify(pub *PublicKey, hash []byte, r, s *big.Int) bool</span></span><br><span class="line">	<span class="keyword">return</span> ecdsa.Verify(publicKey,hash[:],sig.r,sig.s)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数字证书"><a href="#数字证书" class="headerlink" title="数字证书"></a>数字证书</h2><p>对公钥进行数字签名</p>
+<p>推荐网站：<a target="_blank" rel="noopener" href="https://blog.csdn.net/suchahaerkang/article/details/84849093">https://blog.csdn.net/suchahaerkang/article/details/84849093</a></p>
+<h3 id="PKI（公钥基础设施）和CA（证书颁发机构）"><a href="#PKI（公钥基础设施）和CA（证书颁发机构）" class="headerlink" title="PKI（公钥基础设施）和CA（证书颁发机构）"></a>PKI（公钥基础设施）和CA（证书颁发机构）</h3><p>PKI：用来实现基于公钥密码体制的密钥和证书的产生、管理、存储、分发和撤销等功能。</p>
+<p>PKI的组成元素主要有三个：</p>
+<ol>
+<li>用户：使用PKI的人</li>
+<li>认证机构：办法证书的人</li>
+<li>仓库：保存证书的数据库</li>
+</ol>
+<p>CA：负责发放和管理数字证书，作为电子商务交易中受信任的第三方</p>
+<h3 id="证书使用"><a href="#证书使用" class="headerlink" title="证书使用"></a>证书使用</h3><p>所有的网站都转成https，https就等于http加ssl，ssl是一个通讯协议，在通讯过程中，使用了数字证书</p>
+<h3 id="https通信"><a href="#https通信" class="headerlink" title="https通信"></a>https通信</h3><ul>
+<li>所有的通信不再传输公钥，而是传输数字证书</li>
+<li>证书里面包含公钥，由CA机构认证</li>
+</ul>
+<ol>
+<li>网站提供者会自己在本地生成公钥私钥，也可以不自己生成，全部由CA处理</li>
+<li>服务器将公钥发送给CA机构</li>
+<li>CA机构也有自己的私钥公钥</li>
+<li>CA使用自己的私钥对服务器的公钥进行签名</li>
+<li>CA向服务器颁发一个数字证书</li>
+<li>当用户访问服务器时，服务器会将CA证书发送给用户</li>
+<li>在客户的浏览器中，已经随着操作系统，预装了知名CA机构的根证书，这里面包含了CA机构的公钥，浏览器会对服务器的证书进行验证</li>
+<li>验证成功则服务器可靠，即可正常通信，否则显示Warning</li>
+<li>证书有效时，浏览器会将自己支持的对称加密算法，生成一个随机秘钥，使用服务器的公钥进行加密，发送给服务器</li>
+<li>服务器选择一个加密算法，使用对称秘钥加密信息，发送给客户端</li>
+<li>双方达成一致，接下来的通信转换为对称加密</li>
+</ol>
+<h3 id="SSL-TLS"><a href="#SSL-TLS" class="headerlink" title="SSL/TLS"></a>SSL/TLS</h3><p>安全传输层协议，用于在两个通信应用程序之间提供保密性和数据完整性。</p>
+<h3 id="windows下查看数字证书"><a href="#windows下查看数字证书" class="headerlink" title="windows下查看数字证书"></a>windows下查看数字证书</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">win+R输入certmgr.msc导出数字证书</span><br><span class="line">终端输入 openssl x509 -in 证书名称 -inform der -text</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书信任链"><a href="#证书信任链" class="headerlink" title="证书信任链"></a>证书信任链</h3><p>通过一个证书证明另一个证书是真实可信的，根证书是最安全的证书，不需要验证</p>
+<h3 id="生成自签名证书"><a href="#生成自签名证书" class="headerlink" title="生成自签名证书"></a>生成自签名证书</h3><ul>
+<li>生成私钥文件</li>
+<li>生成数字证书（包含公钥）</li>
+</ul>
+<p>方法一:分步生成</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">启动openssl</span> </span><br><span class="line">openssl</span><br><span class="line"><span class="meta">#</span><span class="bash">生成一个RSA私钥，执行后输入密码并确认</span></span><br><span class="line">genrsa -des3 -out server.key 2048  #des3是对私钥进行加密</span><br><span class="line"><span class="meta">#</span><span class="bash">生成CSR（证书签名请求）</span></span><br><span class="line">req -new -key server.key -out server.csr</span><br><span class="line"><span class="meta">#</span><span class="bash">查看csr文件细节</span></span><br><span class="line">openssl req -in server.csr -noout -text</span><br><span class="line"><span class="meta">#</span><span class="bash">删除私钥中的密码</span></span><br><span class="line">rsa -in server.key -out server.key</span><br><span class="line"><span class="meta">#</span><span class="bash">生成自签名证书</span></span><br><span class="line">x509 -req -days 365 -in server.csr -signkey server.key -out server.crt</span><br><span class="line"><span class="meta">#</span><span class="bash">查看crt文件细节</span></span><br><span class="line">x509 -in server.crt -text -noout</span><br></pre></td></tr></table></figure>
+
+<p>方法二：一步生成</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">不需要生成csr，直接生成证书</span></span><br><span class="line">req -x509 -newkey rsa:4096 -keyout server2.key -out cert.crt -days 365 -nodes #nodes不设置密码</span><br><span class="line"><span class="meta">#</span><span class="bash">查看证书细节</span></span><br><span class="line">x509 -in cert.crt -text -noout</span><br></pre></td></tr></table></figure>
+
+<h3 id="常见证书格式"><a href="#常见证书格式" class="headerlink" title="常见证书格式"></a>常见证书格式</h3><ol>
+<li><p>pem格式</p>
+<p>使用openssl生成的都是pem格式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -in cert.crt -text</span><br></pre></td></tr></table></figure></li>
+<li><p>der格式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -in cert.der -inform der -text</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="单向认证"><a href="#单向认证" class="headerlink" title="单向认证"></a>单向认证</h3><p>客户端单向认证服务器，服务器不认证客户端，服务器证书使用openssl自签名</p>
+<p>创建证书：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">req -x509 -newkey rsa:4096 -keyout server.key -out server.crt -days 365 -nodes</span><br></pre></td></tr></table></figure>
+
+<p>代码流程：</p>
+<p>推荐网站：<a target="_blank" rel="noopener" href="http://www.youkud.com/m/view.php?id=1487">http://www.youkud.com/m/view.php?id=1487</a></p>
+<p>创建http服务器：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//1. 创建http server</span></span><br><span class="line">	server:=http.Server&#123;</span><br><span class="line">		Addr:              <span class="string">&quot;:433&quot;</span>,<span class="comment">//监听端口</span></span><br><span class="line">		Handler:           <span class="literal">nil</span>,<span class="comment">//处理函数，nil时会使用默认处理函数</span></span><br><span class="line">		TLSConfig:         <span class="literal">nil</span>,<span class="comment">//单向认证填nil</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//编写处理逻辑</span></span><br><span class="line">	http.HandleFunc(<span class="string">&quot;/&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(writer http.ResponseWriter, request *http.Request)</span></span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;HandleFunc called\n&quot;</span>)</span><br><span class="line">		writer.Write([]<span class="keyword">byte</span>(<span class="string">&quot;hello world&quot;</span>))</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//2. 启动http server，启动时加载自己的证书，使用TLS</span></span><br><span class="line">	err:=server.ListenAndServeTLS(<span class="string">&quot;server.crt&quot;</span>,<span class="string">&quot;server.key&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>客户端：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//读取CA证书</span></span><br><span class="line">	caCertInfo,err:=ioutil.ReadFile(<span class="string">&quot;server.crt&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//创建CA池</span></span><br><span class="line">	certPool:=x509.NewCertPool()</span><br><span class="line">	<span class="comment">//把CA证书添加到CA池中</span></span><br><span class="line">	certPool.AppendCertsFromPEM(caCertInfo)</span><br><span class="line">	<span class="comment">//将CA池配置给tls</span></span><br><span class="line">	cfg:=tls.Config&#123;</span><br><span class="line">		RootCAs: certPool,</span><br><span class="line">        <span class="comment">//如果设置验证证书的话（TLSClientConfig: &amp;tls.Config&#123;InsecureSkipVerify: false&#125;），那么需要验证两个东西，一个是上证书用的CN的名称一致。</span></span><br><span class="line">	<span class="comment">//另一个是证书是否权威签发，否则就是上面的unknown authority了如果设置成true，则无所谓了，不校验证书，当然不一致也无所谓了。否则会报错： x509: cannot validate certificate for 127.0.0.1 because it doesn&#x27;t contain any IP SANs</span></span><br><span class="line">		InsecureSkipVerify: <span class="literal">true</span>, </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//创建http client</span></span><br><span class="line">	client:=http.Client&#123;Transport: &amp;http.Transport&#123;TLSClientConfig: &amp;cfg&#125;&#125;</span><br><span class="line">	<span class="comment">//5. client发起请求</span></span><br><span class="line">	response,err:=client.Get(<span class="string">&quot;https://localhost:433&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//6. 打印返回值</span></span><br><span class="line">	bodyInfo,err:=ioutil.ReadAll(response.Body)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	response.Body.Close()</span><br><span class="line">	fmt.Printf(<span class="string">&quot;body : %s\n&quot;</span>,bodyInfo)</span><br><span class="line">	fmt.Printf(<span class="string">&quot;response : %s\n&quot;</span>,response.Status)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="双向认证"><a href="#双向认证" class="headerlink" title="双向认证"></a>双向认证</h3><p>客户端认证服务器，服务器认证客户端，服务器和客户端证书都使用openssl自签名证书</p>
+<p>创建证书：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">req -x509 -newkey rsa:4096 -keyout server.key -out server.crt -days 365 -nodes</span><br><span class="line">req -x509 -newkey rsa:4096 -keyout client.key -out client.crt -days 365 -nodes</span><br></pre></td></tr></table></figure>
+
+<p>服务器：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//读取client证书</span></span><br><span class="line">	caInfo,err:=ioutil.ReadFile(<span class="string">&quot;client.crt&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//创建CA池</span></span><br><span class="line">	certPool:=x509.NewCertPool()</span><br><span class="line">	<span class="comment">//把CA证书添加到CA池中</span></span><br><span class="line">	certPool.AppendCertsFromPEM(caInfo)</span><br><span class="line">	<span class="comment">//将CA池配置给tls</span></span><br><span class="line">	cfg:=tls.Config&#123;</span><br><span class="line">		ClientCAs: certPool,<span class="comment">//客户端的CA池填充</span></span><br><span class="line">		ClientAuth: tls.RequireAndVerifyClientCert,<span class="comment">//设置服务器认证客户端</span></span><br><span class="line">		InsecureSkipVerify: <span class="literal">true</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//创建http server</span></span><br><span class="line">	server:=http.Server&#123;</span><br><span class="line">		Addr:<span class="string">&quot;:433&quot;</span>,</span><br><span class="line">		Handler: <span class="literal">nil</span>,</span><br><span class="line">		TLSConfig: &amp;cfg,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//编写处理逻辑</span></span><br><span class="line">	http.HandleFunc(<span class="string">&quot;/&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(writer http.ResponseWriter, request *http.Request)</span></span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;ServerHttp called\n&quot;</span>)</span><br><span class="line">		writer.Write([]<span class="keyword">byte</span>(<span class="string">&quot;夜行书生&quot;</span>))</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//启动http server</span></span><br><span class="line">	err = server.ListenAndServeTLS(<span class="string">&quot;server.crt&quot;</span>,<span class="string">&quot;server.key&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>客户端：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//读取server证书</span></span><br><span class="line">	caInfo,err:=ioutil.ReadFile(<span class="string">&quot;server.crt&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//创建CA池</span></span><br><span class="line">	certPool:=x509.NewCertPool()</span><br><span class="line">	<span class="comment">//把CA证书添加到CA池中</span></span><br><span class="line">	certPool.AppendCertsFromPEM(caInfo)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//加载客户端的证书和密钥</span></span><br><span class="line">	clientCert,err:=tls.LoadX509KeyPair(<span class="string">&quot;client.crt&quot;</span>,<span class="string">&quot;client.key&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//配置tls</span></span><br><span class="line">	cfg:=tls.Config&#123;</span><br><span class="line">		<span class="comment">//CA池</span></span><br><span class="line">		RootCAs: certPool,</span><br><span class="line">		<span class="comment">//客户端证书</span></span><br><span class="line">		Certificates: []tls.Certificate&#123;clientCert&#125;,</span><br><span class="line">		InsecureSkipVerify: <span class="literal">true</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//创建http client</span></span><br><span class="line">	client:=http.Client&#123;Transport: &amp;http.Transport&#123;TLSClientConfig: &amp;cfg&#125;&#125;</span><br><span class="line">	<span class="comment">//client发起请求</span></span><br><span class="line">	response,err:=client.Get(<span class="string">&quot;https://localhost:433&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//打印返回值</span></span><br><span class="line">	bodyInfo,err:=ioutil.ReadAll(response.Body)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> response.Body.Close()</span><br><span class="line">	fmt.Printf(<span class="string">&quot;body : %s\n&quot;</span>,bodyInfo)</span><br><span class="line">	fmt.Printf(<span class="string">&quot;response : %s\n&quot;</span>,response.Status)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/Go%E8%AF%AD%E8%A8%80/"># Go语言</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                            <a class="prev" rel="prev" href="/2021/05/18/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                                Redis数据库
+                                            </a>
+                                            
+                                                
+                                                    <a class="next" rel="next" href="/2021/05/18/%E6%A8%A1%E6%8B%9F%E6%AF%94%E7%89%B9%E5%B8%81%E4%BA%A4%E6%98%93/">
+                                                        Go语言模拟比特币交易
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
