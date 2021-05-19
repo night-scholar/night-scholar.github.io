@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>Go语言同步与锁 | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    Go语言同步与锁
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">May 19, 2020&nbsp;&nbsp;18:24:56</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Go%E8%AF%AD%E8%A8%80%E6%A0%B8%E5%BF%83/">Go语言核心</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="Go语言同步与锁"><a href="#Go语言同步与锁" class="headerlink" title="Go语言同步与锁"></a>Go语言同步与锁</h1><p>在并发条件下，信息的同步要求用户必须用锁的机制来保证准确性。Go语言标准库中提供了互斥锁和读写锁供开发者使用。</p>
+<p>Go语言包中的sync包提供了两种锁类型：sync.Mutex和sync.RwMutex，前者是互斥锁，后者是读写锁。</p>
+<h2 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h2><p>互斥锁是传统的并发程序对资源共享进行访问控制的主要手段，在Go语言中，更推崇使用通道来实现资源共享和通信，互斥锁具有两个公开方法：调用Lock()获得锁和调用Unlock()释放锁。</p>
+<ul>
+<li>同一个协程中同步调用使用Lock()枷锁后，不能再对其加锁，只能在Unlock()之后再次Lock()，多个协程在Unlock()之后会产生锁竞争，来竞争下一次加锁的机会，因此互斥锁只允许有一个读或者写的场景，所以该锁也叫全局锁。</li>
+<li>Unlock()只用于解锁，Unlock()之前必须要有Lock()。已经锁定的Mutex并不与特定的协程相关联，这样可以利用一个协程对其加锁，再利用其它协程对其解锁。</li>
+</ul>
+<p>接下来看一段代码，通过三个协程体现互斥锁对资源的访问控制：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;sync&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	wg := sync.WaitGroup&#123;&#125;</span><br><span class="line">	mutex := sync.Mutex&#123;&#125;</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;Locking G0&quot;</span>)</span><br><span class="line">	mutex.Lock()</span><br><span class="line">	fmt.Println(<span class="string">&quot;Locked G0&quot;</span>)</span><br><span class="line">	wg.Add(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i:=<span class="number">1</span>;i&lt;<span class="number">4</span>;i++&#123;</span><br><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(i <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;Locking G%d\n&quot;</span>,i)</span><br><span class="line">			mutex.Lock()</span><br><span class="line">			fmt.Printf(<span class="string">&quot;Locked G%d\n&quot;</span>,i)</span><br><span class="line"></span><br><span class="line">			time.Sleep(time.Second*<span class="number">2</span>)</span><br><span class="line">			mutex.Unlock()</span><br><span class="line">			fmt.Printf(<span class="string">&quot;unlocked G%d\n&quot;</span>,i)</span><br><span class="line">			wg.Done()</span><br><span class="line">		&#125;(i)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	time.Sleep(time.Second*<span class="number">2</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;ready unlocked G0&quot;</span>)</span><br><span class="line">	mutex.Unlock()</span><br><span class="line">	fmt.Println(<span class="string">&quot;unlocked G0&quot;</span>)</span><br><span class="line">	wg.Wait()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*输出：</span></span><br><span class="line"><span class="comment">Locking G0</span></span><br><span class="line"><span class="comment">Locked G0</span></span><br><span class="line"><span class="comment">Locking G3</span></span><br><span class="line"><span class="comment">Locking G2</span></span><br><span class="line"><span class="comment">Locking G1</span></span><br><span class="line"><span class="comment">ready unlocked G0</span></span><br><span class="line"><span class="comment">unlocked G0</span></span><br><span class="line"><span class="comment">Locked G3</span></span><br><span class="line"><span class="comment">unlocked G3</span></span><br><span class="line"><span class="comment">Locked G2</span></span><br><span class="line"><span class="comment">unlocked G2</span></span><br><span class="line"><span class="comment">Locked G1</span></span><br><span class="line"><span class="comment">unlocked G1</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>通过这段程序可以看到，只有当锁释放时，才能进行加锁动作，当G0的锁释放时，等待加锁的G1，G2，G3都会竞争加锁的机会。</p>
+<h2 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h2><p>读写锁实质上是多读单写的互斥锁，分别针对读操作和写操作进行锁定和解锁操作，用于读次数远大于写次数的场合。读写锁具有四个公开的方法：写锁定Lock()、写解锁Unlock()、读锁定RLock()、读解锁RUnlock()。</p>
+<ul>
+<li>写锁定时，对读写锁进行读锁定或写锁定时，都将阻塞。</li>
+<li>读锁定时，对读写锁进行写锁定，将阻塞。但可多读。</li>
+<li>写解锁之前必须要写锁定。读解锁之间必须要读锁定。</li>
+</ul>
+<p>下面看一段代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">   <span class="string">&quot;fmt&quot;</span></span><br><span class="line">   <span class="string">&quot;sync&quot;</span></span><br><span class="line">   <span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> m *sync.RWMutex</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span><br><span class="line">   wg := sync.WaitGroup&#123;&#125;</span><br><span class="line"></span><br><span class="line">   wg.Add(<span class="number">20</span>)</span><br><span class="line">   <span class="keyword">var</span> rwMutex sync.RWMutex</span><br><span class="line">   Data := <span class="number">0</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span> i:=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++&#123;</span><br><span class="line">      <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(i <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">         rwMutex.RLock()</span><br><span class="line">         <span class="keyword">defer</span> rwMutex.RUnlock()</span><br><span class="line">         fmt.Printf(<span class="string">&quot;读数据: %v , %d\n&quot;</span>,Data,i )</span><br><span class="line">         wg.Done()</span><br><span class="line">         time.Sleep(time.Second)</span><br><span class="line">      &#125;(i)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(t <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">         rwMutex.Lock()</span><br><span class="line">         <span class="keyword">defer</span> rwMutex.Unlock()</span><br><span class="line">         Data += t</span><br><span class="line">         fmt.Printf(<span class="string">&quot;写数据: %v , %d\n&quot;</span>, Data,i)</span><br><span class="line">         wg.Done()</span><br><span class="line">         time.Sleep(<span class="number">10</span>*time.Second)</span><br><span class="line">      &#125;(i)</span><br><span class="line">   &#125;</span><br><span class="line">   wg.Wait()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行这段代码可以看到，在写锁定的情况下，10s内其他协程都无法进行数据的读取，而当写解锁后，所有的读数据的协程都哦完成了对数据的读取。说直白一点就是：写的时候不可读，读的时候不可写，读的时候大家一起读，写的时候只有我能写。</p>
+<h2 id="sync-WaitGroup"><a href="#sync-WaitGroup" class="headerlink" title="sync.WaitGroup"></a>sync.WaitGroup</h2><p>WaitGroup用于线程总同步。它等待一组线程集合完成，才会继续向下执行。主线程调用Add()方法来设置等待的协程数量，然后每个协程运行，并在完成后调用Done()方法，同时Wait()方法用来阻塞主线程直到所有协程完成。</p>
+<p>下面是一段代码实例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;sync&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line">	<span class="comment">//wg.Add(5)</span></span><br><span class="line">	wg.Add(<span class="number">10</span>)</span><br><span class="line">	<span class="keyword">for</span> i:=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++&#123;</span><br><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(t <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">			<span class="keyword">defer</span> wg.Done()</span><br><span class="line">			fmt.Println(t)</span><br><span class="line">		&#125;(i)</span><br><span class="line">	&#125;</span><br><span class="line">	wg.Wait()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当调用Wg.Add(5)是，程序只会输出5个结果，这是因为5个协程执行了Wg.Done()后，满足了主线程的Wg.Wait()的要求，程序解除阻塞，自动退出。</p>
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/Go%E8%AF%AD%E8%A8%80/"># Go语言</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                            <a class="prev" rel="prev" href="/2020/05/19/Git%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/">
+                                                Git的基本使用方法
+                                            </a>
+                                            
+                                                
+                                                    <a class="next" rel="next" href="/2020/04/20/Go%E8%AF%AD%E8%A8%80%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
+                                                        Go语言网络编程
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
