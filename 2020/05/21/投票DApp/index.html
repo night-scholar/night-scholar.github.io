@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>投票DApp开发学习 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    投票DApp开发学习
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">May 21, 2020&nbsp;&nbsp;17:04:53</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="投票DApp"><a href="#投票DApp" class="headerlink" title="投票DApp"></a>投票DApp</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">创建项目目录</span></span><br><span class="line">mkdir voting</span><br><span class="line">cd voting</span><br><span class="line"><span class="meta">#</span><span class="bash">安装ganache,web3,solc</span></span><br><span class="line">npm init</span><br><span class="line">npm install ganache-cli web3@^0.20.0 solc</span><br><span class="line"><span class="meta">#</span><span class="bash">开启ganache</span></span><br><span class="line">node_modules/.bin/ganache-cli</span><br><span class="line"><span class="meta">#</span><span class="bash">当然我们也可以安装可视化的Ganache，我比较推荐</span></span><br></pre></td></tr></table></figure>
+
+<p>项目目录如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Mode                LastWriteTime         Length Name</span><br><span class="line">----                -------------         ------ ----</span><br><span class="line">d-----        2020/5/20     17:06                node_modules</span><br><span class="line">-a----        2020/5/20     17:06         132029 package-lock.json</span><br><span class="line">-a----        2020/5/20     17:06            300 package.json</span><br></pre></td></tr></table></figure>
+
+<h2 id="Solidity合约"><a href="#Solidity合约" class="headerlink" title="Solidity合约"></a>Solidity合约</h2><h3 id="Voting-sol"><a href="#Voting-sol" class="headerlink" title="Voting.sol"></a>Voting.sol</h3><p>Voting合约包含以下内容:</p>
+<ul>
+<li>用于初始化候选者的构造函数</li>
+<li>用于投票的方法</li>
+<li>返回候选者获得票数的方法</li>
+</ul>
+<p>代码如下，然后将代码保存在voting目录下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity &gt;=0.4.22;</span><br><span class="line"></span><br><span class="line">contract Voting&#123;</span><br><span class="line">    bytes32[] public candidateList; //候选人数组</span><br><span class="line">    mapping(bytes32 =&gt; uint) public votesReceived;  </span><br><span class="line">    constructor(bytes32[] candidateListName) public&#123;</span><br><span class="line">        candidateList = candidateListName;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //检测是否为有效的投票地址</span><br><span class="line">    function validateCandidate(bytes32 candidateName) internal view returns(bool)&#123;</span><br><span class="line">        for(uint i = 0; i &lt; candidateList.length; i++)&#123;</span><br><span class="line">            if (candidateName == candidateList[i])</span><br><span class="line">                return true;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //投票函数</span><br><span class="line">    function vote(bytes32 candidateName) public &#123;</span><br><span class="line">        require(validateCandidate(candidateName));</span><br><span class="line">        votesReceived[candidateName] += 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //返回某个候选人的得票</span><br><span class="line">    function totalVotesFor(bytes32 candidateName) public view returns(uint)&#123;</span><br><span class="line">        require(validateCandidate(candidateName));</span><br><span class="line">        return votesReceived[candidateName];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>终端输入命令查看安装版本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm list web3</span><br><span class="line">npm list solc</span><br></pre></td></tr></table></figure>
+
+<h3 id="编译合约"><a href="#编译合约" class="headerlink" title="编译合约"></a>编译合约</h3><p>我们现在我们启动node控制台：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node</span><br></pre></td></tr></table></figure>
+
+<p>进行web3和solc编译：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">输入命令</span></span><br><span class="line">node</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> var Web3 = require(<span class="string">&#x27;web3&#x27;</span>)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> var solc = require(<span class="string">&#x27;solc&#x27;</span>)</span></span><br></pre></td></tr></table></figure>
+
+<p>连接我们的gananche，</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">定义在node环境里的web3对象，这里的localhost的端口是ganache的地址，默认是8545，我是7545</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> var web3 = new Web3(new Web3.providers.HttpProvider(<span class="string">&#x27;http://localhost:7545&#x27;</span>))</span></span><br><span class="line"><span class="meta">#</span><span class="bash">我们可以使用web3.eth.accounts查看ganache生成的10个地址</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> web3.isConnected()<span class="comment">#这里返回的是false证明你没有开启ganache，开启的话是返回true</span></span></span><br></pre></td></tr></table></figure>
+
+<p>保存并查看我们的合约文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> var sourceCode = fs.readFileSync(<span class="string">&#x27;Voting.sol&#x27;</span>).toString()</span></span><br><span class="line"><span class="meta">#</span><span class="bash">查看我们的合约文件</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> sourceCode</span></span><br></pre></td></tr></table></figure>
+
+<p>现在我们可以对合约进行编译了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">我们现在有了源代码，就可以进行编译了</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> var compileCode = solc.compile(sourceCode)</span></span><br><span class="line"><span class="meta">#</span><span class="bash">我们可以输入compileCode查看编译后的信息，以供下边部署使用</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="部署合约"><a href="#部署合约" class="headerlink" title="部署合约"></a>部署合约</h3><p>编译完成后进行合约的部署，我们需要ABI和字节码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">ABI</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> var abi = compileCode.contracts[<span class="string">&#x27;:Voting&#x27;</span>].interface</span></span><br><span class="line"><span class="meta">#</span><span class="bash">这里的abi是一段字符串，而我们需要的并不是字符串，因此需要转一下</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> var abi = JSON.parse(abi)<span class="comment">#也可以将两步合二为一</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">需要的bytecode是字符串类型的，因此不需要类型转换，但是我们需要</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> var byteCode = compileCode.contracts[<span class="string">&#x27;:Voting&#x27;</span>].bytecode</span></span><br></pre></td></tr></table></figure>
+
+<p>创建合约对象</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> var VotingContract = web3.eth.contract(abi)</span></span><br></pre></td></tr></table></figure>
+
+<p>构建一个交易</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> var deployTxObj = &#123;data:byteCode,from:web3.eth.accounts[0],gas:3000000&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>创建一个部署合约的交易</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> var contractInstance = VotingContract.new([<span class="string">&#x27;Alice&#x27;</span>, <span class="string">&#x27;Bob&#x27;</span>, <span class="string">&#x27;Cary&#x27;</span>],deployTxObj)</span></span><br></pre></td></tr></table></figure>
+
+<p>这时候我们看一眼ganache，发现这笔合约交易已经被部署到了本地区块链上。</p>
+<p>我们输入contractInstance.address可以查看这个合约的地址</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> contractInstance.address</span></span><br><span class="line"><span class="meta">#</span><span class="bash">返回的信息与ganache显示的一致</span></span><br><span class="line">&#x27;0x58cf20f3011ad77ef87d0d8b2a657c109b396290&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>那我们现在就算是完成了合约的编译和部署的内容。</p>
+<p>入股按照上面的步骤最终在DApp调试是报错，大家可以试试下面的步骤：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&gt; var Web3 = require(&#x27;web3&#x27;)</span><br><span class="line">undefined</span><br><span class="line">&gt; var web3 = new Web3(new Web3.providers.HttpProvider(&#x27;http://localhost:7545&#x27;))</span><br><span class="line">undefined</span><br><span class="line">&gt; var solc = require(&#x27;solc&#x27;);</span><br><span class="line">undefined</span><br><span class="line">&gt; var fs = require(&#x27;fs&#x27;);</span><br><span class="line">undefined</span><br><span class="line">&gt; var solPath = &#x27;Voting.sol&#x27;;</span><br><span class="line">undefined</span><br><span class="line">&gt; var contractName = &#x27;Voting&#x27;;</span><br><span class="line">undefined</span><br><span class="line">&gt; var contractSource = fs.readFileSync(solPath, &#x27;utf-8&#x27;);</span><br><span class="line">undefined</span><br><span class="line">&gt; var contractObj = solc.compile(contractSource).contracts[&#x27;:&#x27; + contractName];</span><br><span class="line">undefined</span><br><span class="line">&gt; var abi = JSON.parse(contractObj.interface);</span><br><span class="line">undefined</span><br><span class="line">&gt; var bytecode = contractObj.bytecode;</span><br><span class="line">undefined</span><br><span class="line">&gt; var VotingContract = web3.eth.contract(abi)</span><br><span class="line">undefined</span><br><span class="line">&gt; var deployTxObj = &#123;data:bytecode, from:web3.eth.accounts[0], gas:3000000&#125;</span><br><span class="line">undefined</span><br><span class="line">&gt; var contractInstance = VotingContract.new([&#x27;Alice&#x27;, &#x27;Bob&#x27;, &#x27;Cary&#x27;], deployTxObj)</span><br><span class="line">undefined</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="功能使用"><a href="#功能使用" class="headerlink" title="功能使用"></a>功能使用</h3><p>调用vote方法进行投票</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> contractInstance.vote.sendTransaction(<span class="string">&quot;Alice&quot;</span>,&#123;from:web3.eth.accounts[0]&#125;)</span></span><br><span class="line"><span class="meta">#</span><span class="bash">这里会进行投票，vote就是合约的投票函数，我们需要告知谁投票以及投给谁，投票后返回交易的哈希，大家可以理解为交易的ID，我们也可以在ganache中看到这笔交易。</span></span><br><span class="line">&#x27;0x602c247d07b95056b3ad97c328f36f39dce35a9d1bff7f7420b67acfeae9d5cf&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>调用totalVotesFor方法查看当前投票数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> contractInstance.totalVotesFor.call(<span class="string">&quot;Alice&quot;</span>)</span></span><br><span class="line"><span class="meta">#</span><span class="bash">这里s代表符号，1为正，e代表10的几次幂，c表示真实有效数位，我们可以使用toString()查看的更清晰</span></span><br><span class="line">BigNumber &#123; s: 1, e: 0, c: [ 1 ] &#125;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> contractInstance.totalVotesFor.call(<span class="string">&quot;Alice&quot;</span>).toString()</span></span><br><span class="line"><span class="meta">#</span><span class="bash">这里不需要加入from，因为这并不是一笔交易</span></span><br><span class="line">&#x27;1&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><strong>这里注意：查询用call，交易用sendTransaction，但也可以不用，是因为这里会自动判断它是call还是sendTransaction，建议加上增强记忆</strong>。</p>
+<h3 id="前端交互"><a href="#前端交互" class="headerlink" title="前端交互"></a>前端交互</h3><p>如果前面的任务都顺利完成了，那么我们就可以开始做前端进行交互了。</p>
+<h4 id="index-html"><a href="#index-html" class="headerlink" title="index.html"></a>index.html</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>投票DApp<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&#x27;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&#x27;</span> <span class="attr">rel</span>=<span class="string">&#x27;stylesheet&#x27;</span> <span class="attr">type</span>=<span class="string">&#x27;text/css&#x27;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>简单区块链投票系统<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;table-responsive&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">&quot;table table-bordered&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 表头 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">thead</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">th</span>&gt;</span>候选人<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">th</span>&gt;</span>得票数<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">thead</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 内容 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">td</span>&gt;</span>Alice<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">id</span>=<span class="string">&quot;candidate-1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">td</span>&gt;</span>Bob<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">id</span>=<span class="string">&quot;candidate-2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">td</span>&gt;</span>Cary<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">id</span>=<span class="string">&quot;candidate-3&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;candidate&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;voteForCandidate()&quot;</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-primary&quot;</span>&gt;</span>投票<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://libs.baidu.com/jquery/2.1.1/jquery.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./index.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> web3 = <span class="keyword">new</span> Web3(<span class="keyword">new</span> Web3.providers.HttpProvider(<span class="string">&#x27;http://localhost:7545&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> abi = <span class="built_in">JSON</span>.parse(<span class="string">&#x27;[&#123;&quot;constant&quot;:true,&quot;inputs&quot;:[&#123;&quot;name&quot;:&quot;candidateName&quot;,&quot;type&quot;:&quot;bytes32&quot;&#125;],&quot;name&quot;:&quot;totalVotesFor&quot;,&quot;outputs&quot;:[&#123;&quot;name&quot;:&quot;&quot;,&quot;type&quot;:&quot;uint256&quot;&#125;],&quot;payable&quot;:false,&quot;stateMutability&quot;:&quot;view&quot;,&quot;type&quot;:&quot;function&quot;&#125;,&#123;&quot;constant&quot;:true,&quot;inputs&quot;:[&#123;&quot;name&quot;:&quot;&quot;,&quot;type&quot;:&quot;bytes32&quot;&#125;],&quot;name&quot;:&quot;votesReceived&quot;,&quot;outputs&quot;:[&#123;&quot;name&quot;:&quot;&quot;,&quot;type&quot;:&quot;uint256&quot;&#125;],&quot;payable&quot;:false,&quot;stateMutability&quot;:&quot;view&quot;,&quot;type&quot;:&quot;function&quot;&#125;,&#123;&quot;constant&quot;:false,&quot;inputs&quot;:[&#123;&quot;name&quot;:&quot;candidateName&quot;,&quot;type&quot;:&quot;bytes32&quot;&#125;],&quot;name&quot;:&quot;vote&quot;,&quot;outputs&quot;:[],&quot;payable&quot;:false,&quot;stateMutability&quot;:&quot;nonpayable&quot;,&quot;type&quot;:&quot;function&quot;&#125;,&#123;&quot;constant&quot;:true,&quot;inputs&quot;:[&#123;&quot;name&quot;:&quot;&quot;,&quot;type&quot;:&quot;uint256&quot;&#125;],&quot;name&quot;:&quot;candidateList&quot;,&quot;outputs&quot;:[&#123;&quot;name&quot;:&quot;&quot;,&quot;type&quot;:&quot;bytes32&quot;&#125;],&quot;payable&quot;:false,&quot;stateMutability&quot;:&quot;view&quot;,&quot;type&quot;:&quot;function&quot;&#125;,&#123;&quot;inputs&quot;:[&#123;&quot;name&quot;:&quot;candidateListName&quot;,&quot;type&quot;:&quot;bytes32[]&quot;&#125;],&quot;payable&quot;:false,&quot;stateMutability&quot;:&quot;nonpayable&quot;,&quot;type&quot;:&quot;constructor&quot;&#125;]&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> contractAddress = <span class="string">&quot;0x44bbe5703662b6d4ff559f6b226b30ab7cb6538d&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> contractInstance = <span class="keyword">new</span> web3.eth.Contract(abi, contractAddress);</span><br><span class="line"></span><br><span class="line"><span class="comment">//候选人和其ID对应关系</span></span><br><span class="line"><span class="keyword">var</span> candidates = &#123; <span class="string">&quot;Alice&quot;</span>: <span class="string">&quot;candidate-1&quot;</span>, <span class="string">&quot;Bob&quot;</span>: <span class="string">&quot;candidate-2&quot;</span>, <span class="string">&quot;Cary&quot;</span>: <span class="string">&quot;candidate-3&quot;</span> &#125;;</span><br><span class="line"><span class="comment">//候选人名数组</span></span><br><span class="line"><span class="keyword">var</span> candidateNames;</span><br><span class="line"><span class="comment">//渲染初始页面</span></span><br><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//获得所有的候选人名字keys</span></span><br><span class="line">    candidateNames = <span class="built_in">Object</span>.keys(candidates);</span><br><span class="line">    <span class="comment">//遍历去查询（call）当前的票数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; candidateNames.length; i++) &#123;</span><br><span class="line">        <span class="keyword">let</span> name = candidateNames[i];</span><br><span class="line">        contractInstance.methods.totalVotesFor(web3.utils.toHex(name)).call(<span class="function">(<span class="params">err, res</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (err) <span class="built_in">console</span>.log(err);</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//渲染到屏幕上</span></span><br><span class="line">                $(<span class="string">&quot;#&quot;</span> + candidates[name]).html(res.toString());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//开始投票</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">voteForCandidate</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//获取当前输入的内容</span></span><br><span class="line">    <span class="keyword">let</span> testName = $(<span class="string">&quot;#candidate&quot;</span>).val();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//判断输入</span></span><br><span class="line">    <span class="keyword">if</span> (!isVaildName(testName)) &#123;</span><br><span class="line">        alert(<span class="string">&quot;输入有效姓名！&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//调用合约函数-投票</span></span><br><span class="line">    contractInstance.methods.vote(web3.utils.toHex(testName)).send(&#123; <span class="attr">from</span>: <span class="string">&#x27;0x6109EE77fd98bE01A4dF09AB441da90c9870aD49&#x27;</span> &#125;, <span class="function">(<span class="params">err, res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="built_in">console</span>.log(err);</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//!!!注意这里不能直接加1显示，而是必须要到区块链中查询</span></span><br><span class="line">            contractInstance.methods.totalVotesFor(web3.utils.toHex(testName)).call(<span class="function">(<span class="params">err, res</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (err) <span class="built_in">console</span>.log(err);</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">//渲染到屏幕上</span></span><br><span class="line">                    $(<span class="string">&quot;#&quot;</span> + candidates[testName]).html(res.toString());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//检查输入</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isVaildName</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; candidateNames.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (name == candidateNames[i]) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ol>
+<li>在remix中需要输入[]bytes32格式，必须要如下才行：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&quot;0x7465737400000000000000000000000000000000000000000000000000000000&quot;,&quot;0x7465737400000000000000000000000000000000000000000000000000000001&quot;,&quot;0x7465737400000000000000000000000000000000000000000000000000000002&quot;]</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>候选人的名称尽量使用英文，用中文应该会有意想不到的错误。</li>
+</ol>
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/"># 以太坊</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                            <a class="prev" rel="prev" href="/2020/06/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                                                Go语言数据结构
+                                            </a>
+                                            
+                                                
+                                                    <a class="next" rel="next" href="/2020/05/19/Git%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/">
+                                                        Git的基本使用方法
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
