@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>基于Truffle的投票DApp实现 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    基于Truffle的投票DApp实现
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">December 12, 2020&nbsp;&nbsp;12:32:04</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="基于Truffle的投票DApp实现"><a href="#基于Truffle的投票DApp实现" class="headerlink" title="基于Truffle的投票DApp实现"></a>基于Truffle的投票DApp实现</h1><h2 id="安装Truffle"><a href="#安装Truffle" class="headerlink" title="安装Truffle"></a>安装Truffle</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g truffle </span><br></pre></td></tr></table></figure>
+
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir Voting_By_Truffle_DApp</span><br><span class="line">cd Voting_By_Truffle_DApp</span><br><span class="line">npm install -g webpack</span><br><span class="line">truffle unbox webpack</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：创建项目时的文件夹必须是一个空文件夹且要使用命令行创建项目文件夹，否则我们执行truffle unbox webpack会报错</strong></p>
+<p>truffle unbox webpack是一个truffle官方的Demo，我们直接对这个项目进行修改。也可以进入truffle官网查看其他的Demo。</p>
+<h2 id="项目实现"><a href="#项目实现" class="headerlink" title="项目实现"></a>项目实现</h2><h4 id="Voting-sol"><a href="#Voting-sol" class="headerlink" title="Voting.sol"></a>Voting.sol</h4><p>删除contracts目录下除了Migrations.sol文件以外的其他两个合约，然后新建Voting.sol，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity &gt;=0.4.22;</span><br><span class="line"></span><br><span class="line">contract Voting &#123;</span><br><span class="line">    bytes32[] public candidateList; //候选人数组</span><br><span class="line">    mapping(bytes32 =&gt; uint256) public votesReceived;</span><br><span class="line"></span><br><span class="line">    constructor(bytes32[] memory candidateListName) public &#123;</span><br><span class="line">        candidateList = candidateListName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //检测是否为有效的投票地址</span><br><span class="line">    function validateCandidate(bytes32 candidateName)</span><br><span class="line">        internal</span><br><span class="line">        view</span><br><span class="line">        returns (bool)</span><br><span class="line">    &#123;</span><br><span class="line">        for (uint256 i = 0; i &lt; candidateList.length; i++) &#123;</span><br><span class="line">            if (candidateName == candidateList[i]) return true;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //投票函数</span><br><span class="line">    function vote(bytes32 candidateName) public &#123;</span><br><span class="line">        require(validateCandidate(candidateName));</span><br><span class="line">        votesReceived[candidateName] += 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //返回某个候选人的得票</span><br><span class="line">    function totalVotesFor(bytes32 candidateName)</span><br><span class="line">        public</span><br><span class="line">        view</span><br><span class="line">        returns (uint256)</span><br><span class="line">    &#123;</span><br><span class="line">        require(validateCandidate(candidateName));</span><br><span class="line">        return votesReceived[candidateName];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-deploy-contracts-js"><a href="#2-deploy-contracts-js" class="headerlink" title="2_deploy_contracts.js"></a>2_deploy_contracts.js</h4><p>查看migrates目录下的2_deploy_contracts.js，我们可以看到该目录下有两个js文件，都是有编号的，项目在部署的时候就是根据编号的顺序进行部署。修改2_deploy_contracts.js。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const Voting = artifacts.require(&quot;./Voting.sol&quot;);</span><br><span class="line"></span><br><span class="line">module.exports = function(deployer) &#123;</span><br><span class="line">    //传参</span><br><span class="line">    deployer.deploy(Voting, [&#x27;Alice&#x27;, &#x27;Bob&#x27;, &#x27;Cary&#x27;].map(x =&gt; web3.utils.asciiToHex(x)), &#123; gas: 300000 &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这里的deploy就是指部署</p>
+<p><strong>注意：这里有些人的truffle版本不一样，我如果不使用map(x =&gt; web3.utils.asciiToHex(x))的话项目会报错，使用了map(x =&gt; web3.utils.asciiToHex(x))则下面投票和查看票数时也需要使用，这里没使用则下面也不需要，web3.utils.asciiToHex（）是使[‘Alice’, ‘Bob’, ‘Cary’]变为16进制字符串</strong></p>
+<h4 id="truffle-config-js"><a href="#truffle-config-js" class="headerlink" title="truffle-config.js"></a>truffle-config.js</h4><p>这个文件主要就是一些配置方面的内容。做以下修改：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">development: &#123;</span><br><span class="line">           host: &quot;127.0.0.1&quot;, // Localhost (default: none)</span><br><span class="line">           port: 7545, // Standard Ethereum port (default: none)</span><br><span class="line">           network_id: &quot;*&quot;, // Any network (default: none)</span><br><span class="line">       &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>这里就是配置连接链的端口，我们开启链的方式一般来说有3种。</p>
+<ol>
+<li>使用truffle命令<strong>ruffle develop</strong>，这里就和ganache差不多。默认端口8545.</li>
+<li>使用ganache。</li>
+<li>使用geth搭建的私有链，不过如果使用的geth搭建的私有链，我们需要在部署和投票时挖矿才行（要挖矿才会出块）。</li>
+</ol>
+<h3 id="项目部署"><a href="#项目部署" class="headerlink" title="项目部署"></a>项目部署</h3><h4 id="编译项目"><a href="#编译项目" class="headerlink" title="编译项目"></a>编译项目</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truffle compile</span><br></pre></td></tr></table></figure>
+
+<h4 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truffle migrate</span><br></pre></td></tr></table></figure>
+
+<h4 id="进入控制台"><a href="#进入控制台" class="headerlink" title="进入控制台"></a>进入控制台</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truffle console</span><br></pre></td></tr></table></figure>
+
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><h5 id="查看地址"><a href="#查看地址" class="headerlink" title="查看地址"></a>查看地址</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var addresses =await web3.eth.getAccounts()</span><br><span class="line">addresses</span><br></pre></td></tr></table></figure>
+
+<p>如果报错则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">accounts或web3.eth.accounts</span><br></pre></td></tr></table></figure>
+
+<h5 id="投票"><a href="#投票" class="headerlink" title="投票"></a>投票</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Voting.deployed().then(votingInstance=&gt;&#123;votingInstance.vote(web3.utils.asciiToHex(&#x27;Alice&#x27;)).then(res=&gt;console.log(res));&#125;)</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看票数"><a href="#查看票数" class="headerlink" title="查看票数"></a>查看票数</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Voting.deployed().then(votingInstance=&gt;&#123;votingInstance.totalVotesFor(web3.utils.asciiToHex(&#x27;Alice&#x27;)).then(res=&gt;console.log(res.toString()));&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="前端交互"><a href="#前端交互" class="headerlink" title="前端交互"></a>前端交互</h3><h4 id="index-html"><a href="#index-html" class="headerlink" title="index.html"></a>index.html</h4><p>在app目录下修改index.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>投票DApp<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&#x27;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&#x27;</span> <span class="attr">rel</span>=<span class="string">&#x27;stylesheet&#x27;</span> <span class="attr">type</span>=<span class="string">&#x27;text/css&#x27;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>简单区块链投票系统<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;address&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;table-responsive&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">&quot;table table-bordered&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 表头 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">thead</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">th</span>&gt;</span>候选人<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">th</span>&gt;</span>得票数<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">thead</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 内容 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">td</span>&gt;</span>Alice<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">id</span>=<span class="string">&quot;candidate-1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">td</span>&gt;</span>Bob<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">id</span>=<span class="string">&quot;candidate-2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">td</span>&gt;</span>Cary<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">id</span>=<span class="string">&quot;candidate-3&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;msg&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;candidate&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;voteForCandidate()&quot;</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-primary&quot;</span>&gt;</span>投票<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://libs.baidu.com/jquery/2.1.1/jquery.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./index.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h4><p>在app目录下修改index.js，这里是新版的MetaMask，因此连接是使用window.ethereum而不是老版的window.web3。而且在交易时必须使用async和await达到同步效果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">default</span> <span class="keyword">as</span> Web3 &#125; <span class="keyword">from</span> <span class="string">&#x27;web3&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">default</span> <span class="keyword">as</span> contract &#125; <span class="keyword">from</span> <span class="string">&#x27;truffle-contract&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> voting_artifacts <span class="keyword">from</span> <span class="string">&#x27;../../build/contracts/Voting.json&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Voting = contract(voting_artifacts);</span><br><span class="line"><span class="keyword">let</span> candidates = &#123; <span class="string">&quot;Alice&quot;</span>: <span class="string">&quot;candidate-1&quot;</span>, <span class="string">&quot;Bob&quot;</span>: <span class="string">&quot;candidate-2&quot;</span>, <span class="string">&quot;Cary&quot;</span>: <span class="string">&quot;candidate-3&quot;</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.voteForCandidate = <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 使用async 和 await 达到同步效果。</span></span><br><span class="line">        <span class="keyword">let</span> accAddrs = <span class="keyword">await</span> web3.eth.getAccounts()</span><br><span class="line">        web3.eth.getAccounts().then(<span class="built_in">console</span>.log);</span><br><span class="line">        <span class="keyword">let</span> candidateName = $(<span class="string">&quot;#candidate&quot;</span>).val();</span><br><span class="line">        $(<span class="string">&quot;#&quot;</span> + <span class="string">&quot;candidate&quot;</span>).val(<span class="string">&quot;&quot;</span>);</span><br><span class="line">        Voting.deployed().then(<span class="function"><span class="params">votingInstance</span> =&gt;</span> &#123;</span><br><span class="line">            votingInstance.vote(web3.utils.toHex(candidateName), &#123; <span class="attr">from</span>: accAddrs[<span class="number">0</span>] &#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> div_id = candidates[candidateName];</span><br><span class="line">                votingInstance.totalVotesFor(web3.utils.toHex(candidateName)).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">                    $(<span class="string">&quot;#&quot;</span> + div_id).html(res.toString());</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(error);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// console.log(web3.eth.getAccounts());</span></span><br><span class="line">    <span class="comment">// console.log(web3.eth.defaultAccount);</span></span><br><span class="line">    <span class="keyword">var</span> web3Provider;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.ethereum) &#123;</span><br><span class="line">        web3Provider = <span class="built_in">window</span>.ethereum;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 请求用户授权</span></span><br><span class="line">            <span class="built_in">window</span>.ethereum.enable();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">            <span class="comment">// 用户不授权时</span></span><br><span class="line">            <span class="built_in">console</span>.error(<span class="string">&quot;User denied account access&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">window</span>.web3) &#123; <span class="comment">// 老版 MetaMask Legacy dapp browsers...</span></span><br><span class="line">        web3Provider = <span class="built_in">window</span>.web3.currentProvider;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        web3Provider = <span class="keyword">new</span> Web3.providers.HttpProvider(<span class="string">&#x27;http://localhost:7545&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    web3 = <span class="keyword">new</span> Web3(web3Provider);</span><br><span class="line"></span><br><span class="line">    Voting.setProvider(web3.currentProvider);</span><br><span class="line">    <span class="keyword">let</span> candidateNames = <span class="built_in">Object</span>.keys(candidates);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; candidateNames.length; i++) &#123;</span><br><span class="line">        <span class="keyword">let</span> name = candidateNames[i]</span><br><span class="line">        Voting.deployed().then(<span class="function"><span class="params">votingInstance</span> =&gt;</span> &#123;</span><br><span class="line">            votingInstance.totalVotesFor(web3.utils.toHex(name)).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">                $(<span class="string">&quot;#&quot;</span> + candidates[name]).html(res.toString());</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>投票DApp制作完成。</p>
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/"># 以太坊</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                            <a class="prev" rel="prev" href="/2021/04/11/IPFS%E5%85%A5%E9%97%A8/">
+                                                IPFS入门学习
+                                            </a>
+                                            
+                                                
+                                                    <a class="next" rel="next" href="/2020/11/30/%E7%AE%80%E5%8D%95%E6%8A%95%E7%A5%A8DApp/">
+                                                        简单投票DApp开发
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
