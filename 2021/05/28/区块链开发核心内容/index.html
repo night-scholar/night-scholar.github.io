@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>区块链开发核心内容 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    区块链开发核心内容
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">May 28, 2021&nbsp;&nbsp;14:01:31</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="共识机制"><a href="#共识机制" class="headerlink" title="共识机制"></a>共识机制</h1><h2 id="工作量证明-pow"><a href="#工作量证明-pow" class="headerlink" title="工作量证明(pow)"></a>工作量证明(pow)</h2><p>nonce++存入Block区块头做哈希，然后用Cmp方法和难度值进行比较，如果返回-1则满足条件，就可以校验交易了。</p>
+<h2 id="权益证明-pos"><a href="#权益证明-pos" class="headerlink" title="权益证明(pos)"></a>权益证明(pos)</h2><p>根据币龄和代币数量调整难度值，出块概率与代币数量和币龄成正比。然后和pow一样。</p>
+<h2 id="股份授权证明-dpos"><a href="#股份授权证明-dpos" class="headerlink" title="股份授权证明(dpos)"></a>股份授权证明(dpos)</h2><p>股份授权证明机制是POS的一个变种，简单来说就是你手里有选票（币就相当于选票）。这时一些正在竞选超级节点的大节点们说把票都投给我把，等我当选了超级节点，我吃肉你喝汤，岂不美哉？然后你就信了，把票投给了竞选节点，这些节点竞选成功成为超级节点后会轮循的获得出块权。矿工费、通胀放出的代币也就都到了他们手里了</p>
+<h2 id="拜占庭容错-pbft"><a href="#拜占庭容错-pbft" class="headerlink" title="拜占庭容错(pbft)"></a>拜占庭容错(pbft)</h2><ol>
+<li>客户端向主节点发送请求信息</li>
+<li>主节点接收到客户端请求后将请求数据里的主要信息提出，并向其余节点进行preprepare发送</li>
+<li>从节点们接收到来自主节点的preprepare，首先利用主节点的公钥进行签名认证，其次将消息进行散列（消息摘要，以便缩小信息在网络中的传输大小）后，向其他节点广播prepare</li>
+<li>节点接收到2f个prepare信息（包含自己）,并全部签名验证通过，则可以进行到commit步骤，向全网其他节点广播commit</li>
+<li>节点接收到2f+1个commit信息（包含自己），并全部签名验证通过，则可以把消息存入到本地，并向客户端返回reply消息</li>
+</ol>
+<h1 id="加密算法"><a href="#加密算法" class="headerlink" title="加密算法"></a>加密算法</h1><h2 id="ECC椭圆曲线算法"><a href="#ECC椭圆曲线算法" class="headerlink" title="ECC椭圆曲线算法"></a>ECC椭圆曲线算法</h2><h2 id="RSA非对称加密"><a href="#RSA非对称加密" class="headerlink" title="RSA非对称加密"></a>RSA非对称加密</h2><h2 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h2><ol>
+<li><p>发送方对原文做哈希运算得到哈希值1</p>
+</li>
+<li><p>发送方用私钥对哈希值1进行加密签名</p>
+</li>
+<li><p>发送方将原文和私钥签名发送给接收方</p>
+</li>
+<li><p>接收方对接收到的原文进行哈希运算得到哈希值2</p>
+</li>
+<li><p>接收方用公钥解密签名得到哈希值1</p>
+</li>
+<li><p>接收方对哈希值1和哈希值2进行比较</p>
+</li>
+</ol>
+<h1 id="智能合约"><a href="#智能合约" class="headerlink" title="智能合约"></a>智能合约</h1><h2 id="Solidity"><a href="#Solidity" class="headerlink" title="Solidity"></a>Solidity</h2><p>modifier：函数修饰器</p>
+<p>constructor：构造函数</p>
+<p>contract下的：状态变量</p>
+<p>constant：状态常量</p>
+<p>memory：其生命周期仅仅局限于一次函数调用</p>
+<p>storage：状态变量存储的地方，永久存储，类似于磁盘存储</p>
+<p>calldata：一种特殊的存储位置，用来存放外部函数调用的参数</p>
+<p>external：以交易的方式被其他合约调用，是合约接口的一部分，要用this.函数名()的方式调用</p>
+<p>internal：只能在当前合约或继承合约中访问</p>
+<p>pure：不可读写</p>
+<p>view：可读不可写</p>
+<p>fallback：一个匿名函数，必须是external类型的，必须用payable修饰，用于接收以太坊代币</p>
+<p>重载：相同名称的函数参数数量必须不同</p>
+<p>event：和emit配合用于监听</p>
+<p>ABI：ABI是智能合约公共接口的描述，DApp用这个公共接口来调用智能合约。</p>
+<p>字节码：每个节点上的以太坊虚拟机都需要智能合约的字节码来运行智能合约。</p>
+<p>is：继承</p>
+<p>new：创建其他合约的实例</p>
+<p>revert：异常处理，事后校验</p>
+<p>require：异常处理，事前校验</p>
+<h2 id="Web3"><a href="#Web3" class="headerlink" title="Web3"></a>Web3</h2><p>window.ethereum或window.web3或web3.providers.HttpProvider(“localhost:8545”)</p>
+<p>web3.currentProvider(返回当前通信的服务提供器)</p>
+<p>web3.setProvider(设置服务提供器)</p>
+<h2 id="ERC20合约"><a href="#ERC20合约" class="headerlink" title="ERC20合约"></a>ERC20合约</h2><p>Token</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.20;</span><br><span class="line"></span><br><span class="line">contract Token&#123;</span><br><span class="line">	struct user&#123;</span><br><span class="line">		address  userAddress;</span><br><span class="line">		uint256  userTokensNum;</span><br><span class="line">	&#125;</span><br><span class="line">	uint256 public tokensSupply;</span><br><span class="line">	uint256 public tokensBalance;</span><br><span class="line">	uint256 public tokensPrice;</span><br><span class="line">	mapping(address =&gt; user) public userInfo;</span><br><span class="line">	constructor(uint256 totalSupply , uint256 price)public &#123;</span><br><span class="line">		tokensSupply = totalSupply;</span><br><span class="line">		tokensBalance = totalSupply;</span><br><span class="line">		tokensPrice = price;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	function Buy() payable public returns(uint256)&#123;</span><br><span class="line">		uint256 tokensNumToBuy = msg.value/tokensPrice;</span><br><span class="line">		require(tokensNumToBuy &lt;= tokensBalance);</span><br><span class="line">		userInfo[msg.sender].userAddress = msg.sender;</span><br><span class="line">		userInfo[msg.sender].userTokensNum += tokensNumToBuy;</span><br><span class="line">		tokensBalance -= tokensNumToBuy;</span><br><span class="line">		return tokensNumToBuy;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="DApp开发"><a href="#DApp开发" class="headerlink" title="DApp开发"></a>DApp开发</h2><h2 id="Geth"><a href="#Geth" class="headerlink" title="Geth"></a>Geth</h2><h3 id="命令"><a href="#命令" class="headerlink" title="命令:"></a>命令:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">account    管理账户</span><br><span class="line">attach     启动交互式JavaScript环境（连接到节点）</span><br><span class="line">bug        上报bug Issues</span><br><span class="line">console    启动交互式JavaScript环境</span><br><span class="line">copydb     从文件夹创建本地链</span><br><span class="line">dump       Dump（分析）一个特定的块存储</span><br><span class="line">dumpconfig 显示配置值</span><br><span class="line">export     导出区块链到文件</span><br><span class="line">import     导入一个区块链文件</span><br><span class="line">init       启动并初始化一个新的创世纪块</span><br><span class="line">js         执行指定的JavaScript文件(多个)</span><br><span class="line">license    显示许可信息</span><br><span class="line">makecache  生成ethash验证缓存(用于测试)</span><br><span class="line">makedag    生成ethash 挖矿DAG(用于测试)</span><br><span class="line">monitor    监控和可视化节点指标</span><br><span class="line">removedb   删除区块链和状态数据库</span><br><span class="line">version    打印版本号</span><br><span class="line">wallet     管理Ethereum预售钱包</span><br><span class="line">help,h     显示一个命令或帮助一个命令列表</span><br></pre></td></tr></table></figure>
+
+<h3 id="ETHEREUM选项"><a href="#ETHEREUM选项" class="headerlink" title="ETHEREUM选项:"></a>ETHEREUM选项:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">--config value          TOML 配置文件</span><br><span class="line">--datadir “xxx”         数据库和keystore密钥的数据目录</span><br><span class="line">--keystore              keystore存放目录(默认在datadir内)</span><br><span class="line">--nousb                 禁用监控和管理USB硬件钱包</span><br><span class="line">--networkid value       网络标识符(整型, 1=Frontier, 2=Morden (弃用), 3=Ropsten, 4=Rinkeby) (默认: 1)</span><br><span class="line">--testnet               Ropsten网络:预先配置的POW(proof-of-work)测试网络</span><br><span class="line">--rinkeby               Rinkeby网络: 预先配置的POA(proof-of-authority)测试网络</span><br><span class="line">--syncmode &quot;fast&quot;       同步模式 (&quot;fast&quot;, &quot;full&quot;, or &quot;light&quot;)</span><br><span class="line">--ethstats value        上报ethstats service  URL (nodename:secret@host:port)</span><br><span class="line">--identity value        自定义节点名</span><br><span class="line">--lightserv value       允许LES请求时间最大百分比(0 – 90)(默认值:0) </span><br><span class="line">--lightpeers value      最大LES client peers数量(默认值:20)</span><br><span class="line">--lightkdf              在KDF强度消费时降低key-derivation RAM&amp;CPU使用</span><br></pre></td></tr></table></figure>
+
+<h3 id="开发者（模式）选项"><a href="#开发者（模式）选项" class="headerlink" title="开发者（模式）选项:"></a>开发者（模式）选项:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--dev               使用POA共识网络，默认预分配一个开发者账户并且会自动开启挖矿。</span><br><span class="line">--dev.period value  开发者模式下挖矿周期 (0 = 仅在交易时) (默认: 0)</span><br></pre></td></tr></table></figure>
+
+<h3 id="ETHASH-选项"><a href="#ETHASH-选项" class="headerlink" title="ETHASH 选项:"></a>ETHASH 选项:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--ethash.cachedir                        ethash验证缓存目录(默认 = datadir目录内)</span><br><span class="line">--ethash.cachesinmem value               在内存保存的最近的ethash缓存个数  (每个缓存16MB ) (默认: 2)</span><br><span class="line">--ethash.cachesondisk value              在磁盘保存的最近的ethash缓存个数 (每个缓存16MB) (默认: 3)</span><br><span class="line">--ethash.dagdir &quot;&quot;                       存ethash DAGs目录 (默认 = 用户hom目录)</span><br><span class="line">--ethash.dagsinmem value                 在内存保存的最近的ethash DAGs 个数 (每个1GB以上) (默认: 1)</span><br><span class="line">--ethash.dagsondisk value                在磁盘保存的最近的ethash DAGs 个数 (每个1GB以上) (默认: 2)</span><br></pre></td></tr></table></figure>
+
+<h3 id="交易池选项"><a href="#交易池选项" class="headerlink" title="交易池选项:"></a>交易池选项:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">--txpool.nolocals            为本地提交交易禁用价格豁免</span><br><span class="line">--txpool.journal value       本地交易的磁盘日志：用于节点重启 (默认: &quot;transactions.rlp&quot;)</span><br><span class="line">--txpool.rejournal value     重新生成本地交易日志的时间间隔 (默认: 1小时)</span><br><span class="line">--txpool.pricelimit value    加入交易池的最小的gas价格限制(默认: 1)</span><br><span class="line">--txpool.pricebump value     价格波动百分比（相对之前已有交易） (默认: 10)</span><br><span class="line">--txpool.accountslots value  每个帐户保证可执行的最少交易槽数量  (默认: 16)</span><br><span class="line">--txpool.globalslots value   所有帐户可执行的最大交易槽数量 (默认: 4096)</span><br><span class="line">--txpool.accountqueue value  每个帐户允许的最多非可执行交易槽数量 (默认: 64)</span><br><span class="line">--txpool.globalqueue value   所有帐户非可执行交易最大槽数量  (默认: 1024)</span><br><span class="line">--txpool.lifetime value      非可执行交易最大入队时间(默认: 3小时)</span><br></pre></td></tr></table></figure>
+
+<h3 id="性能调优的选项"><a href="#性能调优的选项" class="headerlink" title="性能调优的选项:"></a>性能调优的选项:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--cache value                分配给内部缓存的内存MB数量，缓存值(最低16 mb /数据库强制要求)(默认:128)</span><br><span class="line">--trie-cache-gens value      保持在内存中产生的trie node数量(默认:120)</span><br></pre></td></tr></table></figure>
+
+<h3 id="帐户选项"><a href="#帐户选项" class="headerlink" title="帐户选项:"></a>帐户选项:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--unlock value              需解锁账户用逗号分隔</span><br><span class="line">--password value            用于非交互式密码输入的密码文件</span><br></pre></td></tr></table></figure>
+
+<h3 id="API和控制台选项"><a href="#API和控制台选项" class="headerlink" title="API和控制台选项:"></a>API和控制台选项:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">--rpc                       启用HTTP-RPC服务器</span><br><span class="line">--rpcaddr value             HTTP-RPC服务器接口地址(默认值:“localhost”)</span><br><span class="line">--rpcport value             HTTP-RPC服务器监听端口(默认值:8545)</span><br><span class="line">--rpcapi value              基于HTTP-RPC接口提供的API</span><br><span class="line">--ws                        启用WS-RPC服务器</span><br><span class="line">--wsaddr value              WS-RPC服务器监听接口地址(默认值:“localhost”)</span><br><span class="line">--wsport value              WS-RPC服务器监听端口(默认值:8546)</span><br><span class="line">--wsapi  value              基于WS-RPC的接口提供的API</span><br><span class="line">--wsorigins value           websockets请求允许的源</span><br><span class="line">--ipcdisable                禁用IPC-RPC服务器</span><br><span class="line">--ipcpath                   包含在datadir里的IPC socket/pipe文件名(转义过的显式路径)</span><br><span class="line">--rpccorsdomain value       允许跨域请求的域名列表(逗号分隔)(浏览器强制)</span><br><span class="line">--jspath loadScript         JavaScript加载脚本的根路径(默认值:“.”)</span><br><span class="line">--exec value                执行JavaScript语句(只能结合console/attach使用)</span><br><span class="line">--preload value             预加载到控制台的JavaScript文件列表(逗号分隔)</span><br></pre></td></tr></table></figure>
+
+<h3 id="网络选项"><a href="#网络选项" class="headerlink" title="网络选项:"></a>网络选项:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">--bootnodes value    用于P2P发现引导的enode urls(逗号分隔)(对于light servers用v4+v5代替)</span><br><span class="line">--bootnodesv4 value  用于P2P v4发现引导的enode urls(逗号分隔) (light server, 全节点)</span><br><span class="line">--bootnodesv5 value  用于P2P v5发现引导的enode urls(逗号分隔) (light server, 轻节点)</span><br><span class="line">--port value         网卡监听端口(默认值:30303)</span><br><span class="line">--maxpeers value     最大的网络节点数量(如果设置为0，网络将被禁用)(默认值:25)</span><br><span class="line">--maxpendpeers value    最大尝试连接的数量(如果设置为0，则将使用默认值)(默认值:0)</span><br><span class="line">--nat value             NAT端口映射机制 (any|none|upnp|pmp|extip:&lt;IP&gt;) (默认: “any”)</span><br><span class="line">--nodiscover            禁用节点发现机制(手动添加节点)</span><br><span class="line">--v5disc                启用实验性的RLPx V5(Topic发现)机制</span><br><span class="line">--nodekey value         P2P节点密钥文件</span><br><span class="line">--nodekeyhex value      十六进制的P2P节点密钥(用于测试)</span><br></pre></td></tr></table></figure>
+
+<h3 id="矿工选项"><a href="#矿工选项" class="headerlink" title="矿工选项:"></a>矿工选项:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--miner.start()         打开挖矿</span><br><span class="line">--miner.stop()          停止挖矿</span><br><span class="line">--minerthreads value    挖矿使用的CPU线程数量(默认值:8)</span><br><span class="line">--etherbase value       挖矿奖励地址(默认=第一个创建的帐户)(默认值:“0”)</span><br><span class="line">--targetgaslimit value  目标gas限制：设置最低gas限制（低于这个不会被挖？） (默认值:“4712388”)</span><br><span class="line">--gasprice value        挖矿接受交易的最低gas价格</span><br><span class="line">--extradata value       矿工设置的额外块数据(默认=client version)</span><br></pre></td></tr></table></figure>
+
+<h3 id="GAS价格选项"><a href="#GAS价格选项" class="headerlink" title="GAS价格选项:"></a>GAS价格选项:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--gpoblocks value      用于检查gas价格的最近块的个数  (默认: 10)</span><br><span class="line">--gpopercentile value  建议gas价参考最近交易的gas价的百分位数，(默认: 50)</span><br></pre></td></tr></table></figure>
+
+<h3 id="虚拟机的选项"><a href="#虚拟机的选项" class="headerlink" title="虚拟机的选项:"></a>虚拟机的选项:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--vmdebug        记录VM及合约调试信息</span><br></pre></td></tr></table></figure>
+
+<h3 id="日志和调试选项"><a href="#日志和调试选项" class="headerlink" title="日志和调试选项:"></a>日志和调试选项:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">--metrics            启用metrics收集和报告</span><br><span class="line">--fakepow            禁用proof-of-work验证</span><br><span class="line">--verbosity value    日志详细度:0=silent, 1=error, 2=warn, 3=info, 4=debug, 5=detail (default: 3)</span><br><span class="line">--vmodule value      每个模块详细度:以 &lt;pattern&gt;=&lt;level&gt;的逗号分隔列表 (比如 eth/*=6,p2p=5)</span><br><span class="line">--backtrace value    请求特定日志记录堆栈跟踪 (比如 “block.go:271”)</span><br><span class="line">--debug                     突出显示调用位置日志(文件名及行号)</span><br><span class="line">--pprof                     启用pprof HTTP服务器</span><br><span class="line">--pprofaddr value           pprof HTTP服务器监听接口(默认值:127.0.0.1)</span><br><span class="line">--pprofport value           pprof HTTP服务器监听端口(默认值:6060)</span><br><span class="line">--memprofilerate value      按指定频率打开memory profiling    (默认:524288)</span><br><span class="line">--blockprofilerate value    按指定频率打开block profiling    (默认值:0)</span><br><span class="line">--cpuprofile value          将CPU profile写入指定文件</span><br><span class="line">--trace value               将execution trace写入指定文件</span><br></pre></td></tr></table></figure>
+
+<h3 id="WHISPER实验选项"><a href="#WHISPER实验选项" class="headerlink" title="WHISPER实验选项:"></a>WHISPER实验选项:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">--shh                        启用Whisper</span><br><span class="line">--shh.maxmessagesize value   可接受的最大的消息大小 (默认值: 1048576)</span><br><span class="line">--shh.pow value              可接受的最小的POW (默认值: 0.2)</span><br></pre></td></tr></table></figure>
+
+<h3 id="弃用选项："><a href="#弃用选项：" class="headerlink" title="弃用选项："></a>弃用选项：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--fast     开启快速同步</span><br><span class="line">--light    启用轻客户端模式</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他选项"><a href="#其他选项" class="headerlink" title="其他选项:"></a>其他选项:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">–help, -h    显示帮助</span><br></pre></td></tr></table></figure>
+
+<h1 id="自己的论文"><a href="#自己的论文" class="headerlink" title="自己的论文"></a>自己的论文</h1><h2 id="UTXO模型"><a href="#UTXO模型" class="headerlink" title="UTXO模型"></a>UTXO模型</h2><p>解锁脚本：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">type TXInput struct &#123;</span><br><span class="line">   TXID  []byte //交易ID</span><br><span class="line">   Index int64  //output的索引</span><br><span class="line">   //Address string //解锁脚本</span><br><span class="line">   Signature []byte //交易签名</span><br><span class="line">   PubKey    []byte //公钥本身，不是公钥哈希</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>锁定脚本：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type TXOutput struct &#123;</span><br><span class="line">   Value UserData //转账数据</span><br><span class="line">   //Address string  //锁定脚本</span><br><span class="line">   PubKeyHash []byte //公钥哈希</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h2><p>首先看是不是一笔挖矿交易，如果是挖矿交易就不需要签名。找到引用的交易，对交易id用私钥进行签名，交易id是对交易进行编码的结果，执行签名函数后会得到一个r和一个s，这是两个大数（Big.Int类型，转化为字节append得出数字签名，然后把数字签名存储到input里。</p>
+<p>校验签名的时候根据这笔交易引用的前交易进行签名数据的还原，然后获取这笔交易的签名和公钥，进行还原，将两次还原后的数据进行对比。</p>
+<h2 id="Merkle根"><a href="#Merkle根" class="headerlink" title="Merkle根"></a>Merkle根</h2><p>对交易ID做递归得出Merkle根</p>
+<h2 id="地址生成和校验"><a href="#地址生成和校验" class="headerlink" title="地址生成和校验"></a>地址生成和校验</h2><p>对公钥做RIPEMD160(sha256(publicKey))，得出20字节，拼接1字节版本号，然后对这21字节的数据做两次sha256运算后取后四字节得出校验码，拼接在一起得出25字节的地址。</p>
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"># 区块链</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2021/04/11/IPFS%E5%85%A5%E9%97%A8/">
+                                                        IPFS入门学习
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
