@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>Solidity内联汇编语法表 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    Solidity内联汇编语法表
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">July 15, 2021&nbsp;&nbsp;15:48:11</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="Solidity内联汇编语法表"><a href="#Solidity内联汇编语法表" class="headerlink" title="Solidity内联汇编语法表"></a>Solidity内联汇编语法表</h1><table>
+<thead>
+<tr>
+<th>Instruction</th>
+<th></th>
+<th></th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>stop</td>
+<td>-</td>
+<td>F</td>
+<td>停止执行，与 return(0,0) 等价</td>
+</tr>
+<tr>
+<td>add(x, y)</td>
+<td></td>
+<td>F</td>
+<td>x + y</td>
+</tr>
+<tr>
+<td>sub(x, y)</td>
+<td></td>
+<td>F</td>
+<td>x - y</td>
+</tr>
+<tr>
+<td>mul(x, y)</td>
+<td></td>
+<td>F</td>
+<td>x * y</td>
+</tr>
+<tr>
+<td>div(x, y)</td>
+<td></td>
+<td>F</td>
+<td>x / y</td>
+</tr>
+<tr>
+<td>sdiv(x, y)</td>
+<td></td>
+<td>F</td>
+<td>x / y，以二进制补码作为符号</td>
+</tr>
+<tr>
+<td>mod(x, y)</td>
+<td></td>
+<td>F</td>
+<td>x % y</td>
+</tr>
+<tr>
+<td>smod(x, y)</td>
+<td></td>
+<td>F</td>
+<td>x % y，以二进制补码作为符号</td>
+</tr>
+<tr>
+<td>exp(x, y)</td>
+<td></td>
+<td>F</td>
+<td>x 的 y 次幂</td>
+</tr>
+<tr>
+<td>not(x)</td>
+<td></td>
+<td>F</td>
+<td>~x，对 x 按位取反</td>
+</tr>
+<tr>
+<td>lt(x, y)</td>
+<td></td>
+<td>F</td>
+<td>如果 x &lt; y 为 1，否则为 0</td>
+</tr>
+<tr>
+<td>gt(x, y)</td>
+<td></td>
+<td>F</td>
+<td>如果 x &gt; y 为 1，否则为 0</td>
+</tr>
+<tr>
+<td>slt(x, y)</td>
+<td></td>
+<td>F</td>
+<td>如果 x &lt; y 为 1，否则为 0，以二进制补码作为符号</td>
+</tr>
+<tr>
+<td>sgt(x, y)</td>
+<td></td>
+<td>F</td>
+<td>如果 x &gt; y 为 1，否则为 0，以二进制补码作为符号</td>
+</tr>
+<tr>
+<td>eq(x, y)</td>
+<td></td>
+<td>F</td>
+<td>如果 x == y 为 1，否则为 0</td>
+</tr>
+<tr>
+<td>iszero(x)</td>
+<td></td>
+<td>F</td>
+<td>如果 x == 0 为 1，否则为 0</td>
+</tr>
+<tr>
+<td>and(x, y)</td>
+<td></td>
+<td>F</td>
+<td>x 和 y 的按位与</td>
+</tr>
+<tr>
+<td>or(x, y)</td>
+<td></td>
+<td>F</td>
+<td>x 和 y 的按位或</td>
+</tr>
+<tr>
+<td>xor(x, y)</td>
+<td></td>
+<td>F</td>
+<td>x 和 y 的按位异或</td>
+</tr>
+<tr>
+<td>byte(n, x)</td>
+<td></td>
+<td>F</td>
+<td>x 的第 n 个字节，这个索引是从 0 开始的</td>
+</tr>
+<tr>
+<td>shl(x, y)</td>
+<td></td>
+<td>C</td>
+<td>将 y 逻辑左移 x 位</td>
+</tr>
+<tr>
+<td>shr(x, y)</td>
+<td></td>
+<td>C</td>
+<td>将 y 逻辑右移 x 位</td>
+</tr>
+<tr>
+<td>sar(x, y)</td>
+<td></td>
+<td>C</td>
+<td>将 y 算术右移 x 位</td>
+</tr>
+<tr>
+<td>addmod(x, y, m)</td>
+<td></td>
+<td>F</td>
+<td>任意精度的 (x + y) % m</td>
+</tr>
+<tr>
+<td>mulmod(x, y, m)</td>
+<td></td>
+<td>F</td>
+<td>任意精度的 (x * y) % m</td>
+</tr>
+<tr>
+<td>signextend(i, x)</td>
+<td></td>
+<td>F</td>
+<td>对 x 的最低位到第 (i * 8 + 7) 进行符号扩展</td>
+</tr>
+<tr>
+<td>keccak256(p, n)</td>
+<td></td>
+<td>F</td>
+<td>keccak(mem[p…(p + n)))</td>
+</tr>
+<tr>
+<td>jump(label)</td>
+<td>-</td>
+<td>F</td>
+<td>跳转到标签 / 代码位置</td>
+</tr>
+<tr>
+<td>jumpi(label, cond)</td>
+<td>-</td>
+<td>F</td>
+<td>如果条件为非零，跳转到标签</td>
+</tr>
+<tr>
+<td>pc</td>
+<td></td>
+<td>F</td>
+<td>当前代码位置</td>
+</tr>
+<tr>
+<td>pop(x)</td>
+<td>-</td>
+<td>F</td>
+<td>删除（弹出）栈顶的 x 个元素</td>
+</tr>
+<tr>
+<td>dup1 … dup16</td>
+<td></td>
+<td>F</td>
+<td>将栈内第 i 个元素（从栈顶算起）复制到栈顶</td>
+</tr>
+<tr>
+<td>swap1 … swap16</td>
+<td>*</td>
+<td>F</td>
+<td>将栈顶元素和其下第 i 个元素互换</td>
+</tr>
+<tr>
+<td>mload(p)</td>
+<td></td>
+<td>F</td>
+<td>mem[p…(p + 32))</td>
+</tr>
+<tr>
+<td>mstore(p, v)</td>
+<td>-</td>
+<td>F</td>
+<td>mem[p…(p + 32)) := v</td>
+</tr>
+<tr>
+<td>mstore8(p, v)</td>
+<td>-</td>
+<td>F</td>
+<td>mem[p] := v &amp; 0xff （仅修改一个字节）</td>
+</tr>
+<tr>
+<td>sload(p)</td>
+<td></td>
+<td>F</td>
+<td>storage[p]</td>
+</tr>
+<tr>
+<td>sstore(p, v)</td>
+<td>-</td>
+<td>F</td>
+<td>storage[p] := v</td>
+</tr>
+<tr>
+<td>msize</td>
+<td></td>
+<td>F</td>
+<td>内存大小，即最大可访问内存索引</td>
+</tr>
+<tr>
+<td>gas</td>
+<td></td>
+<td>F</td>
+<td>执行可用的 gas</td>
+</tr>
+<tr>
+<td>address</td>
+<td></td>
+<td>F</td>
+<td>当前合约 / 执行上下文的地址</td>
+</tr>
+<tr>
+<td>balance(a)</td>
+<td></td>
+<td>F</td>
+<td>地址 a 的余额，以 wei 为单位</td>
+</tr>
+<tr>
+<td>caller</td>
+<td></td>
+<td>F</td>
+<td>调用发起者（不包括 <code>delegatecall</code>）</td>
+</tr>
+<tr>
+<td>callvalue</td>
+<td></td>
+<td>F</td>
+<td>随调用发送的 Wei 的数量</td>
+</tr>
+<tr>
+<td>calldataload(p)</td>
+<td></td>
+<td>F</td>
+<td>位置 p 的调用数据（32 字节）</td>
+</tr>
+<tr>
+<td>calldatasize</td>
+<td></td>
+<td>F</td>
+<td>调用数据的字节数大小</td>
+</tr>
+<tr>
+<td>calldatacopy(t, f, s)</td>
+<td>-</td>
+<td>F</td>
+<td>从调用数据的位置 f 的拷贝 s 个字节到内存的位置 t</td>
+</tr>
+<tr>
+<td>codesize</td>
+<td></td>
+<td>F</td>
+<td>当前合约 / 执行上下文地址的代码大小</td>
+</tr>
+<tr>
+<td>codecopy(t, f, s)</td>
+<td>-</td>
+<td>F</td>
+<td>从代码的位置 f 开始拷贝 s 个字节到内存的位置 t</td>
+</tr>
+<tr>
+<td>extcodesize(a)</td>
+<td></td>
+<td>F</td>
+<td>地址 a 的代码大小</td>
+</tr>
+<tr>
+<td>extcodecopy(a, t, f, s)</td>
+<td>-</td>
+<td>F</td>
+<td>和 codecopy(t, f, s) 类似，但从地址 a 获取代码</td>
+</tr>
+<tr>
+<td>returndatasize</td>
+<td></td>
+<td>B</td>
+<td>最后一个 returndata 的大小</td>
+</tr>
+<tr>
+<td>returndatacopy(t, f, s)</td>
+<td>-</td>
+<td>B</td>
+<td>从 returndata 的位置 f 拷贝 s 个字节到内存的位置 t</td>
+</tr>
+<tr>
+<td>create(v, p, s)</td>
+<td></td>
+<td>F</td>
+<td>用 mem[p…(p + s)) 中的代码创建一个新合约、发送 v wei 并返回 新地址</td>
+</tr>
+<tr>
+<td>create2(v, n, p, s)</td>
+<td></td>
+<td>C</td>
+<td>用 mem[p…(p + s)) 中的代码，在地址 keccak256(<address> . n . keccak256(mem[p…(p + s))) 上 创建新合约、发送 v wei 并返回新地址</td>
+</tr>
+<tr>
+<td>call(g, a, v, in, insize, out, outsize)</td>
+<td></td>
+<td>F</td>
+<td>使用 mem[in…(in + insize)) 作为输入数据， 提供 g gas 和 v wei 对地址 a 发起消息调用， 输出结果数据保存在 mem[out…(out + outsize))， 发生错误（比如 gas 不足）时返回 0，正确结束返回 1</td>
+</tr>
+<tr>
+<td>callcode(g, a, v, in, insize, out, outsize)</td>
+<td></td>
+<td>F</td>
+<td>与 <code>call</code> 等价，但仅使用地址 a 中的代码 且保持当前合约的执行上下文</td>
+</tr>
+<tr>
+<td>delegatecall(g, a, in, insize, out, outsize)</td>
+<td></td>
+<td>F</td>
+<td>与 <code>callcode</code> 等价且保留 <code>caller</code> 和 <code>callvalue</code></td>
+</tr>
+<tr>
+<td>staticcall(g, a, in, insize, out, outsize)</td>
+<td></td>
+<td>F</td>
+<td>与 <code>call(g, a, 0, in, insize, out, outsize)</code> 等价 但不允许状态修改</td>
+</tr>
+<tr>
+<td>return(p, s)</td>
+<td>-</td>
+<td>F</td>
+<td>终止运行，返回 mem[p…(p + s)) 的数据</td>
+</tr>
+<tr>
+<td>revert(p, s)</td>
+<td>-</td>
+<td>B</td>
+<td>终止运行，撤销状态变化，返回 mem[p…(p + s)) 的数据</td>
+</tr>
+<tr>
+<td>selfdestruct(a)</td>
+<td>-</td>
+<td>F</td>
+<td>终止运行，销毁当前合约并且把资金发送到地址 a</td>
+</tr>
+<tr>
+<td>invalid</td>
+<td>-</td>
+<td>F</td>
+<td>以无效指令终止运行</td>
+</tr>
+<tr>
+<td>log0(p, s)</td>
+<td>-</td>
+<td>F</td>
+<td>以 mem[p…(p + s)) 的数据产生不带 topic 的日志</td>
+</tr>
+<tr>
+<td>log1(p, s, t1)</td>
+<td>-</td>
+<td>F</td>
+<td>以 mem[p…(p + s)) 的数据和 topic t1 产生日志</td>
+</tr>
+<tr>
+<td>log2(p, s, t1, t2)</td>
+<td>-</td>
+<td>F</td>
+<td>以 mem[p…(p + s)) 的数据和 topic t1、t2 产生日志</td>
+</tr>
+<tr>
+<td>log3(p, s, t1, t2, t3)</td>
+<td>-</td>
+<td>F</td>
+<td>以 mem[p…(p + s)) 的数据和 topic t1、t2、t3 产生日志</td>
+</tr>
+<tr>
+<td>log4(p, s, t1, t2, t3, t4)</td>
+<td>-</td>
+<td>F</td>
+<td>以 mem[p…(p + s)) 的数据和 topic t1、t2、t3 和 t4 产生日志</td>
+</tr>
+<tr>
+<td>origin</td>
+<td></td>
+<td>F</td>
+<td>交易发起者地址</td>
+</tr>
+<tr>
+<td>gasprice</td>
+<td></td>
+<td>F</td>
+<td>交易所指定的 gas 价格</td>
+</tr>
+<tr>
+<td>blockhash(b)</td>
+<td></td>
+<td>F</td>
+<td>区块号 b 的哈希 - 目前仅适用于不包括当前区块的最后 256 个区块</td>
+</tr>
+<tr>
+<td>coinbase</td>
+<td></td>
+<td>F</td>
+<td>当前的挖矿收益者地址</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td></td>
+<td>F</td>
+<td>从当前 epoch 开始的当前区块时间戳（以秒为单位）</td>
+</tr>
+<tr>
+<td>number</td>
+<td></td>
+<td>F</td>
+<td>当前区块号</td>
+</tr>
+<tr>
+<td>difficulty</td>
+<td></td>
+<td>F</td>
+<td>当前区块难度</td>
+</tr>
+<tr>
+<td>gaslimit</td>
+<td></td>
+<td>F</td>
+<td>当前区块的 gas 上限</td>
+</tr>
+</tbody></table>
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/"># 以太坊</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                            <a class="prev" rel="prev" href="/2021/07/15/%E7%90%86%E8%A7%A3%E5%8C%BA%E5%9D%97%E9%93%BE%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/">
+                                                理解区块链共识机制
+                                            </a>
+                                            
+                                                
+                                                    <a class="next" rel="next" href="/2021/07/15/L2%20%E2%80%93%20zkSync%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AF%BC%E8%AF%BB/">
+                                                        L2 – zkSync源代码导读
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

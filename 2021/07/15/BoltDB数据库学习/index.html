@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>BoltDB数据库学习 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    BoltDB数据库学习
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">July 15, 2021&nbsp;&nbsp;15:50:15</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="BoltDB数据库学习"><a href="#BoltDB数据库学习" class="headerlink" title="BoltDB数据库学习"></a>BoltDB数据库学习</h1><p>BlotDB数据库是k/v非关系型数据库。</p>
+<p>使用github.com/blotdb/bolt包实现Go语言的BoltDB</p>
+<p>在Go语言中具体的使用方式如下：</p>
+<h2 id="创建-amp-打开数据库"><a href="#创建-amp-打开数据库" class="headerlink" title="创建&amp;打开数据库"></a>创建&amp;打开数据库</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Bolt会在数据文件上获得一个文件锁，所以多个进程不能同时打开同一个数据库</span></span><br><span class="line">	<span class="comment">//打开一个已经打开的Bolt数据库将导致它挂起，直到另一个进程关闭它</span></span><br><span class="line">	<span class="comment">//为防止无限期等待，可以将超时选项传递给Open()函数</span></span><br><span class="line">	db,err := bolt.Open(<span class="string">&quot;my.db&quot;</span> , <span class="number">0600</span> , &amp;bolt.Options&#123;Timeout: <span class="number">10</span>*time.Second&#125;)</span><br><span class="line">	<span class="keyword">defer</span> db.Close()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="写数据"><a href="#写数据" class="headerlink" title="写数据"></a>写数据</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//两种处理方式：读-写和只读操作，读写方式开始于db.Update()方法</span></span><br><span class="line">	<span class="comment">//Bolt一次只允许一个读-写事务，但是一次允许多个只读事务</span></span><br><span class="line">	<span class="comment">//每个事务处理都有一个始终如一的数据视图</span></span><br><span class="line">	err = db.Update(<span class="function"><span class="keyword">func</span><span class="params">(tx *bolt.Tx)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">		<span class="comment">//这里还有另外一层:k-v存储在bucket种</span></span><br><span class="line">		<span class="comment">//可以将bucket当作一个key的集合或者是数据库中的表</span></span><br><span class="line">		<span class="comment">//buckets中可以包含其他的buckets</span></span><br><span class="line">		<span class="comment">//Buckets使键值对在数据库中的集合。所有在bucket中的key必须唯一</span></span><br><span class="line">		<span class="comment">//使用DB.CreateBucket()函数建立bucket</span></span><br><span class="line">		<span class="comment">//Tx.DeleteBucket()删除bucket</span></span><br><span class="line">		<span class="comment">//b:=tx.Bucket([]byte(&quot;MyBucket&quot;))</span></span><br><span class="line">		b , err := tx.CreateBucketIfNotExists([]<span class="keyword">byte</span>(<span class="string">&quot;MyBucket&quot;</span>))</span><br><span class="line">		<span class="comment">//这要将key-value对保存到bucket，请使用Bucket.Put()函数</span></span><br><span class="line">		<span class="comment">//这将在MyBucket的bucket中将“answer”key的值设置为“42”</span></span><br><span class="line">		err = b.Put([]<span class="keyword">byte</span>(<span class="string">&quot;answer&quot;</span>) , []<span class="keyword">byte</span>(<span class="string">&quot;42&quot;</span>))</span><br><span class="line">		err = b.Put([]<span class="keyword">byte</span>(<span class="string">&quot;why&quot;</span>) , []<span class="keyword">byte</span>(<span class="string">&quot;101010&quot;</span>))</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line"></span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="读数据"><a href="#读数据" class="headerlink" title="读数据"></a>读数据</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//只读事务在db.View函数中可以读取，但是不能修改。</span></span><br><span class="line">	db.View(<span class="function"><span class="keyword">func</span><span class="params">(tx *bolt.Tx)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">		<span class="comment">//要检索这个value，可以使用Bucket.Get()函数</span></span><br><span class="line">		<span class="comment">//由于Get是有安全保障的，所以不会返回错误，不存在的key会返回nil</span></span><br><span class="line">		b := tx.Bucket([]<span class="keyword">byte</span>(<span class="string">&quot;MyBucket&quot;</span>))</span><br><span class="line">		v := b.Get([]<span class="keyword">byte</span>(<span class="string">&quot;answer&quot;</span>))</span><br><span class="line">		id , _ := b.NextSequence()</span><br><span class="line">		fmt.Printf(<span class="string">&quot;The answer is : %s,%d\n&quot;</span> , v , id)</span><br><span class="line"></span><br><span class="line">		<span class="comment">//游标遍历</span></span><br><span class="line">		c := b.Cursor()</span><br><span class="line">		fmt.Printf(<span class="string">&quot;\n游标遍历key&quot;</span>)</span><br><span class="line">		<span class="keyword">for</span> k , v := c.First() ; k!=<span class="literal">nil</span>;k,v=c.Next()&#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;key = %s , value = %s\n&quot;</span> , k ,v)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//游标上有以下函数</span></span><br><span class="line">		<span class="comment">//First()，移动到第一个键</span></span><br><span class="line">		<span class="comment">//Last()，移动到最后一个键</span></span><br><span class="line">		<span class="comment">//Seek()，移动到特定的一个键</span></span><br><span class="line">		<span class="comment">//Next()，移动到下一个键</span></span><br><span class="line">		<span class="comment">//Prev()，移动到上一个键</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//Prefix 前缀扫描</span></span><br><span class="line">		fmt.Printf(<span class="string">&quot;\nPrefix 前缀扫描&quot;</span>)</span><br><span class="line">		prefix := []<span class="keyword">byte</span>(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">		<span class="keyword">for</span> k ,v := c.Seek(prefix);k!=<span class="literal">nil</span>&amp;&amp;bytes.HasPrefix(k,prefix);k,v=c.Next()&#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;key = %s , value = %s\n&quot;</span> , k,v)</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//如果直到所在桶中拥有键，也可以使用ForEach()来迭代</span></span><br><span class="line">	db.View(<span class="function"><span class="keyword">func</span><span class="params">(tx *bolt.Tx)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;\nForEach()来迭代&quot;</span>)</span><br><span class="line">		b := tx.Bucket([]<span class="keyword">byte</span>(<span class="string">&quot;MyBucket&quot;</span>))</span><br><span class="line">		b.ForEach(<span class="function"><span class="keyword">func</span><span class="params">(k, v []<span class="keyword">byte</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;key = %s , value = %s\n&quot;</span> , k ,v)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">		&#125;)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="事务处理"><a href="#事务处理" class="headerlink" title="事务处理"></a>事务处理</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//事务处理</span></span><br><span class="line">	<span class="comment">//开始事务</span></span><br><span class="line">	tx,err := db.Begin(<span class="literal">true</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> tx.Rollback()</span><br><span class="line"></span><br><span class="line">	<span class="comment">//使用事务</span></span><br><span class="line">	_,err = tx.CreateBucket([]<span class="keyword">byte</span>(<span class="string">&quot;MyBucket&quot;</span>))</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//事务提交</span></span><br><span class="line">	<span class="keyword">if</span> err = tx.Commit() ; err != <span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用案例"><a href="#使用案例" class="headerlink" title="使用案例"></a>使用案例</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;bytes&quot;</span></span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/boltdb/bolt&quot;</span></span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span><br><span class="line">	BoltDB()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BoltDB</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//Bolt会在数据文件上获得一个文件锁，所以多个进程不能同时打开同一个数据库</span></span><br><span class="line">	<span class="comment">//打开一个已经打开的Bolt数据库将导致它挂起，直到另一个进程关闭它</span></span><br><span class="line">	<span class="comment">//为防止无限期等待，可以将超时选项传递给Open()函数</span></span><br><span class="line">	db,err := bolt.Open(<span class="string">&quot;my.db&quot;</span> , <span class="number">0600</span> , &amp;bolt.Options&#123;Timeout: <span class="number">10</span>*time.Second&#125;)</span><br><span class="line">	<span class="keyword">defer</span> db.Close()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//两种处理方式：读-写和只读操作，读写方式开始于db.Update()方法</span></span><br><span class="line">	<span class="comment">//Bolt一次只允许一个读-写事务，但是一次允许多个只读事务</span></span><br><span class="line">	<span class="comment">//每个事务处理都有一个始终如一的数据视图</span></span><br><span class="line">	err = db.Update(<span class="function"><span class="keyword">func</span><span class="params">(tx *bolt.Tx)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">		<span class="comment">//这里还有另外一层:k-v存储在bucket种</span></span><br><span class="line">		<span class="comment">//可以将bucket当作一个key的集合或者是数据库中的表</span></span><br><span class="line">		<span class="comment">//buckets中可以包含其他的buckets</span></span><br><span class="line">		<span class="comment">//Buckets使键值对在数据库中的集合。所有在bucket中的key必须唯一</span></span><br><span class="line">		<span class="comment">//使用DB.CreateBucket()函数建立bucket</span></span><br><span class="line">		<span class="comment">//Tx.DeleteBucket()删除bucket</span></span><br><span class="line">		<span class="comment">//b:=tx.Bucket([]byte(&quot;MyBucket&quot;))</span></span><br><span class="line">		b , err := tx.CreateBucketIfNotExists([]<span class="keyword">byte</span>(<span class="string">&quot;MyBucket&quot;</span>))</span><br><span class="line">		<span class="comment">//这要将key-value对保存到bucket，请使用Bucket.Put()函数</span></span><br><span class="line">		<span class="comment">//这将在MyBucket的bucket中将“answer”key的值设置为“42”</span></span><br><span class="line">		err = b.Put([]<span class="keyword">byte</span>(<span class="string">&quot;answer&quot;</span>) , []<span class="keyword">byte</span>(<span class="string">&quot;42&quot;</span>))</span><br><span class="line">		err = b.Put([]<span class="keyword">byte</span>(<span class="string">&quot;why&quot;</span>) , []<span class="keyword">byte</span>(<span class="string">&quot;101010&quot;</span>))</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line"></span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="comment">//可以看到，传入db.update函数一个参数，在函数内部可以get/set数据和处理error</span></span><br><span class="line">	<span class="comment">//如果返回为nil，事务就会从数据库得到一个commit，但如果返回一个实际的错误，就会回滚，在函数中做的任何事情都不会commit</span></span><br><span class="line">	<span class="comment">//只读事务，只读事务和读写事务不应该相互依赖，一般不应该在同一个例程中同时打开。</span></span><br><span class="line">	<span class="comment">//这可能会导致死锁，因为读写事务需要定期重新映射数据文件</span></span><br><span class="line">	<span class="comment">//但只有在只读事务处于打开状态时才能这样做</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//批量读写事务。每一次新的事务都需要等待上一次事务的结束。</span></span><br><span class="line">	<span class="comment">//可以通过DB.Batch()批处理来完成</span></span><br><span class="line">	err = db.Batch(<span class="function"><span class="keyword">func</span><span class="params">(tx *bolt.Tx)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//只读事务在db.View函数中可以读取，但是不能修改。</span></span><br><span class="line">	db.View(<span class="function"><span class="keyword">func</span><span class="params">(tx *bolt.Tx)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">		<span class="comment">//要检索这个value，可以使用Bucket.Get()函数</span></span><br><span class="line">		<span class="comment">//由于Get是有安全保障的，所以不会返回错误，不存在的key会返回nil</span></span><br><span class="line">		b := tx.Bucket([]<span class="keyword">byte</span>(<span class="string">&quot;MyBucket&quot;</span>))</span><br><span class="line">		v := b.Get([]<span class="keyword">byte</span>(<span class="string">&quot;answer&quot;</span>))</span><br><span class="line">		id , _ := b.NextSequence()</span><br><span class="line">		fmt.Printf(<span class="string">&quot;The answer is : %s,%d\n&quot;</span> , v , id)</span><br><span class="line"></span><br><span class="line">		<span class="comment">//游标遍历</span></span><br><span class="line">		c := b.Cursor()</span><br><span class="line">		fmt.Printf(<span class="string">&quot;\n游标遍历key&quot;</span>)</span><br><span class="line">		<span class="keyword">for</span> k , v := c.First() ; k!=<span class="literal">nil</span>;k,v=c.Next()&#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;key = %s , value = %s\n&quot;</span> , k ,v)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//游标上有以下函数</span></span><br><span class="line">		<span class="comment">//First()，移动到第一个键</span></span><br><span class="line">		<span class="comment">//Last()，移动到最后一个键</span></span><br><span class="line">		<span class="comment">//Seek()，移动到特定的一个键</span></span><br><span class="line">		<span class="comment">//Next()，移动到下一个键</span></span><br><span class="line">		<span class="comment">//Prev()，移动到上一个键</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//Prefix 前缀扫描</span></span><br><span class="line">		fmt.Printf(<span class="string">&quot;\nPrefix 前缀扫描&quot;</span>)</span><br><span class="line">		prefix := []<span class="keyword">byte</span>(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">		<span class="keyword">for</span> k ,v := c.Seek(prefix);k!=<span class="literal">nil</span>&amp;&amp;bytes.HasPrefix(k,prefix);k,v=c.Next()&#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;key = %s , value = %s\n&quot;</span> , k,v)</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//如果直到所在桶中拥有键，也可以使用ForEach()来迭代</span></span><br><span class="line">	db.View(<span class="function"><span class="keyword">func</span><span class="params">(tx *bolt.Tx)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;\nForEach()来迭代&quot;</span>)</span><br><span class="line">		b := tx.Bucket([]<span class="keyword">byte</span>(<span class="string">&quot;MyBucket&quot;</span>))</span><br><span class="line">		b.ForEach(<span class="function"><span class="keyword">func</span><span class="params">(k, v []<span class="keyword">byte</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;key = %s , value = %s\n&quot;</span> , k ,v)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">		&#125;)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//事务处理</span></span><br><span class="line">	<span class="comment">//开始事务</span></span><br><span class="line">	tx,err := db.Begin(<span class="literal">true</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> tx.Rollback()</span><br><span class="line"></span><br><span class="line">	<span class="comment">//使用事务</span></span><br><span class="line">	_,err = tx.CreateBucket([]<span class="keyword">byte</span>(<span class="string">&quot;MyBucket&quot;</span>))</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//事务提交</span></span><br><span class="line">	<span class="keyword">if</span> err = tx.Commit() ; err != <span class="literal">nil</span>&#123;</span><br><span class="line">		log.Panic(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//还可以在一个键中存储一个bucket，以创建嵌套的桶</span></span><br><span class="line">	<span class="comment">//func(*Bucket) CreateBucket(key []byte)(*Bucket,err)</span></span><br><span class="line">	<span class="comment">//func(*Bucket) CreateBucketNotExists(key []byte)(*Bucket,err)</span></span><br><span class="line">	<span class="comment">//func(*Bucket) DeleteBucket(key []byte)error</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/Nosql/"># Nosql</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2021/07/15/%E7%90%86%E8%A7%A3%E5%8C%BA%E5%9D%97%E9%93%BE%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/">
+                                                        理解区块链共识机制
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

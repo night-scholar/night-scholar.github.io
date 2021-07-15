@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>L2 – zkSync源代码导读 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    L2 – zkSync源代码导读
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">July 15, 2021&nbsp;&nbsp;15:43:58</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="L2-–-zkSync源代码导读"><a href="#L2-–-zkSync源代码导读" class="headerlink" title="L2 – zkSync源代码导读"></a>L2 – zkSync源代码导读</h1><p><strong>转载自：<a target="_blank" rel="noopener" href="https://htzkw.com/archives/27342">https://htzkw.com/archives/27342</a></strong></p>
+<p><a target="_blank" rel="noopener" href="https://htzkw.com/archives/tag/layer2">Layer2</a>是一个大方向。最近一段时间，会围绕L2写一些文章。区块链技术有趣的地方就是一种技术的发展打开了一扇窗。零知识证明的发展拓宽了区块链L2的视角，提供了L2的另外一种实现可能，即zk Rollup。从另外一个角度看，区块链的进步是缓慢的，需要很多优秀的人才跨界把不同的技术揉杂在一起，让不可能成为可能。</p>
+<p>matter labs在zk Rollup方向的积累比较深，有一系列的开源项目可以学习。让我们从zkSync开始吧。</p>
+<p>zkSync的源代码地址，所有的逻辑使用rust语言开发：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/matter-labs/zksync.git">https://github.com/matter-labs/zksync.git</a></p>
+<p>特别注意的是，查看完整源代码需要查看dev分支，并不是master分支。master分支提供编译后的各种执行程序。本文采用的代码的最后一个提交信息如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">commit dcdddeda4d6eb1dace5ec56cf9fe091ed5e062fd</span><br><span class="line">Merge: 37c5976bd aab5608c3</span><br><span class="line">Author: Vitaly Drogan &lt;vd@matterlabs.dev&gt;</span><br><span class="line">Date:   Thu Sep 17 17:07:05 2020 +0300</span><br><span class="line"></span><br><span class="line">    Merge pull request #948 from matter-labs/popzxc-minor-sdk-bugfix</span><br><span class="line">    </span><br><span class="line">    Minor SDK bugfix</span><br></pre></td></tr></table></figure>
+
+
+
+<p>1</p>
+<p>源代码目录结构</p>
+<p>zkSync项目实现了L2相关的方方面面。查看zkSync的提交记录，这个项目创建于2018年的11月份，已经有两年的开发时间。从matter labs公开的各种项目，matter labs在zk rollup想的很远，也已经走的蛮远。细想想，踏踏实实地思考区块链技术，认认真真地把一小点积累做好。整个源代码目录结构如下：</p>
+<p><a target="_blank" rel="noopener" href="https://htzkw.com/wp-content/uploads/2020/10/frc-2df6654b7c3a6ef2dc77f38dc0dd33c7.png"><img src="https://htzkw.com/wp-content/uploads/2020/10/frc-2df6654b7c3a6ef2dc77f38dc0dd33c7.png" alt="L2 - zkSync源代码导读"></a></p>
+<p>bin – 一些二进制程序和脚步</p>
+<p>contracts – 智能合约逻辑</p>
+<p>core – L2的核心逻辑</p>
+<p>docker – docker相关的配置</p>
+<p>docs – 文档，比较详细的解释了zkSync的协议设计，电路实现，智能合约，K8如何配置，以及如何启动等等。</p>
+<p>etc – 配置信息</p>
+<p>js – zkSync客户端以及浏览器（explorer）</p>
+<p>zkSync的内容比较多，这篇文章主要给大家讲讲zkSync的大体逻辑结构，重点介绍智能合约以及core的相关逻辑。所有zkSync的核心逻辑都实现在core的目录下：</p>
+<p><a target="_blank" rel="noopener" href="https://htzkw.com/wp-content/uploads/2020/10/frc-c94a8da2a3d95e1e99bf918de9ee8b27.png"><img src="https://htzkw.com/wp-content/uploads/2020/10/frc-c94a8da2a3d95e1e99bf918de9ee8b27.png" alt="L2 - zkSync源代码导读"></a></p>
+<p>core/circuit – 零知识证明电路实现</p>
+<p>core/crypto_exports – 零知识证明底层库封装</p>
+<p>core/data_restore – 状态恢复的相关逻辑</p>
+<p>core/eth_client – eth客户端的封装</p>
+<p>core/loadtest – 压力测试相关逻辑</p>
+<p>core/models – zkSync的模型定义</p>
+<p>core/plasma – zkSync的状态实现</p>
+<p>core/prover – 零知识证明的证明生成引擎</p>
+<p>core/server – 各种server的实现，包括eth的监测(watch)和交易发送(sender)，交易费用的计算(fee_ticker)，零知识证明的服务器(prover server)以及API服务等等</p>
+<p>core/storage – 所有状态的存储以及持久化逻辑</p>
+<p>2</p>
+<p>整体架构</p>
+<p>zkSync目前主要实现了L2的转账功能。L2有自己的账户系统以及状态。zkSync总体的功能模块以及相互之间的关系如下：</p>
+<p><a target="_blank" rel="noopener" href="https://htzkw.com/wp-content/uploads/2020/10/frc-78a7d1d7ca8e2789dec67a6c6f5da94a.png"><img src="https://htzkw.com/wp-content/uploads/2020/10/frc-78a7d1d7ca8e2789dec67a6c6f5da94a.png" alt="L2 - zkSync源代码导读"></a></p>
+<p>Eth Watch以及Eth Sender负责监控和发送zkSync智能合约的交易。Mem Pool负责收集交易。交易分为两种两种：L1交易和L2交易。Block Proposer将交易打包，并更改世界状态(Plasma State)。在世界状态更改后，通过Block Committer生成证明需要的信息。零知识的证明通过Plonk证明系统生成，其中包括Prover Server和Proving Client。API提供接口实现UI的信息展示和L2的交易提交。</p>
+<p>3</p>
+<p>L2账户系统和世界状态</p>
+<p>zkSync并不需要独立生成新账户。zkSync的L2账户和L1账户一一对应，“共享”一份私钥。</p>
+<p><a target="_blank" rel="noopener" href="https://htzkw.com/wp-content/uploads/2020/10/frc-1dd0084a1f652c3a9268ee6d66d8ac73.png"><img src="https://htzkw.com/wp-content/uploads/2020/10/frc-1dd0084a1f652c3a9268ee6d66d8ac73.png" alt="L2 - zkSync源代码导读"></a></p>
+<p>简单的说，L1的私钥的ECDSA签名的结果作为L2账户的私钥。L2账户的秘钥是JubJub曲线上的Scalar值，对应的公钥是对应椭圆曲线上的点。L2的状态包括两部分：账户以及账户下所有Token的余额。</p>
+<p><a target="_blank" rel="noopener" href="https://htzkw.com/wp-content/uploads/2020/10/frc-0f0c5a2c172b56c3efb84db928aab87d.png"><img src="https://htzkw.com/wp-content/uploads/2020/10/frc-0f0c5a2c172b56c3efb84db928aab87d.png" alt="L2 - zkSync源代码导读"></a></p>
+<p>账户以及支持的Token个数定义在etc/env/dev.env文件中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ACCOUNT_TREE_DEPTH=32</span><br><span class="line">BALANCE_TREE_DEPTH=11</span><br></pre></td></tr></table></figure>
+
+<p>目前支持2^32个L2账户，2^11个Token。每个L2账户都有一个唯一的编号，从零开始。编号0，默认为Validator的账户。Account节点包括如下信息（其中PubKeyHash就是L2账户的公钥信息）：</p>
+<p><a target="_blank" rel="noopener" href="https://htzkw.com/wp-content/uploads/2020/10/frc-def15065882bef595f7881a9c03010c7.png"><img src="https://htzkw.com/wp-content/uploads/2020/10/frc-def15065882bef595f7881a9c03010c7.png" alt="L2 - zkSync源代码导读"></a></p>
+<p>每个Token也都有唯一编号。Token节点包括如下信息：</p>
+<p><a target="_blank" rel="noopener" href="https://htzkw.com/wp-content/uploads/2020/10/frc-845ebc91eab86545a019c4e612efe1e5.png"><img src="https://htzkw.com/wp-content/uploads/2020/10/frc-845ebc91eab86545a019c4e612efe1e5.png" alt="L2 - zkSync源代码导读"></a></p>
+<p>zkSync支持的Token信息由L1智能合约维护，具体逻辑可以查看contracts/contracts/Governance.sol的addToken函数。</p>
+<p>4</p>
+<p>交易类型和区块</p>
+<p>zkSync目前支持如下交易类型（操作类型）：</p>
+<ol>
+<li>Noop – 空操作（L2）</li>
+<li>Transfer – 转账（L2）</li>
+<li>Transfer to new – 转账给新账户（L2）</li>
+<li>Withdraw （Partial Exit）- 转出资金（L2）</li>
+<li>Deposit -转入资金（L1）</li>
+<li>Change pubkey – 更改L2的公钥信息（L2）</li>
+<li>Full exit – 退出，从Layer1发起的交易，退出L2（L1）</li>
+<li>close操作 – 退出，从<a target="_blank" rel="noopener" href="https://htzkw.com/archives/tag/layer2">Layer2</a>发起的交易（新版本已经废除，L2）</li>
+</ol>
+<p>L2的区块信息相对简单，总体的结构如下：</p>
+<p><a target="_blank" rel="noopener" href="https://htzkw.com/wp-content/uploads/2020/10/frc-6bfecf07f17a722e8c6195b4b880dd97.png"><img src="https://htzkw.com/wp-content/uploads/2020/10/frc-6bfecf07f17a722e8c6195b4b880dd97.png" alt="L2 - zkSync源代码导读"></a></p>
+<p>L2的区块信息包括：新的世界状态的树根（new root hash)，区块交易费用接收账户以及多个交易信息。交易信息分为两种：一种是L2的交易，从L2的角度看，这些才是“正常”交易(transaction)；另外一种是从L1发起的交易（Deposit以及Full exit）。</p>
+<p>从L1发起的交易，在代码中常常被标记为”Priority”交易。相对来说，从L1发起的交易，相对L2的交易优先级确实更高一些。</p>
+<p>以Deposit交易为例，介绍一下L2账户创建的流程：</p>
+<p><a target="_blank" rel="noopener" href="https://htzkw.com/wp-content/uploads/2020/10/frc-19578047258efce16cacfa277f24ffb7.png"><img src="https://htzkw.com/wp-content/uploads/2020/10/frc-19578047258efce16cacfa277f24ffb7.png" alt="L2 - zkSync源代码导读"></a></p>
+<p>在L2创建账户，其实涉及到两个交易类型。Deposit是L1的Priority的交易。在Eth Watch监测到交易后，发起L2的交易，并在世界状态添加状态。在账户创建后，再通过Change pubkey更新L2的公钥信息。</p>
+<p>5</p>
+<p>基本流程</p>
+<p>在明确了账户系统以及状态后，整个L2的打包以及更改世界状态的流程还是比较清晰的：</p>
+<p><a target="_blank" rel="noopener" href="https://htzkw.com/wp-content/uploads/2020/10/frc-0f0400a3fc26f3e14c415deec907b1b0.png"><img src="https://htzkw.com/wp-content/uploads/2020/10/frc-0f0400a3fc26f3e14c415deec907b1b0.png" alt="L2 - zkSync源代码导读"></a></p>
+<p>一切从NewTx开始。通过API，创建好的Transaction添加到Mem Pool。详细逻辑可以查看core/server/src/mempool.rs的add_tx函数。Block Proposer每隔一段时间，查看Mem Pool中的有效交易，并打包。详细逻辑可以查看core/server/src/block_proposer.rs的run_block_proposer_task函数。</p>
+<p>区块打包成功后，更新世界状态，详细逻辑可以查看core/server/src/state_keeper.rs的execute_tx_batch。</p>
+<p>更新了世界状态后，要将最新的世界状态进行证明，详细逻辑可以查看core/server/src/committer.rs的commit_block函数。</p>
+<p>证明通过Eth Sender发送给L1。</p>
+<p>6</p>
+<p>Plonk证明系统</p>
+<p>zkSync采用Plonk零知识证明的算法，证明L2的交易和状态的正确性。Plonk零知识证明的算法，和Groth16算法不一样，是Universal的零知识算法。Plonk算法的技术细节后面会单独写文章详细介绍。zkSync设计了相对独立的Plonk证明系统，示意如下：</p>
+<p><a target="_blank" rel="noopener" href="https://htzkw.com/wp-content/uploads/2020/10/frc-1dfb57c12f4d7fd681a861bf70447cdc.png"><img src="https://htzkw.com/wp-content/uploads/2020/10/frc-1dfb57c12f4d7fd681a861bf70447cdc.png" alt="L2 - zkSync源代码导读"></a></p>
+<p>Plonk证明系统涉及到三个功能模块：Block Committer，Prover Server以及Prover。这三个模块之间的数据传输通过Storage存储模块。Block Committer将Block信息存入Storage，Prover Server从Storage提取Block并生成证明需要的信息，并再次存入Storage，Prover从存储中查看需要证明的信息，生成零知识证明。</p>
+<p>Prover Server和Prover之间的调用关系，示意如下：</p>
+<p><a target="_blank" rel="noopener" href="https://htzkw.com/wp-content/uploads/2020/10/frc-dd45b3d01be0412914ff8e06efe4d3da.png"><img src="https://htzkw.com/wp-content/uploads/2020/10/frc-dd45b3d01be0412914ff8e06efe4d3da.png" alt="L2 - zkSync源代码导读"></a></p>
+<p>详细逻辑可以查看core/server/src/prover_server以及core/prover目录。</p>
+<p>7</p>
+<p>zkSync电路实现</p>
+<p>zkSync在bellman的基础上增加了Plonk零知识证明系统。zkSync的电路设计非常有趣，由于篇幅原因，后面会单独介绍zkSync的电路实现原理。简单的说，zkSync采用Chunk设计，将交易切分为多个Chunk，支持不同的区块大小。看zkSync源代码的小伙伴，在理解电路逻辑前，先理解好Chunk的逻辑。</p>
+<p>8</p>
+<p>状态确定以及L1智能合约</p>
+<p>zkSync的交易可以由Layer1或者<a target="_blank" rel="noopener" href="https://htzkw.com/archives/tag/layer2">Layer2</a>的操作发起。简单的说，zkSync的交易经历三个状态：1/Request 2/ Committed 3/ Verified。只有Verified的操作才是确定性状态。从状态的角度看，交易的流程如下图所示：</p>
+<p><a target="_blank" rel="noopener" href="https://htzkw.com/wp-content/uploads/2020/10/frc-4a2259a219d9ac378fe08bad45397cb9.png"><img src="https://htzkw.com/wp-content/uploads/2020/10/frc-4a2259a219d9ac378fe08bad45397cb9.png" alt="L2 - zkSync源代码导读"></a></p>
+<p>某个交易在打包后，会将交易对应的Pub Data信息提交到链上，交易进入Committed状态。在交易对应的区块提交证明后，改交易进入Verified的状态，也就是确定性状态。</p>
+<p>L1智能合约提供了commitBlock和verifyBlock接口实现Pub Data信息以及证明信息的提交：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function commitBlock(</span><br><span class="line">    uint32 _blockNumber,</span><br><span class="line">    uint32 _feeAccount,</span><br><span class="line">    bytes32[] calldata _newBlockInfo,</span><br><span class="line">    bytes calldata _publicData,</span><br><span class="line">    bytes calldata _ethWitness,</span><br><span class="line">    uint32[] calldata _ethWitnessSizes</span><br><span class="line">) </span><br><span class="line"></span><br><span class="line">function verifyBlock(uint32 _blockNumber, uint256[] calldata _proof, bytes calldata _withdrawalsData)</span><br><span class="line">    external nonReentrant</span><br></pre></td></tr></table></figure>
+
+<p>具体的逻辑，感兴趣的小伙伴可以查看contracts/contracts/ZkSync.sol源代码。</p>
+<p><strong>总结：</strong></p>
+<p>zkSync通过zk Rollup协议，实现了L2的转账。zkSync项目非常完整，是学习L2非常好的参考项目。zkSync采用Plonk零知识证明算法向L1证明状态的正确性。Plonk算法是Universal的零知识证明算法，只需要一次可信设置。zkSync电路设计采用Chunk设计，支持不同的区块大小。</p>
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"># 区块链</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                            <a class="prev" rel="prev" href="/2021/07/15/Solidity%E5%86%85%E8%81%94%E6%B1%87%E7%BC%96/">
+                                                Solidity内联汇编语法表
+                                            </a>
+                                            
+                                                
+                                                    <a class="next" rel="next" href="/2021/05/28/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BC%80%E5%8F%91%E6%A0%B8%E5%BF%83%E5%86%85%E5%AE%B9/">
+                                                        区块链开发核心内容
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
