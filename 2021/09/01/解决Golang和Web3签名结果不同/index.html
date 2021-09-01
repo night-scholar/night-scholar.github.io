@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>解决Golang和Web3签名结果不同 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    解决Golang和Web3签名结果不同
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">September 1, 2021&nbsp;&nbsp;15:32:12</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="解决Golang和Web3签名结果不同"><a href="#解决Golang和Web3签名结果不同" class="headerlink" title="解决Golang和Web3签名结果不同"></a>解决Golang和Web3签名结果不同</h1><p>因为在做区块链工作时，出现了前端用户签名后的数据后端无法进行校验，或者后端签名数据链上合约无法校验的问题。通过查找资料，了解到了具体原因：</p>
+<p>以太坊有两种消息，交易𝕋和字节串𝔹⁸ⁿ。这些分别用<code>eth_sendTransaction</code>和<code>eth_sign</code>来签名。最初的编码函数<code>encode : 𝕋∪𝔹⁸ⁿ→𝔹⁸ⁿ</code>如下定义：</p>
+<ul>
+<li><code>encode(t : T) = RLP_encode(t)</code></li>
+<li><code>encode(b :  𝔹⁸ⁿ) = b</code></li>
+</ul>
+<p>独立来看的话，它们都满足要求的属性，但是合在一起看就不满足了。如果我们采用<code>b = RLP_encode(t)</code>就会产生碰撞（即两种编码得到的结果就是一样的了）。在Geth <a target="_blank" rel="noopener" href="https://github.com/ethereum/go-ethereum/pull/2940">PR 2940</a>中，通过修改编码函数的第二条定义，这种情况得到了缓解：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ethereum/go-ethereum/pull/2940">PR 2940</a></p>
+<p>即在第二种编码方式前加上”\x19Ethereum Signed Message:\n” + len(message)</p>
+<p>代码如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;crypto/ecdsa&quot;</span></span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;github.com/ethereum/go-ethereum/common/hexutil&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;github.com/ethereum/go-ethereum/common&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/ethereum/go-ethereum/crypto&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hash</span><span class="params">(data []<span class="keyword">byte</span>)</span> <span class="title">common</span>.<span class="title">Hash</span></span> &#123;</span><br><span class="line">	msg := fmt.Sprintf(<span class="string">&quot;\x19Ethereum Signed Message:\n%d%s&quot;</span>, <span class="built_in">len</span>(data), data)</span><br><span class="line">	<span class="keyword">return</span> crypto.Keccak256Hash([]<span class="keyword">byte</span>(msg))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">signMsg</span><span class="params">(msg, privKeyHex <span class="keyword">string</span>)</span> <span class="params">([]<span class="keyword">byte</span>, ecdsa.PublicKey)</span></span> &#123;</span><br><span class="line">	privKeyECDSA, err := crypto.HexToECDSA(privKeyHex)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	a, _ := hexutil.Decode(msg)</span><br><span class="line">	msgHash := hash(a)</span><br><span class="line">	signature, err := crypto.Sign(msgHash.Bytes(), privKeyECDSA)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> signature, privKeyECDSA.PublicKey</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fakeP = <span class="string">&quot;f9a87df69a477fe6b7862f496637c75c2ae5efdff409f3a4234d506d96e8bdda&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	sig, _ := signMsg(<span class="string">&quot;0x76641f63d887703b83099f9d138f547e2d5b5ef71ba81ef45s2bf38814c5600e&quot;</span>, fakeP)</span><br><span class="line">	fmt.Println(<span class="string">&quot;signature&quot;</span>, hexutil.Encode(sig))</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>encode(b : 𝔹⁸ⁿ) = &quot;\x19Ethereum Signed Message:\n&quot; ‖ len(b) ‖ b</code> 其中<code>len(b)</code>是<code>b</code>中字节数的ASCII十进制编码。</li>
+</ul>
+<p>这就解决了两个定义之间的冲突，因为<code>RLP_encode(t : 𝕋)</code>永远不会以<code>\x19</code>作为开头。但新的编码函数依然存在确定性和单射性风险，仔细思考这些对我们很有帮助。</p>
+<p>原来，上面的定义并不具有确定性。对一个4个字节大小的字符串<code>b</code>来说，用<code>len(b) = &quot;4&quot;</code>或者<code>len(b) = &quot;004&quot;</code>都是有效的。我们可以进一步要求所有表示长度的十进制编码前面不能有0并且<code>len(&quot;&quot;)=&quot;0&quot;</code>来解决这个问题。</p>
+<p>上面的定义并不是明显无碰撞阻力的。一个以<code>&quot;\x19Ethereum Signed Message:\n42a…&quot;</code>开头的字节串到底表示一个42字节大小的字符串，还是一个以<code>&quot;2a&quot;</code>作为开头的字符串？这个问题在 <a target="_blank" rel="noopener" href="https://github.com/ethereum/go-ethereum/issues/14794">Geth issue #14794</a>中被提出来，也直接促使了trezor不使用这个标准。幸运的是这并没有导致真正的碰撞因为编码后的字节串总长度提供了足够的信息来消除这个歧义。</p>
+<p>如果忽略了<code>len(b)</code>，确定性和单射性就没有那么重要了。重点是，很难将任意集合映射到字节串，而不会在编码函数中引入安全问题。目前对<code>eth_sign</code>的设计仍然将字节串作为输入，并期望实现者提供一种编码。</p>
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/Go%E8%AF%AD%E8%A8%80/"># Go语言</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2021/09/01/Golang%E4%B9%8BJSON%E5%A4%84%E7%90%86/">
+                                                        Golang之JSON处理
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
