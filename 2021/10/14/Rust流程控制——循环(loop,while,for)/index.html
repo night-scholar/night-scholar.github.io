@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>Rust流程控制——循环(loop,while,for) | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    Rust流程控制——循环(loop,while,for)
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">October 14, 2021&nbsp;&nbsp;15:36:51</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Rust%E8%AF%AD%E8%A8%80%E6%A0%B8%E5%BF%83/">Rust语言核心</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="Rust流程控制——循环-loop-while-for"><a href="#Rust流程控制——循环-loop-while-for" class="headerlink" title="Rust流程控制——循环(loop,while,for)"></a>Rust流程控制——循环(loop,while,for)</h1><h2 id="loop循环"><a href="#loop循环" class="headerlink" title="loop循环"></a>loop循环</h2><p>Rust 提供了 <code>loop</code> 关键字来实现一个无限循环。</p>
+<p>可以使用 <code>break</code> 语句在任何时候退出一个循环，另外可用 <code>continue</code> 跳过循环体的剩余部分并开始下一轮循环。</p>
+<h3 id="循环返回值"><a href="#循环返回值" class="headerlink" title="循环返回值"></a>循环返回值</h3><p>loop为无限循环，使用break退出，退出时有返回值</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> counter = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="keyword">loop</span>&#123;</span><br><span class="line">        counter += <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> counter &gt;= <span class="number">10</span>&#123;</span><br><span class="line">            <span class="comment">//从 loop 循环中返回</span></span><br><span class="line">            <span class="keyword">break</span> counter*<span class="number">2</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出 20</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="嵌套循环中断"><a href="#嵌套循环中断" class="headerlink" title="嵌套循环中断"></a>嵌套循环中断</h3><p>嵌套循环和标签,利用标签决定跳出哪个循环,注意标签是’name:loop。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line">    <span class="symbol">&#x27;outer</span>:<span class="keyword">loop</span>&#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;outer loop&quot;</span>);</span><br><span class="line">        <span class="symbol">&#x27;inner</span>:<span class="keyword">loop</span>&#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;break outer loop&quot;</span>);</span><br><span class="line">            <span class="comment">//break or break &#x27;inner</span></span><br><span class="line">            <span class="comment">// 这会中断外层循环</span></span><br><span class="line">            <span class="keyword">break</span> <span class="symbol">&#x27;outer</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出 </span></span><br><span class="line"><span class="comment">//outer loop</span></span><br><span class="line"><span class="comment">//break outer loop</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="continue跳出循环体剩余部分"><a href="#continue跳出循环体剩余部分" class="headerlink" title="continue跳出循环体剩余部分"></a>continue跳出循环体剩余部分</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> counter = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">loop</span>&#123;</span><br><span class="line">        counter += <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> counter &gt;<span class="number">5</span>&#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;no continue&quot;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line"><span class="comment">//no continue</span></span><br><span class="line"><span class="comment">//no continue</span></span><br><span class="line"><span class="comment">//no continue</span></span><br><span class="line"><span class="comment">//no continue</span></span><br><span class="line"><span class="comment">//no continue</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h2><p><code>while</code> 关键字可以用作当型循环（当条件满足时循环）</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> counter = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//当counter小于5时循环</span></span><br><span class="line">    <span class="keyword">while</span> counter &lt; <span class="number">5</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> counter %<span class="number">2</span> == <span class="number">0</span>&#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;偶数&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;奇数&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        counter +=<span class="number">1</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line"><span class="comment">//偶数</span></span><br><span class="line"><span class="comment">//奇数</span></span><br><span class="line"><span class="comment">//偶数</span></span><br><span class="line"><span class="comment">//奇数</span></span><br><span class="line"><span class="comment">//偶数</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h2><h3 id="区间"><a href="#区间" class="headerlink" title="区间"></a>区间</h3><p><code>for in</code> 结构可以遍历一个 <code>Iterator</code>（迭代器）。创建迭代器的一个最简单的方法是使 用区间标记 <code>a..b</code>。这会生成从 <code>a</code>（包含此值） 到 <code>b</code>（不含此值）的，步长为 1 的 一系列值。</p>
+<p>区间0..5不包含5，0..=5包含5。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line">    <span class="keyword">for</span> counter <span class="keyword">in</span> <span class="number">0</span> ..<span class="number">5</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> counter %<span class="number">2</span> == <span class="number">0</span>&#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;偶数&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;奇数&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//或者</span></span><br><span class="line">    <span class="keyword">for</span> counter <span class="keyword">in</span> <span class="number">0</span> ..=<span class="number">4</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> counter %<span class="number">2</span> == <span class="number">0</span>&#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;偶数&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;奇数&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line"><span class="comment">//偶数</span></span><br><span class="line"><span class="comment">//奇数</span></span><br><span class="line"><span class="comment">//偶数</span></span><br><span class="line"><span class="comment">//奇数</span></span><br><span class="line"><span class="comment">//偶数</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p>1.iter - 在每次迭代中借用集合中的一个元素。这样集合本身不会被改变，循环之后仍 可以使用。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line">    <span class="keyword">let</span> names = <span class="built_in">vec!</span>[<span class="string">&quot;Curry&quot;</span>,<span class="string">&quot;James&quot;</span>,<span class="string">&quot;Durant&quot;</span>];</span><br><span class="line">    <span class="keyword">for</span> name <span class="keyword">in</span> names.iter()&#123;</span><br><span class="line">        <span class="keyword">match</span> name &#123;</span><br><span class="line">            &amp;<span class="string">&quot;Curry&quot;</span> =&gt; &#123;</span><br><span class="line">                <span class="built_in">println!</span>(<span class="string">&quot;Best shooter&quot;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            _ =&gt;&#123;</span><br><span class="line">                <span class="built_in">println!</span>(<span class="string">&quot;Good player&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line"><span class="comment">//Best shooter</span></span><br><span class="line"><span class="comment">//Good player</span></span><br><span class="line"><span class="comment">//Good player</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>2.into_iter - 会消耗集合。在每次迭代中，集合中的数据本身会被提供。一旦集合被消耗了，之后就无法再使用了，因为它已经在循环中被 “移除”（move）了。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line">    <span class="keyword">let</span> names = <span class="built_in">vec!</span>[<span class="string">&quot;Curry&quot;</span>,<span class="string">&quot;James&quot;</span>,<span class="string">&quot;Durant&quot;</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> name <span class="keyword">in</span> names.into_iter()&#123;</span><br><span class="line">        <span class="keyword">match</span> name &#123;</span><br><span class="line">            <span class="string">&quot;Curry&quot;</span> =&gt; &#123;</span><br><span class="line">                <span class="built_in">println!</span>(<span class="string">&quot;Best shooter&quot;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            _ =&gt;&#123;</span><br><span class="line">                <span class="built_in">println!</span>(<span class="string">&quot;Good player&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line"><span class="comment">//Best shooter</span></span><br><span class="line"><span class="comment">//Good player</span></span><br><span class="line"><span class="comment">//Good player</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>3.iter_mut - 可变地（mutably）借用集合中的每个元素，从而允许集合被就地修改。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> names = <span class="built_in">vec!</span>[<span class="string">&quot;Curry&quot;</span>,<span class="string">&quot;James&quot;</span>,<span class="string">&quot;Durant&quot;</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> name <span class="keyword">in</span> names.iter_mut()&#123;</span><br><span class="line">        *name = <span class="keyword">match</span> name &#123;</span><br><span class="line">            &amp;<span class="keyword">mut</span> <span class="string">&quot;Curry&quot;</span> =&gt; &#123;</span><br><span class="line">                <span class="string">&quot;Best shooter&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">            _ =&gt;&#123;</span><br><span class="line">                <span class="string">&quot;Good player&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>,names);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line"><span class="comment">//[&quot;Best shooter&quot;, &quot;Good player&quot;, &quot;Good player&quot;]</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/Rust%E8%AF%AD%E8%A8%80/"># Rust语言</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2021/09/27/%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3Rust%E6%89%80%E6%9C%89%E6%9D%83%E8%A7%84%E5%88%99/">
+                                                        初步了解Rust所有权规则
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
