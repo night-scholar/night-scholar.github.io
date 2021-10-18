@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>Golang 语言极简 HTTP 客户端 GoRequest | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    Golang 语言极简 HTTP 客户端 GoRequest
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">October 18, 2021&nbsp;&nbsp;10:18:14</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Go%E8%AF%AD%E8%A8%80%E6%A0%B8%E5%BF%83/">Go语言核心</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="Golang-语言极简-HTTP-客户端-GoRequest"><a href="#Golang-语言极简-HTTP-客户端-GoRequest" class="headerlink" title="Golang 语言极简 HTTP 客户端 GoRequest"></a>Golang 语言极简 HTTP 客户端 GoRequest</h1><p>转载自：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vvzu_KDejpQ4rJUsT2wD_A">https://mp.weixin.qq.com/s/vvzu_KDejpQ4rJUsT2wD_A</a></p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>GoRequest 是一个极简的 HTTP 客户端，作者灵感来源于 Node.js 库 SuperAgent。相比 Golang 标准库 <code>net/http</code>，GoRequest 使用起来更加简单。GoRequest 官方的口号是 “像机枪一样发送请求”。</p>
+<p>GoRequest 包含以下功能：</p>
+<ul>
+<li>支持 HTTP 请求方式：Get/Post/Put/Head/Delete/Patch/Options</li>
+<li>支持设置 header 请求头</li>
+<li>支持使用 JSON 字符串作为请求参数</li>
+<li>支持将多路请求的方式发送数据和文件</li>
+<li>支持通过代理发送请求</li>
+<li>支持为请求设置超时</li>
+<li>支持 TLS 客户端设置</li>
+<li>支持设置重定向策略</li>
+<li>支持为请求设置 cookie</li>
+<li>CookieJar - automatic in-memory cookiejar</li>
+<li>支持请求头设置基本身份认证</li>
+</ul>
+<h3 id="安装方式"><a href="#安装方式" class="headerlink" title="安装方式"></a>安装方式</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/parnurzeal/goreques</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="HTTP-请求方式"><a href="#HTTP-请求方式" class="headerlink" title="HTTP 请求方式"></a>HTTP 请求方式</h2><p>Golang 发送一个简单的 Get 请求，使用 <code>net/http</code> 标准库和使用 GoRequst 库，两种发送 Get 请求的方式都比较简单。</p>
+<p>示例代码如下：</p>
+<p>标准库方式：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">resp, err := http.Get(<span class="string">&quot;http://example.com/&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>GoRequest 库方式：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">request := gorequest.New()</span><br><span class="line">resp, body, errs := request.Get(<span class="string">&quot;http://example.com/&quot;</span>).End()</span><br></pre></td></tr></table></figure>
+
+<p>或(该 GoRequest 方式无法复用对象)</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">resp, body, errs := gorequest.New().Get(<span class="string">&quot;http://example.com/&quot;</span>).End()</span><br></pre></td></tr></table></figure>
+
+<p>阅读上面这两段代码，我们可以发现，使用标准库的方式发送 Get 请求，甚至比使用 GoRequest 库的方式发送 Get 请求更加简单。</p>
+<p>但是，当我们需求稍作修改，比如我们需要为 Get 请求，设置 header 头和设置重定向策略。我们再来看一下分别使用标准库和 GoRequest 库两种实现方式。</p>
+<h3 id="标准库方式"><a href="#标准库方式" class="headerlink" title="标准库方式"></a>标准库方式</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">client := &amp;http.Client&#123;</span><br><span class="line">  CheckRedirect: redirectPolicyFunc,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">req, err := http.NewRequest(<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;http://example.com&quot;</span>, <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line">req.Header.Add(<span class="string">&quot;If-None-Match&quot;</span>, <span class="string">`W/&quot;wyzzy&quot;`</span>)</span><br><span class="line">resp, err := client.Do(req)</span><br></pre></td></tr></table></figure>
+
+<h3 id="GoRequest-库方式（其它-HTTP-请求方式与-Get-使用方式相同）"><a href="#GoRequest-库方式（其它-HTTP-请求方式与-Get-使用方式相同）" class="headerlink" title="GoRequest 库方式（其它 HTTP 请求方式与 Get 使用方式相同）"></a>GoRequest 库方式（其它 HTTP 请求方式与 Get 使用方式相同）</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">request := gorequest.New()</span><br><span class="line">resp, body, errs := request.Get(<span class="string">&quot;http://example.com&quot;</span>).</span><br><span class="line">  RedirectPolicy(redirectPolicyFunc).</span><br><span class="line">  Set(<span class="string">&quot;If-None-Match&quot;</span>, <span class="string">`W/&quot;wyzzy&quot;`</span>).</span><br><span class="line">  End()</span><br></pre></td></tr></table></figure>
+
+<p>阅读上面两段代码，很容易发现使用 GoRequest 方式使实现更加简单。使用标准库方式，首先需要创建一个 Client，然后使用不同的命令设置 header 头等操作，这仅仅是为了实现一个 HTTP 请求。而使用 GoRequest 方式，仅需链式调用两个方法即可轻松实现。</p>
+<h2 id="JSON-格式请求参数"><a href="#JSON-格式请求参数" class="headerlink" title="JSON 格式请求参数"></a>JSON 格式请求参数</h2><p>在 Golang 语言中，如果使用标准库 <code>net/http</code> 发送请求参数为 JSON 格式的 POST 请求，首先需要先将 map 或 struct 类型的数据，使用标准库 <code>encoding/json</code> 的 Marshal 方法，将数据转换为 JSON 格式的数据，并且设置 header 头参数 <code>Content-Type</code> 的值为 <code>application/json</code>，然后创建一个 Client，最终你的代码变得越来越长，越来越难维护。</p>
+<h3 id="标准库方式-1"><a href="#标准库方式-1" class="headerlink" title="标准库方式"></a>标准库方式</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">m := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;backy&quot;</span>,</span><br><span class="line">  <span class="string">&quot;species&quot;</span>: <span class="string">&quot;dog&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line">mJson, _ := json.Marshal(m)</span><br><span class="line">contentReader := bytes.NewReader(mJson)</span><br><span class="line">req, _ := http.NewRequest(<span class="string">&quot;POST&quot;</span>, <span class="string">&quot;http://example.com&quot;</span>, contentReader)</span><br><span class="line">req.Header.Set(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/json&quot;</span>)</span><br><span class="line">req.Header.Set(<span class="string">&quot;Notes&quot;</span>,<span class="string">&quot;GoRequest is coming!&quot;</span>)</span><br><span class="line">client := &amp;http.Client&#123;&#125;</span><br><span class="line">resp, _ := client.Do(req)</span><br></pre></td></tr></table></figure>
+
+<p>如果使用 GoRequest 库发送请求参数为 JSON 格式的 POST 请求，因为它默认支持 JSON 格式的请求参数，所以它只需要一行代码就可以实现。</p>
+<h3 id="GoRequest-库方式"><a href="#GoRequest-库方式" class="headerlink" title="GoRequest 库方式"></a>GoRequest 库方式</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">request := gorequest.New()</span><br><span class="line">resp, body, errs := request.Post(<span class="string">&quot;http://example.com&quot;</span>).</span><br><span class="line">  Set(<span class="string">&quot;Notes&quot;</span>,<span class="string">&quot;gorequst is coming!&quot;</span>).</span><br><span class="line">  Send(<span class="string">`&#123;&quot;name&quot;:&quot;backy&quot;, &quot;species&quot;:&quot;dog&quot;&#125;`</span>).</span><br><span class="line">  End()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="支持回调函数-Callback"><a href="#支持回调函数-Callback" class="headerlink" title="支持回调函数 Callback"></a>支持回调函数 Callback</h2><p>GoRequest 库还支持回调函数，你可以根据自己的项目需求灵活使用它，回调函数示例代码如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">printStatus</span><span class="params">(resp gorequest.Response, body <span class="keyword">string</span>, errs []error)</span></span>&#123;</span><br><span class="line">  fmt.Println(resp.Status)</span><br><span class="line">&#125;</span><br><span class="line">gorequest.New().Get(<span class="string">&quot;http://example.com&quot;</span>).End(printStatus)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="请求控制"><a href="#请求控制" class="headerlink" title="请求控制"></a>请求控制</h2><p>在 Golang 项目开发中，有时我们可能需要对请求做一些额外控制，比如超时处理，重试请求 N 次，重定向处理等。GoRequest 库都可以为我们提供简单的实现方式。</p>
+<h3 id="超时处理"><a href="#超时处理" class="headerlink" title="超时处理"></a>超时处理</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">request := gorequest.New().Timeout(<span class="number">2</span>*time.Millisecond)</span><br><span class="line">resp, body, errs:= request.Get(<span class="string">&quot;http://example.com&quot;</span>).End()</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，Timeout 是将 Dial 连接和 IO 读写的耗时总和，与时间参数作比较。</p>
+<h3 id="重试请求"><a href="#重试请求" class="headerlink" title="重试请求"></a>重试请求</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request := gorequest.New()</span><br><span class="line">resp, body, errs := request.Get(<span class="string">&quot;http://example.com/&quot;</span>).</span><br><span class="line">                    Retry(<span class="number">3</span>, <span class="number">5</span> * time.Second, http.StatusBadRequest, http.StatusInternalServerError).</span><br><span class="line">                    End()</span><br></pre></td></tr></table></figure>
+
+<p>阅读上面这段代码，它的含义是当服务器返回结果是 <code>http.StatusBadRequest</code> 或 <code>http.StatusInternalServerError</code> 时，会每隔 5 秒重试请求一次，共重试 3 次。</p>
+<h3 id="重定向处理"><a href="#重定向处理" class="headerlink" title="重定向处理"></a>重定向处理</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">request := gorequest.New()</span><br><span class="line">resp, body, errs := request.Get(<span class="string">&quot;http://example.com/&quot;</span>).</span><br><span class="line">                    RedirectPolicy(<span class="function"><span class="keyword">func</span><span class="params">(req Request, via []*Request)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">                      <span class="keyword">if</span> req.URL.Scheme != <span class="string">&quot;https&quot;</span> &#123;</span><br><span class="line">                        <span class="keyword">return</span> http.ErrUseLastResponse</span><br><span class="line">                      &#125;</span><br><span class="line">                    &#125;).</span><br><span class="line">                    End()</span><br></pre></td></tr></table></figure>
+
+<p>阅读上面这段代码，它的含义是将 http 请求重定向为 https 请求。</p>
+<h2 id="返回结果处理方式"><a href="#返回结果处理方式" class="headerlink" title="返回结果处理方式"></a>返回结果处理方式</h2><p>读者朋友们可能已经发现，以上示例代码都是以 End 结束，End 的含义是返回结果是字符串类型，如果我们希望返回结果是其他类型，比如字节类型和结构体类型，可以将 End 分别替换为 EndBytes 和 EndStruct。</p>
+<h3 id="EndBytes-格式"><a href="#EndBytes-格式" class="headerlink" title="EndBytes 格式"></a>EndBytes 格式</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">resp, bodyBytes, errs := gorequest.New().Get(<span class="string">&quot;http://example.com/&quot;</span>).EndBytes()</span><br></pre></td></tr></table></figure>
+
+<h3 id="EndStruct-格式"><a href="#EndStruct-格式" class="headerlink" title="EndStruct 格式"></a>EndStruct 格式</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">heyYou <span class="keyword">struct</span> &#123;</span><br><span class="line">  Hey <span class="keyword">string</span> <span class="string">`json:&quot;hey&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> heyYou heyYou</span><br><span class="line"></span><br><span class="line">resp, _, errs := gorequest.New().Get(<span class="string">&quot;http://example.com/&quot;</span>).EndStruct(&amp;heyYou)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文我们介绍 Golang 语言的极简 HTTP 客户端 GoRequest 以及它的使用方法。它比标准库 <code>net/http</code> 使用方式简单，当我们项目开发中需要使用 HTTP 方式调用接口时，强烈推荐使用 GoRequest 库。</p>
+<p>GoRequest 底层在大多数用例中是基于 <code>http.Client</code> 实现的，所以通过一次调用 <code>gorequest.New()</code> 得到的对象，应尽可能多次使用。</p>
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/Go%E8%AF%AD%E8%A8%80/"># Go语言</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2021/10/14/Rust%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E2%80%94%E2%80%94%E5%BE%AA%E7%8E%AF(loop,while,for)/">
+                                                        Rust流程控制——循环(loop,while,for)
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
