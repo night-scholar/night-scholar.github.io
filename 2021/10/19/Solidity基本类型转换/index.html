@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>Solidity基本类型转换 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    Solidity基本类型转换
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">October 19, 2021&nbsp;&nbsp;19:53:42</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="Solidity基本类型转换"><a href="#Solidity基本类型转换" class="headerlink" title="Solidity基本类型转换"></a>Solidity基本类型转换</h1><h2 id="1-隐式转换"><a href="#1-隐式转换" class="headerlink" title="1. 隐式转换"></a>1. 隐式转换</h2><p>如果一个运算符能支持不同类型。编译器会隐式的尝试将一个操作数的类型，转为另一个操作数的类型，赋值同理。</p>
+<p>一般来说，值类型间的互相转换只要不丢失信息，语义可通则可转换。下面，我们来看一个整数转换的例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.0;</span><br><span class="line"></span><br><span class="line">contract Int&#123;</span><br><span class="line">  function conversion() returns (uint16)&#123;</span><br><span class="line">    uint8 a = 1;</span><br><span class="line">    //隐式转换</span><br><span class="line">    uint16 b = a;</span><br><span class="line"></span><br><span class="line">    return (b);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中，我们将一个<code>uint8</code>的变量<code>a</code>隐式的转换为了<code>uint16</code>。同理它还支持转为<code>uint32</code>，<code>uint128</code>和<code>uint256</code>。</p>
+<p>另外，无符号整数可以被转为同样，或更大的字节的类型。但需要注意的是，不能反过来转换。由于<code>address</code>是20字节大小，所以它与<code>int160</code>大小是一样。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.0;</span><br><span class="line"></span><br><span class="line">contract IntToAddress&#123;</span><br><span class="line">  function f() returns (uint)&#123;</span><br><span class="line">    uint160 i = 10;</span><br><span class="line">    address addr = i;</span><br><span class="line">    return addr.balance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中，将<code>uint160</code>的<code>i</code>转为了一个<code>address</code>。</p>
+<h2 id="2-显式转换"><a href="#2-显式转换" class="headerlink" title="2. 显式转换"></a>2. 显式转换</h2><p>编译器不会将语法上不可转换的类型进行隐式转换，此时我们要通过显式转换的方式，比如将一个有符号整数，转为一个无符号整数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.0;</span><br><span class="line"></span><br><span class="line">contract ExplicitConversion&#123;</span><br><span class="line">  function f() returns (int8)&#123;</span><br><span class="line">    uint8 a = 1;</span><br><span class="line"></span><br><span class="line">    //强制转换</span><br><span class="line">    int8 b = int8(a);</span><br><span class="line">    return b;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-类型推断"><a href="#3-类型推断" class="headerlink" title="3. 类型推断"></a>3. 类型推断</h2><p>有时为了方便，我们不会显式定义类型。但由于编译器，会自动挑选一个最恰当的类型，所以会常常留下坑，我们来看这个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.4;</span><br><span class="line"></span><br><span class="line">contract Test&#123;</span><br><span class="line">    function a() returns (uint)&#123;</span><br><span class="line">      uint count = 0;</span><br><span class="line">        for (var i = 0; i &lt; 2000; i++) &#123;</span><br><span class="line">            count++;</span><br><span class="line">            if(count &gt;= 2100)&#123;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>大家可以想想上述代码运行的结果。</p>
+<p>上述代码运行的结果实际为<code>2100</code>。原因是因为<code>var i = 0</code>定义时，通过类型推断，<code>i</code>的实际类型为<code>uint8</code>，所以它会一直循环，如果没有<code>count &gt;= 2100</code>这个判断语句，这个循环将永远不会结束。</p>
+<h2 id="4-一些常见的转换方案"><a href="#4-一些常见的转换方案" class="headerlink" title="4. 一些常见的转换方案"></a>4. 一些常见的转换方案</h2><h3 id="uint转为bytes"><a href="#uint转为bytes" class="headerlink" title="uint转为bytes"></a>uint转为bytes</h3><p>将一个uint转转bytes，可以使用<code>assembly</code><a target="_blank" rel="noopener" href="https://me.tryblockchain.org/solidity-conversions.html#fn1">1</a>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function toBytes(uint256 x) returns (bytes b) &#123;</span><br><span class="line">    b = new bytes(32);</span><br><span class="line">    assembly &#123; mstore(add(b, 32), x) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的转换方式可能是效率最高的方式。</p>
+<h3 id="string转为bytes"><a href="#string转为bytes" class="headerlink" title="string转为bytes"></a>string转为bytes</h3><p><code>string</code>可以显示的转为<code>bytes</code>。但如果要转为<code>bytes32</code>，可能只能使用<code>assembly</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.0;</span><br><span class="line"></span><br><span class="line">contract StringToBytes&#123;</span><br><span class="line">  function StringToBytesVer1(string memory source) returns (bytes result) &#123;</span><br><span class="line">    return bytes(source);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function stringToBytesVer2(string memory source) returns (bytes32 result) &#123;</span><br><span class="line">    assembly &#123;</span><br><span class="line">        result := mload(add(source, 32))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="address转为string"><a href="#address转为string" class="headerlink" title="address转为string"></a>address转为string</h3><p>address类型在solidity中不能像Go语言类似的<code>string(address)</code>的转换，如果使用<code>abi.encodePacked(x)</code>进行转换，会的到一串我们难以解读的字符串，我们无法读取通过ABI编码的字符串，因此要对ascii字符进行转换：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function toAsciiString(address x) internal view returns (string memory) &#123;</span><br><span class="line">    bytes memory s = new bytes(40);</span><br><span class="line">    for (uint i = 0; i &lt; 20; i++) &#123;</span><br><span class="line">        bytes1 b = bytes1(uint8(uint(uint160(x)) / (2**(8*(19 - i)))));</span><br><span class="line">        bytes1 hi = bytes1(uint8(b) / 16);</span><br><span class="line">        bytes1 lo = bytes1(uint8(b) - 16 * uint8(hi));</span><br><span class="line">        s[2*i] = char(hi);</span><br><span class="line">        s[2*i+1] = char(lo);            </span><br><span class="line">    &#125;</span><br><span class="line">    return string(s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function char(bytes1 b) internal view returns (bytes1 c) &#123;</span><br><span class="line">    if (uint8(b) &lt; 10) return bytes1(uint8(b) + 0x30);</span><br><span class="line">    else return bytes1(uint8(b) + 0x57);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/"># 以太坊</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2021/10/18/Golang%20%E8%AF%AD%E8%A8%80%E6%9E%81%E7%AE%80%20HTTP%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20GoRequest/">
+                                                        Golang 语言极简 HTTP 客户端 GoRequest
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
