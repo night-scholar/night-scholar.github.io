@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>Rust闭包(closure) | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    Rust闭包(closure)
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">October 27, 2021&nbsp;&nbsp;17:02:36</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Rust%E8%AF%AD%E8%A8%80%E6%A0%B8%E5%BF%83/">Rust语言核心</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="Rust闭包-closure"><a href="#Rust闭包-closure" class="headerlink" title="Rust闭包(closure)"></a>Rust闭包(closure)</h1><h2 id="什么是闭包"><a href="#什么是闭包" class="headerlink" title="什么是闭包"></a>什么是闭包</h2><p>Rust闭包的特点包括：</p>
+<ul>
+<li>声明时使用 <code>||</code> 替代 <code>()</code> 将输入参数括起来。</li>
+<li>函数体定界符（<code>&#123;&#125;</code>）对于单个表达式是可选的，其他情况必须加上。</li>
+<li>有能力捕获外部环境的变量。</li>
+<li>闭包是引用类型。</li>
+</ul>
+<p>其具体使用方式为：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">|val| val + x</span><br></pre></td></tr></table></figure>
+
+<p>​        在<code>rust</code>中，函数和闭包都是实现了<code>Fn</code>、<code>FnMut</code>或<code>FnOnce</code>特质（<code>trait</code>）的类型。任何实现了这三种特质其中一种的类型的对象，都是 可调用对象 ，都能像函数和闭包一样通过这样<code>name()</code>的形式调用，<code>()</code>在<code>rust</code>中是一个操作符，操作符在<code>rust</code>中是可以重载的。<code>rust</code>的操作符重载是通过实现相应的<code>trait</code>来实现，而<code>()</code>操作符的相应<code>trait</code>就是<code>Fn</code>、<code>FnMut</code>和<code>FnOnce</code>，所以，任何实现了这三个<code>trait</code>中的一种的类型，其实就是重载了<code>()</code>操作符。</p>
+<h2 id="三种闭包的定义"><a href="#三种闭包的定义" class="headerlink" title="三种闭包的定义"></a>三种闭包的定义</h2><p>​        虽然 Rust 无需类型说明就能在大多数时候完成变量捕获，但在编写函数时，这种模糊写法 是不允许的。当以闭包作为输入参数时，必须指出闭包的完整类型，它是通过使用以下 <code>trait</code> 中的一种来指定的。其受限制程度按以下顺序递减：</p>
+<ul>
+<li><code>Fn</code>：表示捕获方式为通过引用（<code>&amp;T</code>）的闭包</li>
+<li><code>FnMut</code>：表示捕获方式为通过可变引用（<code>&amp;mut T</code>）的闭包</li>
+<li><code>FnOnce</code>：表示捕获方式为通过值（<code>T</code>）的闭包</li>
+</ul>
+<blockquote>
+<p>注意：顺序之所以是这样，是因为 <code>&amp;T</code> 只是获取了不可变的引用，<code>&amp;mut T</code> 则可以改变 变量，<code>T</code> 则是拿到了变量的所有权而非借用。</p>
+</blockquote>
+<h3 id="FnOnce"><a href="#FnOnce" class="headerlink" title="FnOnce"></a>FnOnce</h3><p>所有函数都至少能调用一次，所以全都会实现。FnOnce包含FnMut和FnOnce。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">E</span></span> &#123;</span><br><span class="line">    a: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="built_in">Drop</span> <span class="keyword">for</span> E &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">drop</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;destroyed struct E&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">fn_once</span></span>&lt;F&gt;(func: F) <span class="keyword">where</span> F: <span class="built_in">FnOnce</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;fn_once begins&quot;</span>);</span><br><span class="line">    func();</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;fn_once ended&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> e = E &#123; a: <span class="string">&quot;fn_once&quot;</span>.to_string() &#125;;</span><br><span class="line">    <span class="comment">// 这样加个move，看看程序执行输出顺序有什么不同</span></span><br><span class="line">    <span class="comment">// let f = move || println!(&quot;fn once calls: &#123;:?&#125;&quot;, e);</span></span><br><span class="line">    <span class="keyword">let</span> f = || <span class="built_in">println!</span>(<span class="string">&quot;fn once closure calls: &#123;:?&#125;&quot;</span>, e);</span><br><span class="line">    fn_once(f);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;main ended&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打印结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">不加move</span></span><br><span class="line">fn_once begins</span><br><span class="line">fn once closure calls: E &#123; a: &quot;fn_once&quot; &#125;</span><br><span class="line">fn_once ended</span><br><span class="line">main ended</span><br><span class="line">destroyed struct E</span><br><span class="line"><span class="meta">#</span><span class="bash">move，不可复制类型必须移动，可复制类型将会复制给闭包，从而原始值不受影响</span></span><br><span class="line">fn_once begins</span><br><span class="line">fn once calls: E &#123; a: &quot;fn_once&quot; &#125;</span><br><span class="line">destroyed struct E</span><br><span class="line">fn_once ended</span><br><span class="line">main ended</span><br></pre></td></tr></table></figure>
+
+<h3 id="FnMut"><a href="#FnMut" class="headerlink" title="FnMut"></a>FnMut</h3><p>对于那些不会移走匿名结构体中的变量的闭包实现。FnMut包含Fn。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">E</span></span> &#123;</span><br><span class="line">    a: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="built_in">Drop</span> <span class="keyword">for</span> E &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">drop</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;destroyed struct E&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">fn_mut</span></span>&lt;F&gt;(<span class="keyword">mut</span> func: F) <span class="keyword">where</span> F: <span class="built_in">FnMut</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;fn_mut begins&quot;</span>);</span><br><span class="line">    func();</span><br><span class="line">    func();</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;fn_mut ended&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> e = E &#123; a: <span class="string">&quot;fn_once&quot;</span>.to_string() &#125;;</span><br><span class="line">	<span class="keyword">let</span> f = || &#123; </span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;FnMut closure calls: &#123;:?&#125;&quot;</span>, e); </span><br><span class="line">        e.a = <span class="string">&quot;fn_mut&quot;</span>.to_string(); </span><br><span class="line">    &#125;;</span><br><span class="line">    fn_mut(f);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;main ended&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打印结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fn_mut begins</span><br><span class="line">FnMut closure calls: E &#123; a: &quot;fn_once&quot; &#125;</span><br><span class="line">FnMut closure calls: E &#123; a: &quot;fn_mut&quot; &#125;</span><br><span class="line">fn_mut ended</span><br><span class="line">main ended</span><br><span class="line">destroyed struct E</span><br></pre></td></tr></table></figure>
+
+<h3 id="Fn"><a href="#Fn" class="headerlink" title="Fn"></a>Fn</h3><p>对于那些不会修改匿名结构体中变量的闭包实现。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">E</span></span> &#123;</span><br><span class="line">    a: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="built_in">Drop</span> <span class="keyword">for</span> E &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">drop</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;destroyed struct E&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">fn_fn</span></span>&lt;F&gt;(func: F) <span class="keyword">where</span> F: <span class="built_in">Fn</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;fn begins&quot;</span>);</span><br><span class="line">    func();</span><br><span class="line">    func();</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;fn ended&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> e = E &#123; a: <span class="string">&quot;fn&quot;</span>.to_string() &#125;;</span><br><span class="line">	<span class="keyword">let</span> f = || &#123; <span class="built_in">println!</span>(<span class="string">&quot;Fn closure calls: &#123;:?&#125;&quot;</span>, e); &#125;;</span><br><span class="line">    fn_fn(f);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;main ended&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打印结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fn begins</span><br><span class="line">Fn closure calls: E &#123; a: &quot;fn&quot; &#125;</span><br><span class="line">Fn closure calls: E &#123; a: &quot;fn&quot; &#125;</span><br><span class="line">fn ended</span><br><span class="line">main ended</span><br><span class="line">destroyed struct E</span><br></pre></td></tr></table></figure>
+
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/Rust%E8%AF%AD%E8%A8%80/"># Rust语言</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2021/10/27/Rust%E5%87%BD%E6%95%B0%E6%96%B9%E6%B3%95(method)/">
+                                                        Rust函数方法(method)
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
