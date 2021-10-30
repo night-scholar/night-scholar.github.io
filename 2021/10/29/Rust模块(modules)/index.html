@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>Rust模块(modules) | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    Rust模块(modules)
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">October 29, 2021&nbsp;&nbsp;17:04:57</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Rust%E8%AF%AD%E8%A8%80%E6%A0%B8%E5%BF%83/">Rust语言核心</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="Rust模块-modules"><a href="#Rust模块-modules" class="headerlink" title="Rust模块(modules)"></a>Rust模块(modules)</h1><p>Rust 提供了一套强大的模块（module）系统，可以将代码按层次分成多个逻辑 单元（模块），并管理这些模块之间的可见性（公有（public）或私有（private））。</p>
+<p>模块是项（item）的集合，项可以是：函数，结构体，trait，<code>impl</code> 块，甚至其它模块。</p>
+<h2 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h2><p>默认情况下，模块中的项拥有私有的可见性（private visibility），不过可以加上 <code>pub</code> 修饰语来重载这一行为。模块中只有公有的（public）项可以从模块外的作用域 访问。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[allow(non_snake_case)]</span></span><br><span class="line"><span class="meta">#[allow(dead_code)]</span></span><br><span class="line"><span class="keyword">mod</span> first&#123;</span><br><span class="line">    <span class="comment">//默认私有</span></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">firstPrivate</span></span>()&#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;firstPrivate&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//定义公有</span></span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">firstPublic</span></span>()&#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;firstPublic&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//嵌套模块</span></span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">mod</span> second&#123;</span><br><span class="line">        <span class="comment">//默认私有</span></span><br><span class="line">        <span class="function"><span class="keyword">fn</span> <span class="title">secondPrivate</span></span>()&#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;secondPrivate&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//定义公有</span></span><br><span class="line">        <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">secondPublic</span></span>()&#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;secondPublic&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//只在当前模块可见</span></span><br><span class="line">        <span class="keyword">pub</span>(<span class="keyword">self</span>) <span class="function"><span class="keyword">fn</span> <span class="title">secondPublicSelf</span></span>()&#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;secondPublicSelf&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//父模块可见</span></span><br><span class="line">        <span class="keyword">pub</span>(<span class="keyword">super</span>) <span class="function"><span class="keyword">fn</span> <span class="title">secondPublicSuper</span></span>()&#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;secondPublicSuper&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">pub</span> <span class="keyword">mod</span> third&#123;</span><br><span class="line">            <span class="comment">//父模块可见</span></span><br><span class="line">            <span class="keyword">pub</span>(<span class="keyword">super</span>) <span class="function"><span class="keyword">fn</span> <span class="title">thirdPublicSuper</span></span>()&#123;</span><br><span class="line">                <span class="built_in">println!</span>(<span class="string">&quot;thirdPublicSuper&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 使用 `pub(in path)` 语法定义的函数只在给定的路径中可见。</span></span><br><span class="line">            <span class="comment">// `path` 必须是父模块（parent module）或祖先模块（ancestor module），这里first和second都可以调用</span></span><br><span class="line">            <span class="keyword">pub</span>(<span class="keyword">in</span> crate::first) <span class="function"><span class="keyword">fn</span> <span class="title">thirdFunctionInFirst</span></span>()&#123;</span><br><span class="line">                <span class="built_in">println!</span>(<span class="string">&quot;thirdFunctionInFirst&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">function</span></span>()&#123;</span><br><span class="line">            secondPublicSelf();</span><br><span class="line">            third::thirdFunctionInFirst();</span><br><span class="line">            third::thirdPublicSuper();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">function</span></span>()&#123;</span><br><span class="line">        firstPublic();</span><br><span class="line">        firstPrivate();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//包含secondPublicSelf third::thirdFunctionInFirst();   third::thirdPublicSuper();</span></span><br><span class="line">        second::function();</span><br><span class="line"></span><br><span class="line">        second::secondPublic();</span><br><span class="line">        <span class="comment">// secondPrivate(); error</span></span><br><span class="line">        second::secondPublicSuper();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line">    first::function();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">firstPublic</span><br><span class="line">firstPrivate</span><br><span class="line">secondPublicSelf</span><br><span class="line">thirdFunctionInFirst</span><br><span class="line">thirdPublicSuper</span><br><span class="line">secondPublic</span><br><span class="line">secondPublicSuper</span><br></pre></td></tr></table></figure>
+
+<p>通过上面的例子可以看出一下几点：</p>
+<ul>
+<li>模块是可以嵌套的。</li>
+<li>模块中方法默认为私有，只能自己调用。</li>
+<li>只声明pub为公有，任何地方都可以调用。</li>
+<li>声明pub(self)为当前模块可见。</li>
+<li>声明pub(super)为父模块可见(只有父模块)。</li>
+<li>声明pub(in path)为指定路径向下可见(包括指定路径)。</li>
+</ul>
+<h2 id="结构体可见性"><a href="#结构体可见性" class="headerlink" title="结构体可见性"></a>结构体可见性</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">mod</span> my&#123;</span><br><span class="line">        <span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">OpenBox</span></span>&lt;T&gt;&#123;</span><br><span class="line">            <span class="keyword">pub</span> contents : T</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">ClosedBox</span></span>&lt;T&gt;&#123;</span><br><span class="line">            contents :T</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">impl</span>&lt;T&gt; ClosedBox&lt;T&gt; &#123;</span><br><span class="line">            <span class="comment">// 一个公有的构造器方法</span></span><br><span class="line">            <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">new</span></span>(contents: T) -&gt; ClosedBox&lt;T&gt; &#123;</span><br><span class="line">                ClosedBox &#123;</span><br><span class="line">                    contents: contents,</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> open_box = my::OpenBox&#123;contents:<span class="string">&quot;open_box&quot;</span>&#125;;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,open_box.contents);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// let closed_box = my::ClosedBox&#123;contents:&quot;close_box&quot;&#125;; error</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> closed_box = my::ClosedBox::new(<span class="string">&quot;close_box&quot;</span>);</span><br><span class="line">    <span class="comment">// println!(&quot;&#123;&#125;&quot;,closed_box.contents);  error</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="use声明"><a href="#use声明" class="headerlink" title="use声明"></a>use声明</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()&#123;</span><br><span class="line">    <span class="keyword">use</span> first::second::function <span class="keyword">as</span> out_function;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">function</span></span>()&#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,<span class="string">&quot;function&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">mod</span> first&#123;</span><br><span class="line">        <span class="keyword">pub</span> <span class="keyword">mod</span> second&#123;</span><br><span class="line">            <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">function</span></span>()&#123;</span><br><span class="line">                <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,<span class="string">&quot;first::second::function()&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    out_function();</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">use</span> first::second::function;</span><br><span class="line">        function();</span><br><span class="line">    &#125;</span><br><span class="line">    function();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="super和self"><a href="#super和self" class="headerlink" title="super和self"></a>super和self</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">function</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;called `function()`&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">mod</span> cool &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">function</span></span>() &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;called `cool::function()`&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">mod</span> my &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">function</span></span>() &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;called `my::function()`&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">mod</span> cool &#123;</span><br><span class="line">        <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">function</span></span>() &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;called `my::cool::function()`&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">indirect_call</span></span>() &#123;</span><br><span class="line">        <span class="comment">// 让我们从这个作用域中访问所有名为 `function` 的函数！</span></span><br><span class="line">        <span class="built_in">print!</span>(<span class="string">&quot;called `my::indirect_call()`, that\n&gt; &quot;</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// `self` 关键字表示当前的模块作用域——在这个例子是 `my`。</span></span><br><span class="line">        <span class="comment">// 调用 `self::function()` 和直接调用 `function()` 都得到相同的结果，</span></span><br><span class="line">        <span class="comment">// 因为他们表示相同的函数。</span></span><br><span class="line">        self::function();</span><br><span class="line">        function();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 我们也可以使用 `self` 来访问 `my` 内部的另一个模块：</span></span><br><span class="line">        self::cool::function();</span><br><span class="line">        cool::function();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// `super` 关键字表示父作用域（在 `my` 模块外面）。</span></span><br><span class="line">        super::function();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 这将在 *crate* 作用域内绑定 `cool::function` 。</span></span><br><span class="line">        <span class="comment">// 在这个例子中，crate 作用域是最外面的作用域。</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">use</span> crate::cool::function <span class="keyword">as</span> root_function;</span><br><span class="line">            root_function();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    my::indirect_call();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">called `my::indirect_call()`, that</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> called `my::<span class="keyword">function</span>()`</span></span><br><span class="line">called `my::function()`</span><br><span class="line">called `my::cool::function()`</span><br><span class="line">called `my::cool::function()`</span><br><span class="line">called `function()`</span><br><span class="line">called `cool::function()`</span><br></pre></td></tr></table></figure>
+
+<h2 id="模块文件分层"><a href="#模块文件分层" class="headerlink" title="模块文件分层"></a>模块文件分层</h2><p>模块可以分配到文件/目录的层次结构中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ tree .</span><br><span class="line">.</span><br><span class="line">|-- my</span><br><span class="line">|   |-- inaccessible.rs</span><br><span class="line">|   |-- mod.rs</span><br><span class="line">|   `-- nested.rs</span><br><span class="line">`-- main.rs</span><br></pre></td></tr></table></figure>
+
+<p><code>main.rs</code> 的内容：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 此声明将会查找名为 `my.rs` 或 `my/mod.rs` 的文件，并将该文件的内容放到</span></span><br><span class="line"><span class="comment">// 此作用域中一个名为 `my` 的模块里面。</span></span><br><span class="line"><span class="keyword">mod</span> my;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">function</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;called `function()`&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    my::function();</span><br><span class="line"></span><br><span class="line">    function();</span><br><span class="line"></span><br><span class="line">    my::indirect_access();</span><br><span class="line"></span><br><span class="line">    my::nested::function();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>my/mod.rs</code> 的内容：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类似地，`mod inaccessible` 和 `mod nested` 将找到 `nested.rs` 和</span></span><br><span class="line"><span class="comment">// `inaccessible.rs` 文件，并在它们放到各自的模块中。</span></span><br><span class="line"><span class="keyword">mod</span> inaccessible;</span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">mod</span> nested;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">function</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;called `my::function()`&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">private_function</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;called `my::private_function()`&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">indirect_access</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;called `my::indirect_access()`&quot;</span>);</span><br><span class="line"></span><br><span class="line">    private_function();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>my/nested.rs</code> 的内容：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">function</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;called `my::nested::function()`&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[allow(dead_code)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">private_function</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;called `my::nested::private_function()`&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>my/inaccessible.rs</code> 的内容：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[allow(dead_code)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">public_function</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;called `my::inaccessible::public_function()`&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行打印结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">called `my::function()`</span><br><span class="line">called `function()`</span><br><span class="line">called `my::indirect_access()` </span><br><span class="line">called `my::private_function()`</span><br><span class="line">called `my::inaccessible::public_function()`</span><br><span class="line">called `my::nested::function()`</span><br></pre></td></tr></table></figure>
+
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/Rust%E8%AF%AD%E8%A8%80/"># Rust语言</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2021/10/27/Rust%E9%97%AD%E5%8C%85(closure)/">
+                                                        Rust闭包(closure)
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
