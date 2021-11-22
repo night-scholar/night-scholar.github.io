@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>github推送出现无法读取远程操作库问题 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    github推送出现无法读取远程操作库问题
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">November 17, 2021&nbsp;&nbsp;17:21:30</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="github推送出现无法读取远程操作库问题"><a href="#github推送出现无法读取远程操作库问题" class="headerlink" title="github推送出现无法读取远程操作库问题"></a>github推送出现无法读取远程操作库问题</h1><ol>
+<li><p>本地初始化 ，并关联新建的github地址，在 pull 的时候发现报错，需要统一远程和本地仓库名称</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -m oldBranchName newBranchName</span><br></pre></td></tr></table></figure></li>
+<li><p>然后push就好了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master</span><br></pre></td></tr></table></figure></li>
+<li><p>如果依旧无法推送，那么我们就需要生成新的rsa密钥。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;http://github.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>中间让你输入时选择y，其它按enter键就行，生成ssh key后找到id_ras.pub</p>
+</li>
+<li><p>复制id_ras.pub的内容并且在github中找到用户setting中的SSH And GPG keys，新添加RSA密钥。</p>
+</li>
+<li><p>重复推送即可。</p>
+</li>
+</ol>
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/Git/"># Git</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                            <a class="prev" rel="prev" href="/2021/11/22/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6Solidity%E7%9A%84Gas%E6%B6%88%E8%80%97%EF%BC%88Gas%E4%BC%98%E5%8C%96%EF%BC%89%E6%80%BB%E7%BB%93/">
+                                                智能合约Solidity的Gas消耗（Gas优化）总结
+                                            </a>
+                                            
+                                                
+                                                    <a class="next" rel="next" href="/2021/10/29/Rust%E6%A8%A1%E5%9D%97(modules)/">
+                                                        Rust模块(modules)
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
