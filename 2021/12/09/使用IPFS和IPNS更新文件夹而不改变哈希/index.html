@@ -12,7 +12,7 @@
 
 
 
-<title>智能合约Solidity的Gas消耗（Gas优化）总结 | Night-Scholar’s Blog</title>
+<title>使用IPFS和IPNS更新文件夹而不改变哈希 | Night-Scholar’s Blog</title>
 
 
 
@@ -173,7 +173,7 @@
                         <article class="post-wrap">
                             <header class="post-header">
                                 <h1 class="post-title">
-                                    智能合约Solidity的Gas消耗（Gas优化）总结
+                                    使用IPFS和IPNS更新文件夹而不改变哈希
                                 </h1>
                                 
                                     <div class="post-meta">
@@ -186,7 +186,7 @@
 
                                                 
                                                     <span class="post-time">
-                        Date: <a href="#">November 22, 2021&nbsp;&nbsp;17:49:45</a>
+                        Date: <a href="#">December 9, 2021&nbsp;&nbsp;16:37:45</a>
                         </span>
                                                     
                                                         
@@ -202,29 +202,29 @@
                             </header>
 
                             <div class="post-content">
-                                <h1 id="智能合约Solidity的Gas消耗（Gas优化）总结"><a href="#智能合约Solidity的Gas消耗（Gas优化）总结" class="headerlink" title="智能合约Solidity的Gas消耗（Gas优化）总结"></a>智能合约Solidity的Gas消耗（Gas优化）总结</h1><p><strong>智能合约Solidity操作消耗gas级别</strong>（从小到大排序，<em>以256位的整型状态变量为例</em>，经Remix初略测试）：</p>
-<ul>
-<li>内部调用view/pure的fun() 消耗：几十gas</li>
-<li>内部调用写状态变量的fun() 消耗：几百gas</li>
-<li>外部调用view/pure的fun() 消耗：两三千gas</li>
-<li>外部调用写状态变量的fun() 消耗：三四千gas</li>
-<li>写一个uint状态变量 消耗：两万多gas （用uint8代替uint256反而消耗gas更多）</li>
-<li>修改一个定长数组(状态变量)元素 消耗：两万多gas</li>
-<li>插入一个map(状态变量)元素 消耗：两万多gas</li>
-<li>push一个uint[]变长数组(状态变量)元素 消耗：四万多gas</li>
-</ul>
-<p><strong>结论</strong>：</p>
-<p>1、勇敢地使用uint256吧，少很多类型转换和兼容性问题，uint8消耗更多gas呢（意外！）</p>
-<p>2、状态变量存储：序列数据尽量用map或者定长数组，而不是变长数组；</p>
-<p>3、只读操作采用静态call模式调用，尽量减少外部调用。</p>
-<p>如下例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.7.6;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">contract Demo&#123;</span><br><span class="line">    </span><br><span class="line">    struct Margin &#123;</span><br><span class="line">        uint256 marginBalance;</span><br><span class="line">        uint256 marginBalance1;</span><br><span class="line">        uint256 marginBalance2;</span><br><span class="line">        uint256 marginBalance3;</span><br><span class="line">        uint256 marginBalance4;</span><br><span class="line">        uint256 marginBalance5;</span><br><span class="line">    &#125;</span><br><span class="line">    mapping (address =&gt; Margin) public marginAccounts;</span><br><span class="line">    </span><br><span class="line">    function setInMap (uint256 num) public &#123;</span><br><span class="line">        Margin memory account = marginAccounts[msg.sender];</span><br><span class="line">        set(account,num);</span><br><span class="line">        marginAccounts[msg.sender] = account;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function set(Margin memory account,uint256 num) internal&#123;</span><br><span class="line">        account.marginBalance = num;</span><br><span class="line">        account.marginBalance1 = num;</span><br><span class="line">        account.marginBalance2 = num;</span><br><span class="line">        account.marginBalance3 = num;</span><br><span class="line">        account.marginBalance4 = num;</span><br><span class="line">        account.marginBalance5 = num;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                                <h1 id="使用IPFS和IPNS更新文件夹而不改变哈希"><a href="#使用IPFS和IPNS更新文件夹而不改变哈希" class="headerlink" title="使用IPFS和IPNS更新文件夹而不改变哈希"></a>使用IPFS和IPNS更新文件夹而不改变哈希</h1><h2 id="IPFS"><a href="#IPFS" class="headerlink" title="IPFS"></a>IPFS</h2><h3 id="开启本地节点"><a href="#开启本地节点" class="headerlink" title="开启本地节点"></a>开启本地节点</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipfs daemon</span><br></pre></td></tr></table></figure>
 
-<p>当marginAccounts[msg.sender]对应对象的属性为0时，执行setInMap方法消耗150000左右gas，而当状态变量不为0的时候。执行setInMap方法仅需消耗50000左右gas。结论如下：</p>
-<ul>
-<li>修改非0的状态变量比修改为0的状态变量消耗的gas更少；</li>
-<li>将一个状态变量设置为0将比修改非0的状态变量消耗的gas更少。</li>
-</ul>
+<p>进入localhost:5001</p>
+<h3 id="公钥生成"><a href="#公钥生成" class="headerlink" title="公钥生成"></a>公钥生成</h3><p>ipfs key gen -t rsa -s 2048 test_key</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">k2k4r8mk2m9yeoc9rkrtv8mtkgz2f64xegx1juhu64gymr4rpupz5s4w</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看ipfs管理的所有密钥对"><a href="#查看ipfs管理的所有密钥对" class="headerlink" title="查看ipfs管理的所有密钥对"></a>查看ipfs管理的所有密钥对</h3><p>ipfs key list</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">self #ipfs节点使用的</span><br><span class="line">test_key #本次生成的</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加文件夹到IPFS"><a href="#添加文件夹到IPFS" class="headerlink" title="添加文件夹到IPFS"></a>添加文件夹到IPFS</h3><p>ipfs add -r .\ID\ -w</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">17.38 KiB / 52.13 KiB [============================&gt;---------------------------------------------------------]  33.33%added QmPPccUJ3LYgpQR1KbgJusgTDSjGoF4Gc1Krys6hotEhzo ID/id1.json</span><br><span class="line">34.75 KiB / 52.13 KiB [=========================================================&gt;----------------------------]  66.67%added QmPPccUJ3LYgpQR1KbgJusgTDSjGoF4Gc1Krys6hotEhzo ID/id2.json</span><br><span class="line">52.13 KiB / 52.13 KiB [======================================================================================] 100.00%added QmPPccUJ3LYgpQR1KbgJusgTDSjGoF4Gc1Krys6hotEhzo ID/id3.json</span><br><span class="line">52.13 KiB / 52.13 KiB [======================================================================================] 100.00%added QmPdjDJnVWZ66bgEmNgomFFGTjK4f92RqLTz3X49PYkY4P ID</span><br><span class="line">52.13 KiB / 52.13 KiB [======================================================================================] 100.00%added QmTyB4zdsgtqiEbSjzzBk6dTbgjfpLQAy43CWfDa6HZsmE</span><br><span class="line">52.13 KiB / 52.13 KiB [======================================================================================] 100.00%</span><br></pre></td></tr></table></figure>
+
+<h2 id="IPNS"><a href="#IPNS" class="headerlink" title="IPNS"></a>IPNS</h2><p><code>IPNS</code>类似于域名系统，由<code>IPFS节点</code>自己维护。<code>IPNS</code>是一个PKI名称空间， <code>IPNS名称</code>是<code>公钥</code>的<code>哈希</code>，<code>私钥</code>则用来发布<code>签名的名称</code>。 当<code>发布</code>或<code>解析名称</code>时，默认情况下总是使用发布者自身的节点ID，也就是节点公钥的哈希，但是可以更改。</p>
+<h3 id="使用自己的节点ID发布文件夹"><a href="#使用自己的节点ID发布文件夹" class="headerlink" title="使用自己的节点ID发布文件夹"></a>使用自己的节点ID发布文件夹</h3><p>ipfs name publish /ipfs/QmTyB4zdsgtqiEbSjzzBk6dTbgjfpLQAy43CWfDa6HZsmE</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Published to k51qzi5uqu5dm4jjl8g22b9n5xw8rzyuogczvn2r3iq12ismy325lhrw3rfpkw: /ipfs/QmTyB4zdsgtqiEbSjzzBk6dTbgjfpLQAy43CWfDa6HZsmE</span><br></pre></td></tr></table></figure>
+
+<h3 id="再次添加一个文件并发布文件夹"><a href="#再次添加一个文件并发布文件夹" class="headerlink" title="再次添加一个文件并发布文件夹"></a>再次添加一个文件并发布文件夹</h3><p>ipfs add -r .\ID\ -w</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">17.38 KiB / ? [-------------------------------------------------------=---------------------------------------------] added QmPPccUJ3LYgpQR1KbgJusgTDSjGoF4Gc1Krys6hotEhzo ID/id1.json</span><br><span class="line">34.75 KiB / 69.51 KiB [==========================================&gt;-------------------------------------------]  50.00%added QmPPccUJ3LYgpQR1KbgJusgTDSjGoF4Gc1Krys6hotEhzo ID/id2.json</span><br><span class="line">52.13 KiB / 69.51 KiB [================================================================&gt;---------------------]  75.00%added QmPPccUJ3LYgpQR1KbgJusgTDSjGoF4Gc1Krys6hotEhzo ID/id3.json</span><br><span class="line">69.51 KiB / 69.51 KiB [======================================================================================] 100.00%added QmPPccUJ3LYgpQR1KbgJusgTDSjGoF4Gc1Krys6hotEhzo ID/id4.json</span><br><span class="line">69.51 KiB / 69.51 KiB [======================================================================================] 100.00%added QmbenETDgNe9Z6MHCiLA3efa2zzsia1JycDnUPPEXW4H91 ID</span><br><span class="line">69.51 KiB / 69.51 KiB [======================================================================================] 100.00%added QmNRswcWMcHeUj9MureWc9mK36wsWHkubKikKkdRuQzV8u</span><br><span class="line">69.51 KiB / 69.51 KiB [======================================================================================] 100.00%</span><br></pre></td></tr></table></figure>
+
+<p>ipfs name publish /ipfs/QmNRswcWMcHeUj9MureWc9mK36wsWHkubKikKkdRuQzV8u</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Published to k51qzi5uqu5dm4jjl8g22b9n5xw8rzyuogczvn2r3iq12ismy325lhrw3rfpkw: /ipfs/QmNRswcWMcHeUj9MureWc9mK36wsWHkubKikKkdRuQzV8u</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看更新结果"><a href="#查看更新结果" class="headerlink" title="查看更新结果"></a>查看更新结果</h3><p><a target="_blank" rel="noopener" href="http://localhost:5001/ipfs/bafybeihcyruaeza7uyjd6ugicbcrqumejf6uf353e5etdkhotqffwtguva/#/ipns/k51qzi5uqu5dm4jjl8g22b9n5xw8rzyuogczvn2r3iq12ismy325lhrw3rfpkw/ID">http://localhost:5001/ipfs/bafybeihcyruaeza7uyjd6ugicbcrqumejf6uf353e5etdkhotqffwtguva/#/ipns/k51qzi5uqu5dm4jjl8g22b9n5xw8rzyuogczvn2r3iq12ismy325lhrw3rfpkw/ID</a></p>
 
                             </div>
 
@@ -243,7 +243,7 @@
                                             <span class="tag">
                     
                     
-                        <a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/"># 以太坊</a>
+                        <a href="/tags/IPFS/"># IPFS</a>
                     
                         
                 </span>
@@ -256,13 +256,9 @@
                                     </section>
                                     <section class="post-nav">
                                         
-                                            <a class="prev" rel="prev" href="/2021/12/09/%E4%BD%BF%E7%94%A8IPFS%E5%92%8CIPNS%E6%9B%B4%E6%96%B0%E6%96%87%E4%BB%B6%E5%A4%B9%E8%80%8C%E4%B8%8D%E6%94%B9%E5%8F%98%E5%93%88%E5%B8%8C/">
-                                                使用IPFS和IPNS更新文件夹而不改变哈希
-                                            </a>
-                                            
                                                 
-                                                    <a class="next" rel="next" href="/2021/11/17/github%E6%8E%A8%E9%80%81%E5%87%BA%E7%8E%B0%E6%97%A0%E6%B3%95%E8%AF%BB%E5%8F%96%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C%E5%BA%93%E9%97%AE%E9%A2%98/">
-                                                        github推送出现无法读取远程操作库问题
+                                                    <a class="next" rel="next" href="/2021/11/22/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6Solidity%E7%9A%84Gas%E6%B6%88%E8%80%97%EF%BC%88Gas%E4%BC%98%E5%8C%96%EF%BC%89%E6%80%BB%E7%BB%93/">
+                                                        智能合约Solidity的Gas消耗（Gas优化）总结
                                                     </a>
                                                     
                                     </section>
