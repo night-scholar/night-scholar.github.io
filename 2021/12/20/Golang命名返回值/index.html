@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>Golang命名返回值 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    Golang命名返回值
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">December 20, 2021&nbsp;&nbsp;11:26:13</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Go%E8%AF%AD%E8%A8%80%E6%A0%B8%E5%BF%83/">Go语言核心</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="Golang命名返回值"><a href="#Golang命名返回值" class="headerlink" title="Golang命名返回值"></a>Golang命名返回值</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Golang 语言支持命名返回值，它与使用普通（匿名）返回值不同的是，命名返回值会被视为定义在函数顶部的变量，并且在使用 <code>return</code> 语句返回时，不再必须在其后面指定参数名，也就是支持“裸”返回。</p>
+<p>而使用普通返回值时，使用 <code>return</code> 语句返回时，需要在其后面指定与普通返回值相同类型的参数名。</p>
+<p>实际上，命名返回值和普通返回值都有其适用的场景，本文我们介绍 Golang 语言函数或方法使用命名返回值和普通返回值各自的“好处”与“坏处”。</p>
+<h2 id="命名返回值"><a href="#命名返回值" class="headerlink" title="命名返回值"></a>命名返回值</h2><p>使用命名返回值的“好处”是可以提升代码可读性，读者朋友们试想一下，当函数或方法有多个返回值时，尤其是函数体中代码比较长的函数或方法，如果我们使用普通返回值，那么我们想要知道返回值的含义，就需要先阅读函数体中完整代码。</p>
+<p>而如果使用具有实际含义的命名返回值，我们只需要阅读函数或方法的签名，就可以知道其含义，甚至可以把它们作为文档使用。</p>
+<p>但是，命名返回值也不是没有“坏处”，如果函数体内有变量与命名返回值同名，那么命名返回值会被覆盖，所以我们也需要注意避免“踩坑”。</p>
+<h2 id="普通返回值"><a href="#普通返回值" class="headerlink" title="普通返回值"></a>普通返回值</h2><p>普通（匿名）返回值的“好处”是简洁，当我们写一些简短函数或方法时，使用普通返回值可以使代码更加简洁，在 Golang 语言官方标准库中，有很多使用普通返回值的函数或方法。</p>
+<p>但是如果返回值是指针类型时，使用普通返回值，就会使我们函数体中的代码变得不优雅，比如以下这段示例代码。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">c</span><span class="params">()</span> *<span class="title">int</span></span> &#123;</span><br><span class="line"> i := <span class="number">0</span></span><br><span class="line"> <span class="keyword">return</span> &amp;i</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">d</span><span class="params">()</span> <span class="params">(i *<span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line"> <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然这里列举的代码片段是个极端示例，我们在编写 Golang 代码时，也并不会这么使用。</p>
+<p>还有就是在编写函数体代码比较长的函数时，使用普通返回值的代码，其可读性比不上使用命名返回值的代码。</p>
+<h2 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h2><p>defer 在命名返回值和普通返回值的函数或方法中，返回的结果不一样。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"> f := fmt.Println</span><br><span class="line"> f(a())</span><br><span class="line"> f(b())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">a</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line"> i := <span class="number">0</span></span><br><span class="line"> <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">  i += <span class="number">1</span></span><br><span class="line">  fmt.Println(<span class="string">&quot;a defer:&quot;</span>, i)</span><br><span class="line"> &#125;()</span><br><span class="line"> <span class="keyword">return</span> i</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">b</span><span class="params">()</span> <span class="params">(i <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line"> i = <span class="number">0</span></span><br><span class="line"> <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">  i += <span class="number">1</span></span><br><span class="line">  fmt.Println(<span class="string">&quot;b defer:&quot;</span>, i)</span><br><span class="line"> &#125;()</span><br><span class="line"> <span class="keyword">return</span> i</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a defer: 1</span><br><span class="line">0</span><br><span class="line">b defer: 1</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>阅读上面这段代码，我们可以发现使用普通返回值的函数 <code>a()</code>，返回结果是 <code>0</code>。使用命名返回值的函数 <code>b()</code>，返回结果是 <code>1</code>。</p>
+<p>我们在之前的文章中，也单独介绍过 <code>defer</code> 。在这里我们简述一下，当我们使用 <code>defer</code> 调用一个函数时，该函数的执行，被推迟到周围函数返回的那一刻，要么是因为周围的函数执行了 <code>return</code> 语句，要么是因为相应的 <code>goroutine</code> 崩溃。</p>
+<p>在函数 <code>a()</code> 中，因为我们没有使用命名返回值，所以返回结果 <code>return i</code>，其中 <code>i</code> 是一个静态值，即使我们在 <code>defer</code> 调用的函数中给变量 <code>i</code> 执行 <code>+1</code> 操作，返回结果中的变量 <code>i</code> 是不可访问的，所以也不会修改返回结果中的变量 <code>i</code>。</p>
+<p>在函数 <code>b()</code> 中，因为我们使用命名返回值，所以变量 <code>i</code> 已被分配，并且被初始化为类型零值。即使 <code>defer</code> 调用的函数在返回结果之后执行，返回结果中的变量 <code>i</code> 仍然是可以被访问的，所以其值仍然可以被修改。</p>
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/Go%E8%AF%AD%E8%A8%80/"># Go语言</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2021/12/17/github%E6%8E%A8%E9%80%81%E5%87%BA%E7%8E%B0%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98/">
+                                                        github推送出现超时问题
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
