@@ -12,7 +12,7 @@
 
 
 
-<title>Substrate开发之一：环境搭建、创建工程 | Night-Scholar’s Blog</title>
+<title>Substrate开发之二：配置wss协议、数字证书、nginx | Night-Scholar’s Blog</title>
 
 
 
@@ -173,7 +173,7 @@
                         <article class="post-wrap">
                             <header class="post-header">
                                 <h1 class="post-title">
-                                    Substrate开发之一：环境搭建、创建工程
+                                    Substrate开发之二：配置wss协议、数字证书、nginx
                                 </h1>
                                 
                                     <div class="post-meta">
@@ -186,7 +186,7 @@
 
                                                 
                                                     <span class="post-time">
-                        Date: <a href="#">January 9, 2022&nbsp;&nbsp;14:49:58</a>
+                        Date: <a href="#">January 10, 2022&nbsp;&nbsp;16:02:03</a>
                         </span>
                                                     
                                                         
@@ -202,28 +202,20 @@
                             </header>
 
                             <div class="post-content">
-                                <h1 id="Substrate开发之一：环境搭建、创建工程"><a href="#Substrate开发之一：环境搭建、创建工程" class="headerlink" title="Substrate开发之一：环境搭建、创建工程"></a>Substrate开发之一：环境搭建、创建工程</h1><h2 id="1-Substrate环境搭建"><a href="#1-Substrate环境搭建" class="headerlink" title="1. Substrate环境搭建"></a>1. Substrate环境搭建</h2><h3 id="1-1-安装依赖"><a href="#1-1-安装依赖" class="headerlink" title="1.1 安装依赖"></a>1.1 安装依赖</h3><p>Substrate 官方安装脚本：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://getsubstrate.io -sSf | bash -s -- --fast</span><br></pre></td></tr></table></figure>
+                                <h1 id="Substrate开发之二：配置wss协议、数字证书、nginx"><a href="#Substrate开发之二：配置wss协议、数字证书、nginx" class="headerlink" title="Substrate开发之二：配置wss协议、数字证书、nginx"></a>Substrate开发之二：配置wss协议、数字证书、nginx</h1><h2 id="1-生成证书"><a href="#1-生成证书" class="headerlink" title="1. 生成证书"></a>1. 生成证书</h2><h3 id="1-1-配置文件"><a href="#1-1-配置文件" class="headerlink" title="1.1 配置文件"></a>1.1 配置文件</h3><p>在/etc/ssl/下生成一个新配置文件sscert.cnf</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[req]</span><br><span class="line">default_bits = 4096</span><br><span class="line">default_md = sha256</span><br><span class="line">distinguished_name = req_distinguished_name</span><br><span class="line">x509_extensions = v3_req</span><br><span class="line">prompt = no</span><br><span class="line">[req_distinguished_name]</span><br><span class="line">C = US</span><br><span class="line">ST = VA</span><br><span class="line">L = SomeCity</span><br><span class="line">O = MyCompany</span><br><span class="line">OU = MyDivision</span><br><span class="line">CN = 127.0.0.1</span><br><span class="line">[v3_req]</span><br><span class="line">keyUsage = keyEncipherment, dataEncipherment</span><br><span class="line">extendedKeyUsage = serverAuth</span><br><span class="line">subjectAltName = @alt_names</span><br><span class="line">[alt_names]</span><br><span class="line">IP.1 = 127.0.0.1</span><br></pre></td></tr></table></figure>
 
-<h3 id="1-2-安装Rust"><a href="#1-2-安装Rust" class="headerlink" title="1.2 安装Rust"></a>1.2 安装Rust</h3><p>Substrate合约开发使用的是rust语言</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl https:<span class="comment">//sh.rustup.rs -sSf | sh </span></span><br><span class="line">rustup <span class="keyword">default</span> stable</span><br><span class="line">rustup update nightly</span><br><span class="line">rustup target add wasm32-unknown-unknown --toolchain nightly</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-生成证书"><a href="#1-2-生成证书" class="headerlink" title="1.2 生成证书"></a>1.2 生成证书</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -nodes -x509 -days 365 -keyout ./substrate/domain.key -out ./substrate/domain.crt -config sscert.cnf</span><br></pre></td></tr></table></figure>
 
-<h3 id="1-3-安装substrate节点"><a href="#1-3-安装substrate节点" class="headerlink" title="1.3 安装substrate节点"></a>1.3 安装substrate节点</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:paritytech/substrate.git</span><br><span class="line">cd substrate</span><br><span class="line">cargo build --release</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -in ./substate/domain.crt -noout -text</span><br></pre></td></tr></table></figure>
 
-<h3 id="1-4-安装cargo-contract插件"><a href="#1-4-安装cargo-contract插件" class="headerlink" title="1.4 安装cargo-contract插件"></a>1.4 安装cargo-contract插件</h3><p>cargo-contract插件用于编译智能合约</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo install cargo-contract --force</span><br></pre></td></tr></table></figure>
+<h2 id="2-配置证书"><a href="#2-配置证书" class="headerlink" title="2. 配置证书"></a>2. 配置证书</h2><h3 id="2-1-nginx配置"><a href="#2-1-nginx配置" class="headerlink" title="2.1 nginx配置"></a>2.1 nginx配置</h3><p>打开nginx配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">listen 8086 ssl http2; </span><br><span class="line">ssl on;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">    proxy_pass http://localhost:9944/; </span><br><span class="line">    proxy_http_version 1.1;</span><br><span class="line">    proxy_read_timeout 120s;</span><br><span class="line">    proxy_redirect off;</span><br><span class="line">    proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">    proxy_set_header Connection &quot;upgrade&quot;;</span><br><span class="line">    proxy_set_header Host $host:$server_port;</span><br><span class="line">    proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">    proxy_set_header REMOTE-HOST $remote_addr;</span><br><span class="line">    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">    &#125;</span><br><span class="line">    ssl_certificate /etc/ssl/substrate/domain.crt;</span><br><span class="line">    ssl_certificate_key /etc/ssl/substrate/domain.key;</span><br><span class="line">    ssl_session_cache shared:cache_nginx_SSL:1m;</span><br><span class="line">    ssl_session_timeout 1440m;</span><br><span class="line">    ssl_ciphers &quot;ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS&quot;;</span><br><span class="line">    ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE</span><br><span class="line">    ssl_prefer_server_ciphers on;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="2-创建合约工程"><a href="#2-创建合约工程" class="headerlink" title="2. 创建合约工程"></a>2. 创建合约工程</h2><h3 id="1-1-创建命令"><a href="#1-1-创建命令" class="headerlink" title="1.1 创建命令"></a>1.1 创建命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo contract new erc20</span><br></pre></td></tr></table></figure>
+<p>重启nginx</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
 
-<h3 id="1-2-测试命令"><a href="#1-2-测试命令" class="headerlink" title="1.2 测试命令"></a>1.2 测试命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo contract test</span><br></pre></td></tr></table></figure>
-
-<p>如果执行报错则</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rustup default nightly</span><br><span class="line">cargo contract test</span><br><span class="line">或者</span><br><span class="line">cargo +nightly contract build</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-3-生成命令"><a href="#1-3-生成命令" class="headerlink" title="1.3 生成命令"></a>1.3 生成命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rustup default nightly</span><br><span class="line">cargo contract build</span><br><span class="line">或者</span><br><span class="line">cargo +nightly contract build</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-启动Substrate"><a href="#3-启动Substrate" class="headerlink" title="3. 启动Substrate"></a>3. 启动Substrate</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./target/release/substrate  --dev --ws-external --rpc-external --rpc-cors=all</span><br></pre></td></tr></table></figure>
-
+<h3 id="2-2-浏览器配置证书"><a href="#2-2-浏览器配置证书" class="headerlink" title="2.2 浏览器配置证书"></a>2.2 浏览器配置证书</h3><p>在chrome浏览器设置中搜索证书，管理证书导入domain.crt，大功告成，就可以在<a target="_blank" rel="noopener" href="https://polkadot.js.org/apps%E4%B8%AD%E4%BD%BF%E7%94%A8wss%E8%BF%9E%E6%8E%A5substrate%E5%8C%BA%E5%9D%97%E9%93%BE%E4%BA%86%E3%80%82">https://polkadot.js.org/apps中使用wss连接substrate区块链了。</a></p>
 
                             </div>
 
@@ -255,13 +247,9 @@
                                     </section>
                                     <section class="post-nav">
                                         
-                                            <a class="prev" rel="prev" href="/2022/01/10/Substrate%E5%BC%80%E5%8F%91%E4%B9%8B%E4%BA%8C%EF%BC%9A%E9%85%8D%E7%BD%AEwss%E5%8D%8F%E8%AE%AE%E3%80%81%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E3%80%81nginx/">
-                                                Substrate开发之二：配置wss协议、数字证书、nginx
-                                            </a>
-                                            
                                                 
-                                                    <a class="next" rel="next" href="/2022/01/06/go%E5%9F%BA%E7%A1%80%E5%BA%93%E4%B9%8B%E7%BC%96%E5%86%99%E6%A0%87%E5%87%86%E8%BE%93%E5%87%BA%E5%92%8C%E9%94%99%E8%AF%AF/">
-                                                        go基础库之编写标准输出和错误
+                                                    <a class="next" rel="next" href="/2022/01/09/Substrate%E5%BC%80%E5%8F%91%E4%B9%8B%E4%B8%80%EF%BC%9A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E3%80%81%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/">
+                                                        Substrate开发之一：环境搭建、创建工程
                                                     </a>
                                                     
                                     </section>
