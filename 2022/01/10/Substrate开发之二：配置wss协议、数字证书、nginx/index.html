@@ -12,7 +12,7 @@
 
 
 
-<title>go基础库之编写标准输出和错误 | Night-Scholar’s Blog</title>
+<title>Substrate开发之一：环境搭建、创建工程 | Night-Scholar’s Blog</title>
 
 
 
@@ -173,7 +173,7 @@
                         <article class="post-wrap">
                             <header class="post-header">
                                 <h1 class="post-title">
-                                    go基础库之编写标准输出和错误
+                                    Substrate开发之一：环境搭建、创建工程
                                 </h1>
                                 
                                     <div class="post-meta">
@@ -186,14 +186,14 @@
 
                                                 
                                                     <span class="post-time">
-                        Date: <a href="#">January 6, 2022&nbsp;&nbsp;17:41:46</a>
+                        Date: <a href="#">January 10, 2022&nbsp;&nbsp;16:02:03</a>
                         </span>
                                                     
                                                         
                                                             <span class="post-category">
                     Category:
                             
-                                <a href="/categories/Go%E8%AF%AD%E8%A8%80%E6%A0%B8%E5%BF%83/">Go语言核心</a>
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
                             
                         </span>
                                                             
@@ -202,15 +202,20 @@
                             </header>
 
                             <div class="post-content">
-                                <h1 id="go基础库之编写标准输出和错误"><a href="#go基础库之编写标准输出和错误" class="headerlink" title="go基础库之编写标准输出和错误"></a>go基础库之编写标准输出和错误</h1><p>转载自<a target="_blank" rel="noopener" href="https://www.ganymedenil.com/2019/05/29/go-standard-library-by-write-standard-output-and-errors.html">https://www.ganymedenil.com/2019/05/29/go-standard-library-by-write-standard-output-and-errors.html</a></p>
-<p>每个进程都各有一个<code>stdin</code>，<code>stdout</code>和 <code>stderr</code>文件描述符。使用的标准方法是<code>stdout</code>作为进程输出，<code>stderr</code>作为进程错误输出。由于这些是文件描述符，因此写入数据的目标可以是从控制台到套接字的任何内容。本文将告诉你如何编写<code>stdout</code>和<code>stderr</code>。</p>
-<h2 id="编写标准输出和错误"><a href="#编写标准输出和错误" class="headerlink" title="编写标准输出和错误"></a>编写标准输出和错误</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>每个进程都各有一个<code>stdin</code>，<code>stdout</code>和 <code>stderr</code>文件描述符。使用的标准方法是<code>stdout</code>作为进程输出，<code>stderr</code>作为进程错误输出。由于这些是文件描述符，因此写入数据的目标可以是从控制台到套接字的任何内容。本文将告诉你如何编写<code>stdout</code>和<code>stderr</code>。</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;io&quot;</span></span><br><span class="line">    <span class="string">&quot;os&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 只需写字符串</span></span><br><span class="line">    io.WriteString(os.Stdout,</span><br><span class="line">        <span class="string">&quot;这是标准输出的字符串。\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">    io.WriteString(os.Stderr,</span><br><span class="line">        <span class="string">&quot;这是标准错误输出的字符串。\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Stdout/err实现了writer接口</span></span><br><span class="line">    buf := []<span class="keyword">byte</span>&#123;<span class="number">0xAF</span>, <span class="number">0xFF</span>, <span class="number">0xFE</span>&#125;</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">200</span>; i++ &#123;</span><br><span class="line">        <span class="keyword">if</span> _, e := os.Stdout.Write(buf); e != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="built_in">panic</span>(e)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// fmt包也可以使用</span></span><br><span class="line">    fmt.Fprintln(os.Stdout, <span class="string">&quot;\n&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">$ <span class="keyword">go</span> run main.<span class="keyword">go</span></span><br><span class="line">这是标准错误输出的字符串。</span><br><span class="line">这是标准输出的字符串。</span><br></pre></td></tr></table></figure>
+                                <h1 id="Substrate开发之二：配置wss协议、数字证书、nginx"><a href="#Substrate开发之二：配置wss协议、数字证书、nginx" class="headerlink" title="Substrate开发之二：配置wss协议、数字证书、nginx"></a>Substrate开发之二：配置wss协议、数字证书、nginx</h1><h2 id="1-生成证书"><a href="#1-生成证书" class="headerlink" title="1. 生成证书"></a>1. 生成证书</h2><h3 id="1-1-配置文件"><a href="#1-1-配置文件" class="headerlink" title="1.1 配置文件"></a>1.1 配置文件</h3><p>在/etc/ssl/下生成一个新配置文件sscert.cnf</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[req]</span><br><span class="line">default_bits = 4096</span><br><span class="line">default_md = sha256</span><br><span class="line">distinguished_name = req_distinguished_name</span><br><span class="line">x509_extensions = v3_req</span><br><span class="line">prompt = no</span><br><span class="line">[req_distinguished_name]</span><br><span class="line">C = US</span><br><span class="line">ST = VA</span><br><span class="line">L = SomeCity</span><br><span class="line">O = MyCompany</span><br><span class="line">OU = MyDivision</span><br><span class="line">CN = 127.0.0.1</span><br><span class="line">[v3_req]</span><br><span class="line">keyUsage = keyEncipherment, dataEncipherment</span><br><span class="line">extendedKeyUsage = serverAuth</span><br><span class="line">subjectAltName = @alt_names</span><br><span class="line">[alt_names]</span><br><span class="line">IP.1 = 127.0.0.1</span><br></pre></td></tr></table></figure>
 
-<h3 id="shell脚本"><a href="#shell脚本" class="headerlink" title="shell脚本"></a>shell脚本</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> build -o demo ./</span><br><span class="line">nohup ./demo <span class="number">1</span>&gt;result.log <span class="number">2</span>&gt;error.log &amp;</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-生成证书"><a href="#1-2-生成证书" class="headerlink" title="1.2 生成证书"></a>1.2 生成证书</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -nodes -x509 -days 365 -keyout ./substrate/domain.key -out ./substrate/domain.crt -config sscert.cnf</span><br></pre></td></tr></table></figure>
 
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>与前文中的<code>Stdin</code>一样，<code>Stdout</code>和<code>Stderr</code>是文件描述符。这些实现了Writer接口。</p>
-<p>上面的示例展示了几种方法展示了如何通过<code>io.WriteString</code>函数写入这些内容，分别是使用<code>Writer</code> API以及<code>fmt</code>包和<code>FprintXX</code>函数。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -in ./substate/domain.crt -noout -text</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-配置证书"><a href="#2-配置证书" class="headerlink" title="2. 配置证书"></a>2. 配置证书</h2><h3 id="2-1-nginx配置"><a href="#2-1-nginx配置" class="headerlink" title="2.1 nginx配置"></a>2.1 nginx配置</h3><p>打开nginx配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">listen 8086 ssl http2; </span><br><span class="line">ssl on;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">    proxy_pass http://localhost:9944/; </span><br><span class="line">    proxy_http_version 1.1;</span><br><span class="line">    proxy_read_timeout 120s;</span><br><span class="line">    proxy_redirect off;</span><br><span class="line">    proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">    proxy_set_header Connection &quot;upgrade&quot;;</span><br><span class="line">    proxy_set_header Host $host:$server_port;</span><br><span class="line">    proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">    proxy_set_header REMOTE-HOST $remote_addr;</span><br><span class="line">    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">    &#125;</span><br><span class="line">    ssl_certificate /etc/ssl/substrate/domain.crt;</span><br><span class="line">    ssl_certificate_key /etc/ssl/substrate/domain.key;</span><br><span class="line">    ssl_session_cache shared:cache_nginx_SSL:1m;</span><br><span class="line">    ssl_session_timeout 1440m;</span><br><span class="line">    ssl_ciphers &quot;ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS&quot;;</span><br><span class="line">    ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE</span><br><span class="line">    ssl_prefer_server_ciphers on;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重启nginx</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-浏览器配置证书"><a href="#2-2-浏览器配置证书" class="headerlink" title="2.2 浏览器配置证书"></a>2.2 浏览器配置证书</h3><p>在chrome浏览器设置中搜索证书，管理证书导入domain.crt，大功告成，就可以在<a target="_blank" rel="noopener" href="https://polkadot.js.org/apps%E4%B8%AD%E4%BD%BF%E7%94%A8wss%E8%BF%9E%E6%8E%A5substrate%E5%8C%BA%E5%9D%97%E9%93%BE%E4%BA%86%E3%80%82">https://polkadot.js.org/apps中使用wss连接substrate区块链了。</a></p>
 
                             </div>
 
@@ -229,7 +234,7 @@
                                             <span class="tag">
                     
                     
-                        <a href="/tags/Go%E8%AF%AD%E8%A8%80/"># Go语言</a>
+                        <a href="/tags/Substrate/"># Substrate</a>
                     
                         
                 </span>
@@ -242,13 +247,9 @@
                                     </section>
                                     <section class="post-nav">
                                         
-                                            <a class="prev" rel="prev" href="/2022/01/09/Substrate%E5%BC%80%E5%8F%91%E4%B9%8B%E4%B8%80%EF%BC%9A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E3%80%81%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/">
-                                                Substrate开发之一：环境搭建、创建工程
-                                            </a>
-                                            
                                                 
-                                                    <a class="next" rel="next" href="/2021/12/27/Golang%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87break%E9%80%80%E5%87%BAfor-select/">
-                                                        Golang如何通过break退出for-select
+                                                    <a class="next" rel="next" href="/2022/01/09/Substrate%E5%BC%80%E5%8F%91%E4%B9%8B%E4%B8%80%EF%BC%9A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E3%80%81%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/">
+                                                        Substrate开发之一：环境搭建、创建工程
                                                     </a>
                                                     
                                     </section>
