@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>以太坊预言机数据采集 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    以太坊预言机数据采集
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">January 24, 2022&nbsp;&nbsp;17:53:56</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="以太坊预言机数据采集"><a href="#以太坊预言机数据采集" class="headerlink" title="以太坊预言机数据采集"></a>以太坊预言机数据采集</h1><p>转载自：<a target="_blank" rel="noopener" href="http://blog.hubwiz.com/2020/05/22/blockchain-data-collection-best-practices/">http://blog.hubwiz.com/2020/05/22/blockchain-data-collection-best-practices/</a></p>
+<p>大多数软件工程师在需要获取外部数据时，都会利用API调用或HTTP请求来实现。 类似的，在有些智能合约中开发者也希望利用外部API实现对链外数据的采集。 在这个教程中，我们将学习如何利用预言机/Oracle实现智能合约访问链外数据， 如何消除预言机/Oracle引入的单点故障，以及如何实现可复用的预言机数据采集 方案。</p>
+<p>实际上我们无法像在普通的软件应用中那样直接通过一个API调用就 获取到外部数据。然而，在某些情况下，我们总是希望区块链智能合约 可以访问外部世界的数据，那么，应该怎么办？</p>
+<blockquote>
+<p>以太坊区块链是完全确定性的，这意味着如果你用整个网络的历史交易 在自己的计算机上重放，总是可以得到正确的状态。 由于互联网是非确定性的并且随时间变化，那么每次我重放网络上的交易， 就会得到不同的答案。– <a target="_blank" rel="noopener" href="https://ethereum.stackexchange.com/questions/301/why-cant-contracts-make-api-calls">Tjaden Hess</a></p>
+</blockquote>
+<p>如果我们在没有预言机的情况下重放区块链并使用常规API调用，那么API调用 可能已经发生了变化，我们将得到不同的结果。</p>
+<p>为了避免让智能合约直接调用API，我们需要让合约调用一个中间应用， 通过这个应用和外部世界交互，并将交互结果记录在链上。这些中间应用 被称为预言机（Oracle），任何与区块链外部世界交互并将交互结果 记录在链上的应用，都是预言机。</p>
+<p>现在让我们看看具体该怎么做，在下面的示例中，我们将尝试获取ETH的美元价格。</p>
+<h2 id="1、朴素的预言机数据采集方案：简单，但存在故障点"><a href="#1、朴素的预言机数据采集方案：简单，但存在故障点" class="headerlink" title="1、朴素的预言机数据采集方案：简单，但存在故障点"></a>1、朴素的预言机数据采集方案：简单，但存在故障点</h2><p>大多数区块链开发人员想到的第一个方案就是找一个现成的预言机实现，然后 把我们要调用的API的URL传给这个预言机，接下来就让预言机与API交互并将 交互结果数据记录到区块链上供我们使用。有很多可用的预言机，我们下面使用 Chainlink，至于为什么选择chainlink，很快你就指导原因了。</p>
+<p>为了使用Chainlink，我们首先要选一个chainlink预言机/节点，它们是在 区块链上独立运营的智能合约。我们可以使用像Linkpool的<a target="_blank" rel="noopener" href="https://market.link/">Market.Link</a> 这样的节点列表服务，任选一个节点就可以了。接下来我们需要确保节点有一个 <strong>http Get &gt; uint256</strong> 任务。并非所有的节点都可以执行URL调用并返回Uint256 类型的结果，但绝大部分节点都是支持的！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">import &quot;github.com/smartcontractkit/chainlink/evm-contracts/src/v0.6/ChainlinkClient.sol&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">contract GetData is ChainlinkClient &#123;</span><br><span class="line">  uint256 public currentPrice;</span><br><span class="line">  address public owner;</span><br><span class="line">  </span><br><span class="line">  // The address of an oracle </span><br><span class="line">  address ORACLE = 0x83F00b902cbf06E316C95F51cbEeD9D2572a349a;</span><br><span class="line">  </span><br><span class="line">  // The address of the http get job </span><br><span class="line">  string constant JOB = &quot;c179a8180e034cf5a341488406c32827&quot;;</span><br><span class="line">  </span><br><span class="line">  // When you call a job, you have to make a payment in LINK token </span><br><span class="line">  // So be sure to send this contract&#x27;s address some LINK </span><br><span class="line">  uint256 constant private ORACLE_PAYMENT = 1 * LINK;</span><br><span class="line"></span><br><span class="line">  // The constructor </span><br><span class="line">  constructor() public &#123;</span><br><span class="line">    setPublicChainlinkToken();</span><br><span class="line">    owner = msg.sender;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // This is where the magic happens</span><br><span class="line">  // And it will be the big orange button on the side of remix</span><br><span class="line">  function requestEthereumPrice() </span><br><span class="line">    public</span><br><span class="line">    onlyOwner</span><br><span class="line">  &#123;</span><br><span class="line">    // We build the API call to send to the node</span><br><span class="line">    // noting that the result will come back through the `fulfill` method</span><br><span class="line">    Chainlink.Request memory req = buildChainlinkRequest(stringToBytes32(JOB), address(this), this.fulfill.selector);</span><br><span class="line">    // Here is where we enter the URL </span><br><span class="line">    req.add(&quot;get&quot;, &quot;https://min-api.cryptocompare.com/data/price?fsym=ETH&amp;tsyms=USD&quot;);</span><br><span class="line">    // The response is in JSON, and the value is in the USD keyword, so we add this path</span><br><span class="line">    req.add(&quot;path&quot;, &quot;USD&quot;);</span><br><span class="line">    // Solidity can&#x27;t handle decimals, so we have to multiply by 100 to get a whole number</span><br><span class="line">    req.addInt(&quot;times&quot;, 100);</span><br><span class="line">    // Then we send the request!</span><br><span class="line">    sendChainlinkRequestTo(ORACLE, req, ORACLE_PAYMENT);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // When the URL finishes, the response is routed to this function</span><br><span class="line">  function fulfill(bytes32 _requestId, uint256 _price)</span><br><span class="line">    public</span><br><span class="line">    recordChainlinkFulfillment(_requestId)</span><br><span class="line">  &#123;</span><br><span class="line">    currentPrice = _price;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // Don&#x27;t worry about this for now </span><br><span class="line">  modifier onlyOwner() &#123;</span><br><span class="line">    require(msg.sender == owner);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // A helper funciton to make the string a bytes32</span><br><span class="line">  function stringToBytes32(string memory source) private pure returns (bytes32 result) &#123;</span><br><span class="line">    bytes memory tempEmptyStringTest = bytes(source);</span><br><span class="line">    if (tempEmptyStringTest.length == 0) &#123;</span><br><span class="line">      return 0x0;</span><br><span class="line">    &#125;</span><br><span class="line">    assembly &#123; // solhint-disable-line no-inline-assembly</span><br><span class="line">      result := mload(add(source, 32))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">    // Allows the owner to withdraw their LINK on this contract</span><br><span class="line">  function withdrawLink() external onlyOwner() &#123;</span><br><span class="line">    LinkTokenInterface _link = LinkTokenInterface(chainlinkTokenAddress());</span><br><span class="line">    require(_link.transfer(msg.sender, _link.balanceOf(address(this))), &quot;Unable to transfer&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们使用ORACLE变量来表示所选择的LinkPool节点地址，上面代码的 关键在<code>requestEthereumPrice</code>函数中。如果你直接接触过Chainlink， 就会指导这是用Chainlink获取数据的最简单的办法。</p>
+<p>很好！我们已经能够获取到数据了。如果你的目的只是测试，或者就像 快速实现代码，那到这里就够了，但是不要在生产级别的智能合约里使用 上面的代码。为什么？因为上面代码最大的问题是：</p>
+<p><strong>它,它,它,它,它,它不是去中心化的！</strong></p>
+<p>你在从一个预言机和一个数据提供商拉取数据。虽然现在Linkpook是最可信的Chainlink 节点服务之一，但是你的应用不应当依赖于这些信任，而且你也不应该从 单一数据源获取数据，现在你的应用中存在两个故障点。CryptoCompare和 LinkPool都是很可靠的。现在让我们继续深入。</p>
+<blockquote>
+<p>你的智能合约不应该存在单点故障，因为你所依赖的单点有可能由于被贿赂、 被黑客攻击、临时宕机等非常多的原因而导致你的智能合约不能正常工作。</p>
+</blockquote>
+<p>那么，我们该如何解决这一问题？</p>
+<h2 id="2、聚合式预言机数据采集方案：复杂，但消除了单点故障"><a href="#2、聚合式预言机数据采集方案：复杂，但消除了单点故障" class="headerlink" title="2、聚合式预言机数据采集方案：复杂，但消除了单点故障"></a>2、聚合式预言机数据采集方案：复杂，但消除了单点故障</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">import &quot;github.com/smartcontractkit/chainlink/evm-contracts/src/v0.6/ChainlinkClient.sol&quot;;</span><br><span class="line"></span><br><span class="line">// MyContract inherits the ChainlinkClient contract to gain the</span><br><span class="line">// functionality of creating Chainlink requests</span><br><span class="line">contract ChainlinkExample is ChainlinkClient &#123;</span><br><span class="line">  // Stores the answer from the Chainlink oracle</span><br><span class="line">  uint256 public currentPrice;</span><br><span class="line">  </span><br><span class="line">  // This is where you&#x27;ll save each response from the </span><br><span class="line">  // nodes you&#x27;ve chosen in a list, and then you can </span><br><span class="line">  // take the median of those nodes </span><br><span class="line">  uint256 public index;</span><br><span class="line">  uint256[3] public currentPriceList;</span><br><span class="line">  </span><br><span class="line">  address public owner;</span><br><span class="line">  // An &quot;Oracle&quot; you&#x27;ll learn about soon :)</span><br><span class="line">  // You&#x27;ll have to add a little more LINK in due to this one</span><br><span class="line">  address ORACLE1 = 0x11db7845a757041F5Dad3fAf81d70ebAd394e9A2;</span><br><span class="line">  bytes32 constant JOBID1 = 0xcb08d1dbcc1b0621b4e8d4aea6bafc79f456e12332c782b4258c7e83bcedb74c;</span><br><span class="line">  </span><br><span class="line">  // LinkPool yessir!</span><br><span class="line">  address ORACLE2 = 0x83F00b902cbf06E316C95F51cbEeD9D2572a349a;</span><br><span class="line">  bytes32 JOBID2 = stringToBytes32(&quot;c179a8180e034cf5a341488406c32827&quot;);</span><br><span class="line">  </span><br><span class="line">  // Alpha Vantage WOOO!</span><br><span class="line">  address ORACLE3 = 0xB36d3709e22F7c708348E225b20b13eA546E6D9c;</span><br><span class="line">  bytes32 JOBID3 = stringToBytes32(&quot;b1440eefbbff416c8b99062a128ca075&quot;);</span><br><span class="line">  </span><br><span class="line">  uint256 constant private ORACLE_PAYMENT = 1 * LINK;</span><br><span class="line"></span><br><span class="line">  constructor() public &#123;</span><br><span class="line">    // Set the address for the LINK token for the network</span><br><span class="line">    setPublicChainlinkToken();</span><br><span class="line">    owner = msg.sender;</span><br><span class="line">    currentPriceList[0] = 0;</span><br><span class="line">    currentPriceList[1] = 0;</span><br><span class="line">    currentPriceList[2] = 0;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Creates a Chainlink request with the uint256 multiplier job</span><br><span class="line">  function requestEthereumPrice(address _address, bytes32 _jobID) </span><br><span class="line">    public</span><br><span class="line">    onlyOwner</span><br><span class="line">  &#123;</span><br><span class="line">    // newRequest takes a JobID, a callback address, and callback function as input</span><br><span class="line">    Chainlink.Request memory req = buildChainlinkRequest(_jobID, address(this), this.fulfill.selector);</span><br><span class="line">    // Adds a URL with the key &quot;get&quot; to the request parameters</span><br><span class="line">    req.add(&quot;get&quot;, &quot;https://min-api.cryptocompare.com/data/price?fsym=ETH&amp;tsyms=USD&quot;);</span><br><span class="line">    // Uses input param (dot-delimited string) as the &quot;path&quot; in the request parameters</span><br><span class="line">    req.add(&quot;path&quot;, &quot;USD&quot;);</span><br><span class="line">    // Adds an integer with the key &quot;times&quot; to the request parameters</span><br><span class="line">    req.addInt(&quot;times&quot;, 100);</span><br><span class="line">    // Sends the request with the amount of payment specified to the oracle</span><br><span class="line">    sendChainlinkRequestTo(_address, req, ORACLE_PAYMENT);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  // fulfill receives a uint256 data type</span><br><span class="line">  function fulfill(bytes32 _requestId, uint256 _price)</span><br><span class="line">    public</span><br><span class="line">    // Use recordChainlinkFulfillment to ensure only the requesting oracle can fulfill</span><br><span class="line">    recordChainlinkFulfillment(_requestId)</span><br><span class="line">  &#123;</span><br><span class="line">    // This is where the magic happens</span><br><span class="line">    // Once we have all 3 responses, we can calculate the median value!</span><br><span class="line">    currentPriceList[index] = _price; </span><br><span class="line">    // This ensures the array never goes past 3, we just keep rotating responses</span><br><span class="line">    index = (index + 1) % 3;</span><br><span class="line">    currentPrice = median();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  function multipleData() public&#123;</span><br><span class="line">      requestEthereumPrice(ORACLE1, JOBID1);</span><br><span class="line">      requestEthereumPrice(ORACLE2, JOBID2);</span><br><span class="line">      requestEthereumPrice(ORACLE3, JOBID3);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // cancelRequest allows the owner to cancel an unfulfilled request</span><br><span class="line">  function cancelRequest(</span><br><span class="line">    bytes32 _requestId,</span><br><span class="line">    uint256 _payment,</span><br><span class="line">    bytes4 _callbackFunctionId,</span><br><span class="line">    uint256 _expiration</span><br><span class="line">  )</span><br><span class="line">    public</span><br><span class="line">    onlyOwner</span><br><span class="line">  &#123;</span><br><span class="line">    cancelChainlinkRequest(_requestId, _payment, _callbackFunctionId, _expiration);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // withdrawLink allows the owner to withdraw any extra LINK on the contract</span><br><span class="line">  function withdrawLink()</span><br><span class="line">    public</span><br><span class="line">    onlyOwner</span><br><span class="line">  &#123;</span><br><span class="line">    LinkTokenInterface link = LinkTokenInterface(chainlinkTokenAddress());</span><br><span class="line">    require(link.transfer(msg.sender, link.balanceOf(address(this))), &quot;Unable to transfer&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  modifier onlyOwner() &#123;</span><br><span class="line">    require(msg.sender == owner);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // helper function</span><br><span class="line">  function stringToBytes32(string memory source) private pure returns (bytes32 result) &#123;</span><br><span class="line">    bytes memory tempEmptyStringTest = bytes(source);</span><br><span class="line">    if (tempEmptyStringTest.length == 0) &#123;</span><br><span class="line">      return 0x0;</span><br><span class="line">    &#125;</span><br><span class="line">    assembly &#123; // solhint-disable-line no-inline-assembly</span><br><span class="line">      result := mload(add(source, 32))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // Our sort of lame approach to getting the median </span><br><span class="line">  function median() public view returns(uint256)&#123;</span><br><span class="line">      if (currentPriceList[0] &gt; currentPriceList[1])&#123;</span><br><span class="line">          if(currentPriceList[0] &gt; currentPriceList[2])&#123;</span><br><span class="line">              if(currentPriceList[1] &gt; currentPriceList[2])&#123;</span><br><span class="line">                  return currentPriceList[1];</span><br><span class="line">              &#125; else &#123;return currentPriceList[2];&#125;</span><br><span class="line">          &#125; else &#123;return currentPriceList[0];&#125;</span><br><span class="line">      &#125; else if (currentPriceList[1] &gt; currentPriceList[2])&#123;</span><br><span class="line">          return currentPriceList[2];</span><br><span class="line">      &#125; </span><br><span class="line">      return currentPriceList[1];</span><br><span class="line">  &#125;</span><br><span class="line">    // Allows the owner to withdraw their LINK on this contract</span><br><span class="line">  function withdrawLink() external onlyOwner() &#123;</span><br><span class="line">    LinkTokenInterface _link = LinkTokenInterface(chainlinkTokenAddress());</span><br><span class="line">    require(_link.transfer(msg.sender, _link.balanceOf(address(this))), &quot;Unable to transfer&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们现在提高一步，使用3个节点来处理我们的API调用，这样可以在 很大程度上解决上面朴素方案存在的问题。现在，为了获取以太币的价格， 我们添加了一个median函数，它负责计算所有结果的中位值。这样即使 其中的一个节点返回离谱的答案，我们也可能得到正确的以太币价格。 容易理解，通过添加更多的节点，就可以减小我们对单个节点的信任依赖。</p>
+<p>理想的方案是我们同时选择不同的数据提供商，不过出于简单化考虑， 在这个示例中我们只使用一个数据提供商。当然如果我们使用3个以上的 节点也会更好，不过3个节点已经消除了单点故障。目前来讲，7~21个 节点就可以视为相当不错了。</p>
+<p>现在的方案要比一开始的朴素方案好多了，虽然增加了不少代码。那么， 有没有简单的办法来将API调用路由给多个节点？</p>
+<p>我们继续。</p>
+<h2 id="3、动态路由预言机数据采集方案：可复用，支持生产环境"><a href="#3、动态路由预言机数据采集方案：可复用，支持生产环境" class="headerlink" title="3、动态路由预言机数据采集方案：可复用，支持生产环境"></a>3、动态路由预言机数据采集方案：可复用，支持生产环境</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">import &quot;github.com/smartcontractkit/chainlink/evm-contracts/src/v0.6/ChainlinkClient.sol&quot;;</span><br><span class="line"></span><br><span class="line">// MyContract inherits the ChainlinkClient contract to gain the</span><br><span class="line">// functionality of creating Chainlink requests</span><br><span class="line">contract ChainlinkExample is ChainlinkClient &#123;</span><br><span class="line">  // Stores the answer from the Chainlink oracle</span><br><span class="line">  uint256 public currentPrice;</span><br><span class="line">  address public owner;</span><br><span class="line">  </span><br><span class="line">  address preCoordinatorOracleAddress = 0x11db7845a757041F5Dad3fAf81d70ebAd394e9A2;</span><br><span class="line">  bytes32 constant private Service_Agreement_ID = 0xcb08d1dbcc1b0621b4e8d4aea6bafc79f456e12332c782b4258c7e83bcedb74c;</span><br><span class="line">  uint256 constant private ORACLE_PAYMENT = 5 * LINK;</span><br><span class="line"></span><br><span class="line">  constructor() public &#123;</span><br><span class="line">    // Set the address for the LINK token for the network</span><br><span class="line">    setPublicChainlinkToken();</span><br><span class="line">    owner = msg.sender;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Creates a Chainlink request with the uint256 multiplier job</span><br><span class="line">  function requestEthereumPrice(address _address, bytes32 _jobID) </span><br><span class="line">    public</span><br><span class="line">    onlyOwner</span><br><span class="line">  &#123;</span><br><span class="line">    // newRequest takes a JobID, a callback address, and callback function as input</span><br><span class="line">    Chainlink.Request memory req = buildChainlinkRequest(_jobID, address(this), this.fulfill.selector);</span><br><span class="line">    // Adds a URL with the key &quot;get&quot; to the request parameters</span><br><span class="line">    req.add(&quot;get&quot;, &quot;https://min-api.cryptocompare.com/data/price?fsym=ETH&amp;tsyms=USD&quot;);</span><br><span class="line">    // Uses input param (dot-delimited string) as the &quot;path&quot; in the request parameters</span><br><span class="line">    req.add(&quot;path&quot;, &quot;USD&quot;);</span><br><span class="line">    // Adds an integer with the key &quot;times&quot; to the request parameters</span><br><span class="line">    req.addInt(&quot;times&quot;, 100);</span><br><span class="line">    // Sends the request with the amount of payment specified to the oracle</span><br><span class="line">    sendChainlinkRequestTo(_address, req, ORACLE_PAYMENT);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  // fulfill receives a uint256 data type</span><br><span class="line">  function fulfill(bytes32 _requestId, uint256 _price)</span><br><span class="line">    public</span><br><span class="line">    // Use recordChainlinkFulfillment to ensure only the requesting oracle can fulfill</span><br><span class="line">    recordChainlinkFulfillment(_requestId)</span><br><span class="line">  &#123;</span><br><span class="line">    currentPrice = _price;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  //0x11db7845a757041F5Dad3fAf81d70ebAd394e9A2, 0xcb08d1dbcc1b0621b4e8d4aea6bafc79f456e12332c782b4258c7e83bcedb74c</span><br><span class="line">  </span><br><span class="line">  function getData() public&#123;</span><br><span class="line">      requestEthereumPrice(0x11db7845a757041F5Dad3fAf81d70ebAd394e9A2, 0xcb08d1dbcc1b0621b4e8d4aea6bafc79f456e12332c782b4258c7e83bcedb74c);</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">  // cancelRequest allows the owner to cancel an unfulfilled request</span><br><span class="line">  function cancelRequest(</span><br><span class="line">    bytes32 _requestId,</span><br><span class="line">    uint256 _payment,</span><br><span class="line">    bytes4 _callbackFunctionId,</span><br><span class="line">    uint256 _expiration</span><br><span class="line">  )</span><br><span class="line">    public</span><br><span class="line">    onlyOwner</span><br><span class="line">  &#123;</span><br><span class="line">    cancelChainlinkRequest(_requestId, _payment, _callbackFunctionId, _expiration);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  // withdrawLink allows the owner to withdraw any extra LINK on the contract</span><br><span class="line">  function withdrawLink()</span><br><span class="line">    public</span><br><span class="line">    onlyOwner</span><br><span class="line">  &#123;</span><br><span class="line">    LinkTokenInterface link = LinkTokenInterface(chainlinkTokenAddress());</span><br><span class="line">    require(link.transfer(msg.sender, link.balanceOf(address(this))), &quot;Unable to transfer&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  modifier onlyOwner() &#123;</span><br><span class="line">    require(msg.sender == owner);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line">  function stringToBytes32(string memory source) private pure returns (bytes32 result) &#123;</span><br><span class="line">    bytes memory tempEmptyStringTest = bytes(source);</span><br><span class="line">    if (tempEmptyStringTest.length == 0) &#123;</span><br><span class="line">      return 0x0;</span><br><span class="line">    &#125;</span><br><span class="line">    assembly &#123; // solhint-disable-line no-inline-assembly</span><br><span class="line">      result := mload(add(source, 32))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这需要一个额外的步骤。你可能注意到remix链接，这是一个只有 两行代码的文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.5.0;</span><br><span class="line"></span><br><span class="line">import &quot;github.com/smartcontractkit/chainlink/evm-contracts/src/v0.5/PreCoordinator.sol&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码创建了一个服务协议，它读取一组你输入的预言机地址和工作ID，然后 自动将你的API调用分发给这些预言机并计算结果中位值，逻辑和我们之前的朴素方案一样样的！</p>
+<p>在GUI中部署theprecoordinator.sol合约，加上你的预言机地址、 jobIDpayments (100000000000000000 = 0.1 LINK)以及_minResponses， 它指的是所需响应结果的最少数量。</p>
+<p>假设我们有5个预言机，但只收到2个响应记录。如果你设置的最小响应数量为3， 那就不会使用这个记录。</p>
+<p><img src="http://blog.hubwiz.com/2020/05/22/blockchain-data-collection-best-practices/create-service-agreement.png" alt="img"></p>
+<p>一旦你载入服务协议，就可以使用服务协议的地址作为预言机地址，服务协议的ID作为 作业ID。你会注意到这一步的语法实际上基本和朴素方案一样。因此如果你使用单一 预言机做完测试，就可以快速进入生产环节：只需要启动服务协议并修改预言机和作业ID， 代码的其他地方都不需要调整。</p>
+<p>如果当前使用的预言机性能不行，那么你使用新的预言机创建新的服务协议很简单。 不需要重写你的代码就可以实现，只要替换到原有的作业ID就可以了。</p>
+<h2 id="4、使用Chainlinkg的参考合约"><a href="#4、使用Chainlinkg的参考合约" class="headerlink" title="4、使用Chainlinkg的参考合约"></a>4、使用Chainlinkg的参考合约</h2><p>很多预言机厂商提供开箱即用的解决方案，Chainlink也一样。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.24;</span><br><span class="line">import &quot;github.com/smartcontractkit/chainlink/evm-contracts/src/v0.4/interfaces/AggregatorInterface.sol&quot;;</span><br><span class="line">contract Demo &#123;</span><br><span class="line">    </span><br><span class="line">    AggregatorInterface internal ref;</span><br><span class="line">    </span><br><span class="line">    constructor(address _aggregator) public &#123;</span><br><span class="line">        ref = AggregatorInterface(_aggregator);</span><br><span class="line">    &#125;</span><br><span class="line">    function getLatestPrice() public view returns (int256) &#123;</span><br><span class="line">        return ref.latestAnswer();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你可以在chainlink的feeds页面找到参考合约的清单，这里面唯一有些 中心化的环节，就是Chainlink负责节点列表的整理，这意味着你不得不 对chainlink团队的节点选择能力有一点信任。然而，如果你需要一个 现成的外包方案，那么Chainlink还是有巨大的优势的。</p>
+<p><img src="http://blog.hubwiz.com/2020/05/22/blockchain-data-collection-best-practices/chainlink.png" alt="img"></p>
+<p>这一服务目前还是免费的，由赞助商负责买单，不过这不是可持续的 商业模式，相信不久之后就会有变化。</p>
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/"># 以太坊</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2022/01/11/Substrate%E5%BC%80%E5%8F%91%E4%B9%8B%E4%B8%89%EF%BC%9A%E5%BC%80%E5%8F%91ERC20%E5%90%88%E7%BA%A6%E5%B9%B6%E9%83%A8%E7%BD%B2%E5%88%B0substrate/">
+                                                        Substrate开发之三：开发ERC20合约并部署到substrate
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
