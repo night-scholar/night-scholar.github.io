@@ -219,7 +219,7 @@
 <h3 id="String（字符串）"><a href="#String（字符串）" class="headerlink" title="String（字符串）"></a>String（字符串）</h3><p>string是redis最基本的类型，一个key对应一个value。</p>
 <p>string类型时二进制安全的。除普通的字符串外，也可以存放图片等数据。</p>
 <p>redis中字符串一个value最大时512M</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; set name 夜行书生￺</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; get name</span><br><span class="line">&quot;\xd2\xb9\xd0\xd0\xca\xe9\xc9\xfa&quot;	#之所以会这样，是因为控制台读取不出来，但在代码中是可以显示的#</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; set name 夜行书生</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; get name</span><br><span class="line">&quot;\xd2\xb9\xd0\xd0\xca\xe9\xc9\xfa&quot;	#之所以会这样，是因为控制台读取不出来，但在代码中是可以显示的#</span><br></pre></td></tr></table></figure>
 
 <h4 id="del"><a href="#del" class="headerlink" title="del"></a>del</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; set name ck</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; del name</span><br><span class="line">(integer) 1</span><br></pre></td></tr></table></figure>
 
@@ -314,7 +314,7 @@
 
 
 
-<h2 id="使用go语言操作redis数据库"><a href="#使用go语言操作redis数据库" class="headerlink" title="使用go语言操作redis数据库"></a>使用go语言操作redis数据库</h2><h3 id="安装指令"><a href="#安装指令" class="headerlink" title="安装指令"></a>安装指令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/garyburd/redigo/redis</span><br></pre></td></tr></table></figure>
+<h2 id="使用go语言操作redis数据库"><a href="#使用go语言操作redis数据库" class="headerlink" title="使用go语言操作redis数据库"></a>使用go语言操作redis数据库</h2><h3 id="安装指令"><a href="#安装指令" class="headerlink" title="安装指令"></a>安装指令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/gomodule/redigo/redis</span><br></pre></td></tr></table></figure>
 
 
 
