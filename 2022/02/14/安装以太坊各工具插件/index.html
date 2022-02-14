@@ -12,7 +12,7 @@
 
 
 
-<title>解决Rust -- update crates.io过慢的问题 | Night-Scholar’s Blog</title>
+<title>安装以太坊各工具插件 | Night-Scholar’s Blog</title>
 
 
 
@@ -173,7 +173,7 @@
                         <article class="post-wrap">
                             <header class="post-header">
                                 <h1 class="post-title">
-                                    解决Rust -- update crates.io过慢的问题
+                                    安装以太坊各工具插件
                                 </h1>
                                 
                                     <div class="post-meta">
@@ -186,14 +186,14 @@
 
                                                 
                                                     <span class="post-time">
-                        Date: <a href="#">February 10, 2022&nbsp;&nbsp;16:05:58</a>
+                        Date: <a href="#">February 14, 2022&nbsp;&nbsp;11:07:02</a>
                         </span>
                                                     
                                                         
                                                             <span class="post-category">
                     Category:
                             
-                                <a href="/categories/Rust%E8%AF%AD%E8%A8%80%E6%A0%B8%E5%BF%83/">Rust语言核心</a>
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
                             
                         </span>
                                                             
@@ -202,15 +202,48 @@
                             </header>
 
                             <div class="post-content">
-                                <h1 id="解决Rust-–-update-crates-io过慢的问题"><a href="#解决Rust-–-update-crates-io过慢的问题" class="headerlink" title="解决Rust – update crates.io过慢的问题"></a>解决Rust – update crates.io过慢的问题</h1><p>首先进入电脑的cargo目录</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.cargo</span><br></pre></td></tr></table></figure>
+                                <h1 id="安装以太坊各工具插件"><a href="#安装以太坊各工具插件" class="headerlink" title="安装以太坊各工具插件"></a>安装以太坊各工具插件</h1><h2 id="从包管理器安装"><a href="#从包管理器安装" class="headerlink" title="从包管理器安装"></a>从包管理器安装</h2><h3 id="通过-Homebrew-在-macOS-上安装"><a href="#通过-Homebrew-在-macOS-上安装" class="headerlink" title="通过 Homebrew 在 macOS 上安装"></a>通过 Homebrew 在 macOS 上安装</h3><p>安装 go-ethereum 最简单的方法是使用我们的 Homebrew tap。如果您没有 Homebrew，<a target="_blank" rel="noopener" href="https://brew.sh/">请先安装它</a>。</p>
+<p>运行以下命令来添加 tap 并安装<code>geth</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew tap ethereum/ethereum</span><br><span class="line">brew install ethereum</span><br></pre></td></tr></table></figure>
 
-<p>创建一个config文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim config</span><br></pre></td></tr></table></figure>
+<p><code>--devel</code>您可以使用以下参数安装主分支：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install ethereum --devel</span><br></pre></td></tr></table></figure>
 
-<p>粘贴下列代码配置代理</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 放到 `<span class="variable">$HOME</span>/.cargo/config` 文件中</span></span><br><span class="line">[source.crates-io]</span><br><span class="line">registry = &quot;https://github.com/rust-lang/crates.io-index&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 替换成你偏好的镜像源</span></span><br><span class="line">replace-with = &#x27;sjtu&#x27;</span><br><span class="line"><span class="meta">#</span><span class="bash">replace-with = <span class="string">&#x27;ustc&#x27;</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 清华大学</span></span><br><span class="line">[source.tuna]</span><br><span class="line">registry = &quot;https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 中国科学技术大学</span></span><br><span class="line">[source.ustc]</span><br><span class="line">registry = &quot;git://mirrors.ustc.edu.cn/crates.io-index&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 上海交通大学</span></span><br><span class="line">[source.sjtu]</span><br><span class="line">registry = &quot;https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rustcc社区</span></span><br><span class="line">[source.rustcc]</span><br><span class="line">registry = &quot;git://crates.rustcc.cn/crates.io-index&quot;</span><br></pre></td></tr></table></figure>
+<p>, <code>abigen</code>, <code>bootnode</code>, <code>checkpoint-admin</code>, <code>clef</code>, <code>devp2p</code>, <code>ethkey</code>, <code>evm</code>, <code>faucet</code>, <code>geth</code>, <code>p2psim</code>, <code>puppeth</code>,<code>rlpdump</code>和<code>wnode</code>命令然后在您的系统上可用<code>/usr/local/bin/</code>。</p>
+<p>查找可用的不同选项和命令<code>geth --help</code>。</p>
+<h3 id="通过-PPA-在-Ubuntu-上安装"><a href="#通过-PPA-在-Ubuntu-上安装" class="headerlink" title="通过 PPA 在 Ubuntu 上安装"></a>通过 PPA 在 Ubuntu 上安装</h3><p>在基于 Ubuntu 的发行版上安装 go-ethereum 的最简单方法是使用内置的启动板 PPA（个人软件包档案）。我们提供了一个单一的 PPA 存储库，其中包含我们针对 Ubuntu 版本<code>trusty</code>、<code>xenial</code>. <code>zesty</code>和<code>artful</code>.</p>
+<p>要启用我们的启动板存储库，请运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository -y ppa:ethereum/ethereum</span><br></pre></td></tr></table></figure>
 
+<p>然后安装 go-ethereum 的稳定版本：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install ethereum</span><br></pre></td></tr></table></figure>
+
+<p>或通过以下方式开发版本：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install ethereum-unstable</span><br></pre></td></tr></table></figure>
+
+<p>, <code>abigen</code>, <code>bootnode</code>, <code>clef</code>, <code>evm</code>, <code>geth</code>,<code>puppeth</code>和命令随后在您的系统中<code>rlpdump</code>可用。<code>wnode``/usr/bin/</code></p>
+<p>查找可用的不同选项和命令<code>geth --help</code>。</p>
+<h3 id="在-Windows-上安装"><a href="#在-Windows-上安装" class="headerlink" title="在 Windows 上安装"></a>在 Windows 上安装</h3><p><a target="_blank" rel="noopener" href="https://geth.ethereum.org/downloads/">安装 go-ethereum 最简单的方法是从下载</a>页面下载预编译的二进制 文件。该页面提供了一个安装程序以及一个 zip 文件。安装程序自动<code>geth</code>放入您的<code>PATH</code>。zip 文件包含命令 <code>.exe</code>文件，您可以通过从命令提示符运行它而无需安装即可使用这些文件。</p>
+<h3 id="通过-pkg-在-FreeBSD-上安装"><a href="#通过-pkg-在-FreeBSD-上安装" class="headerlink" title="通过 pkg 在 FreeBSD 上安装"></a>通过 pkg 在 FreeBSD 上安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkg install go-ethereum</span><br></pre></td></tr></table></figure>
+
+<p>然后该<code>geth</code>命令在您的系统上可用<code>/usr/local/bin/</code>。您可以使用以下命令在节点上创建一个新帐户：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">geth account new</span><br></pre></td></tr></table></figure>
+
+<p>查找可用的不同选项和命令<code>geth --help</code>。</p>
+<h3 id="通过端口在-FreeBSD-上安装"><a href="#通过端口在-FreeBSD-上安装" class="headerlink" title="通过端口在 FreeBSD 上安装"></a>通过端口在 FreeBSD 上安装</h3><p>转到<code>net-p2p/go-ethereum</code>端口目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/ports/net-p2p/go-ethereum</span><br></pre></td></tr></table></figure>
+
+<p>然后以标准方式构建它（作为根）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p>, <code>abigen</code>, <code>bootnode</code>, <code>clef</code>, <code>evm</code>, <code>geth</code>,<code>puppeth</code>和命令随后在您的系统中<code>rlpdump</code>可用。<code>wnode``/usr/local/bin/</code></p>
+<p>查找可用的不同选项和命令<code>geth --help</code>。</p>
+<h3 id="通过在-Arch-Linux-上安装pacman"><a href="#通过在-Arch-Linux-上安装pacman" class="headerlink" title="通过在 Arch Linux 上安装pacman"></a>通过在 Arch Linux 上安装<code>pacman</code></h3><p>该<code>geth</code>软件包可从<a target="_blank" rel="noopener" href="https://www.archlinux.org/packages/community/x86_64/geth/">社区 repo</a>获得。</p>
+<p>您可以使用以下方式安装它：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S geth</span><br></pre></td></tr></table></figure>
+
+<p>, <code>abigen</code>, <code>bootnode</code>, <code>clef</code>, <code>evm</code>, <code>geth</code>,<code>puppeth</code>和命令随后在您的系统中<code>rlpdump</code>可用。<code>wnode``/usr/bin/</code></p>
+<p>查找可用的不同选项和命令<code>geth --help</code>。</p>
 
                             </div>
 
@@ -229,7 +262,7 @@
                                             <span class="tag">
                     
                     
-                        <a href="/tags/Rust%E8%AF%AD%E8%A8%80/"># Rust语言</a>
+                        <a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/"># 以太坊</a>
                     
                         
                 </span>
@@ -242,13 +275,9 @@
                                     </section>
                                     <section class="post-nav">
                                         
-                                            <a class="prev" rel="prev" href="/2022/02/14/%E5%AE%89%E8%A3%85%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%90%84%E5%B7%A5%E5%85%B7%E6%8F%92%E4%BB%B6/">
-                                                安装以太坊各工具插件
-                                            </a>
-                                            
                                                 
-                                                    <a class="next" rel="next" href="/2022/02/09/Golang%E5%80%BC%E6%96%B9%E6%B3%95%E5%92%8C%E6%8C%87%E9%92%88%E6%96%B9%E6%B3%95/">
-                                                        Golang值方法和指针方法
+                                                    <a class="next" rel="next" href="/2022/02/10/%E8%A7%A3%E5%86%B3Rust%20--%20update%20crates.io%E8%BF%87%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98/">
+                                                        解决Rust -- update crates.io过慢的问题
                                                     </a>
                                                     
                                     </section>
