@@ -207,6 +207,17 @@
 <p>tx.origin代表交易来源，这始终为用户，也就是支付gasfee的用户。</p>
 <p>msg.sender代表方法的调用方，这有可能为合约地址。</p>
 <p>因此使用tx.origin==msg.sender来判断该用户是否为直接调用方法而非第三方合约调用。</p>
+<p>举例如下：</p>
+<p>Demo.sol</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.7.6;</span><br><span class="line"></span><br><span class="line">contract Demo &#123;</span><br><span class="line">  uint256 public a ;</span><br><span class="line">  address public senderAddress;</span><br><span class="line">  address public originAddress;</span><br><span class="line">  function set(uint256 num) external &#123;</span><br><span class="line">      a = num;</span><br><span class="line">      senderAddress = msg.sender;</span><br><span class="line">      originAddress = tx.origin;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>IDemo.sol</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.7.6;</span><br><span class="line"></span><br><span class="line">interface IDemo&#123;</span><br><span class="line">    function set(uint256 a) external;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Demo1.sol</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.7.6;</span><br><span class="line"></span><br><span class="line">import &quot;./IDemo.sol&quot;;</span><br><span class="line">contract Demo &#123;</span><br><span class="line">  function set(address demoAddress,uint256 num) external &#123;</span><br><span class="line">      IDemo demo = IDemo(demoAddress);</span><br><span class="line">      demo.set(num);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行Demo1.sol的set方法后发现，senderAddress为Demo1.sol合约地址，而originAddress为我们自己的用户地址。</p>
 
                             </div>
 
