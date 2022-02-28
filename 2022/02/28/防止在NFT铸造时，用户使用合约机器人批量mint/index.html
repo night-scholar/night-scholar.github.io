@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>防止在NFT铸造时，用户使用合约机器人批量mint | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    防止在NFT铸造时，用户使用合约机器人批量mint
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">February 28, 2022&nbsp;&nbsp;10:45:34</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="防止在NFT铸造时，用户使用合约机器人批量mint"><a href="#防止在NFT铸造时，用户使用合约机器人批量mint" class="headerlink" title="防止在NFT铸造时，用户使用合约机器人批量mint"></a>防止在NFT铸造时，用户使用合约机器人批量mint</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">modifier callerIsUser() &#123;</span><br><span class="line">  require(tx.origin == msg.sender, &quot;The caller is another contract&quot;);</span><br><span class="line">  _;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>tx.origin代表交易来源，这始终为用户，也就是支付gasfee的用户。</p>
+<p>msg.sender代表方法的调用方，这有可能为合约地址。</p>
+<p>因此使用tx.origin==msg.sender来判断该用户是否为直接调用方法而非第三方合约调用。</p>
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/"># 以太坊</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2022/02/17/golang%E7%9B%91%E5%90%AC%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%87%BA%E5%9D%97%E5%8F%8A%E4%BA%A4%E6%98%93/">
+                                                        golang监听以太坊出块及交易
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
