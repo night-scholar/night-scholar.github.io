@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>以太坊公钥私钥地址转换 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    以太坊公钥私钥地址转换
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">March 2, 2022&nbsp;&nbsp;14:14:10</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="以太坊公钥私钥地址转换"><a href="#以太坊公钥私钥地址转换" class="headerlink" title="以太坊公钥私钥地址转换"></a>以太坊公钥私钥地址转换</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> test</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;encoding/hex&quot;</span></span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;github.com/ethereum/go-ethereum/common&quot;</span></span><br><span class="line">    <span class="string">&quot;github.com/ethereum/go-ethereum/common/hexutil&quot;</span></span><br><span class="line">    <span class="string">&quot;github.com/ethereum/go-ethereum/crypto&quot;</span></span><br><span class="line">    <span class="string">&quot;github.com/ethereum/go-ethereum/log&quot;</span></span><br><span class="line">    <span class="string">&quot;testing&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestGenerateKey</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">    key, err := crypto.GenerateKey()</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        t.Fatalf(<span class="string">&quot;failed GenerateKey with %s.&quot;</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fmt.Println(<span class="string">&quot;private key have 0x   \n&quot;</span>, hexutil.Encode(crypto.FromECDSA(key)))</span><br><span class="line">    fmt.Println(<span class="string">&quot;private key no 0x \n&quot;</span>, hex.EncodeToString(crypto.FromECDSA(key)))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> err := crypto.SaveECDSA(<span class="string">&quot;privatekey&quot;</span>, key); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Error(fmt.Sprintf(<span class="string">&quot;Failed to persist node key: %v&quot;</span>, err))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fmt.Println(<span class="string">&quot;public key have 0x   \n&quot;</span>, hexutil.Encode(crypto.FromECDSAPub(&amp;key.PublicKey)))</span><br><span class="line">    fmt.Println(<span class="string">&quot;public key no 0x \n&quot;</span>, hex.EncodeToString(crypto.FromECDSAPub(&amp;key.PublicKey)))</span><br><span class="line"></span><br><span class="line">    <span class="comment">//由私钥字符串转换私钥</span></span><br><span class="line">    acc1Key, _ := crypto.HexToECDSA(<span class="string">&quot;8a1f9a8f95be41cd7ccb6168179afb4504aefe388d1e14474d32c45c72ce7b7a&quot;</span>)</span><br><span class="line">    address1 := crypto.PubkeyToAddress(acc1Key.PublicKey)</span><br><span class="line">    fmt.Println(<span class="string">&quot;address &quot;</span>, address1.String())</span><br><span class="line"></span><br><span class="line">    dummyAddr := common.HexToAddress(<span class="string">&quot;9b2055d370f73ec7d8a03e965129118dc8f5bf83&quot;</span>)</span><br><span class="line">    fmt.Println(<span class="string">&quot;dummyAddr&quot;</span>,dummyAddr.String())</span><br><span class="line"></span><br><span class="line">    <span class="comment">//字节转地址</span></span><br><span class="line">    addr3      := common.BytesToAddress([]<span class="keyword">byte</span>(<span class="string">&quot;ethereum&quot;</span>))</span><br><span class="line">    fmt.Println(<span class="string">&quot;address &quot;</span>,addr3.String())</span><br><span class="line"></span><br><span class="line">    <span class="comment">//字节转hash</span></span><br><span class="line">    hash1 := common.BytesToHash([]<span class="keyword">byte</span>(<span class="string">&quot;topic1&quot;</span>))</span><br><span class="line">    fmt.Println(<span class="string">&quot;hash &quot;</span>,hash1.String())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> testAddrHex = <span class="string">&quot;970e8128ab834e8eac17ab8e3812f010678cf791&quot;</span></span><br><span class="line">    <span class="keyword">var</span> testPrivHex = <span class="string">&quot;289c2857d4598e37fb9647507e47a309d6133539bf21a8b9cb6df88fd5232032&quot;</span></span><br><span class="line">    key1, _ := crypto.HexToECDSA(testPrivHex)</span><br><span class="line">    addrtest := common.HexToAddress(testAddrHex)</span><br><span class="line"></span><br><span class="line">    msg := crypto.Keccak256([]<span class="keyword">byte</span>(<span class="string">&quot;foo&quot;</span>))</span><br><span class="line">    sig, err := crypto.Sign(msg, key1)</span><br><span class="line">    recoveredPub, err := crypto.Ecrecover(msg, sig)</span><br><span class="line">    pubKey, _ := crypto.UnmarshalPubkey(recoveredPub)</span><br><span class="line">    recoveredAddr := crypto.PubkeyToAddress(*pubKey)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// should be equal to SigToPub</span></span><br><span class="line">    recoveredPub2, _ := crypto.SigToPub(msg, sig)</span><br><span class="line">    recoveredAddr2 := crypto.PubkeyToAddress(*recoveredPub2)</span><br><span class="line"></span><br><span class="line">    fmt.Println(<span class="string">&quot;addrtest &quot;</span>,addrtest.String())</span><br><span class="line">    fmt.Println(<span class="string">&quot;recoveredAddr &quot;</span>,recoveredAddr.String())</span><br><span class="line">    fmt.Println(<span class="string">&quot;recoveredAddr2 &quot;</span>,recoveredAddr2.String())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/"># 以太坊</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2022/02/28/%E9%98%B2%E6%AD%A2%E5%9C%A8NFT%E9%93%B8%E9%80%A0%E6%97%B6%EF%BC%8C%E7%94%A8%E6%88%B7%E4%BD%BF%E7%94%A8%E5%90%88%E7%BA%A6%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%89%B9%E9%87%8Fmint/">
+                                                        防止在NFT铸造时，用户使用合约机器人批量mint
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
