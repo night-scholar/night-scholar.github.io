@@ -12,7 +12,7 @@
 
 
 
-<title>truffle-flattener扁平化处理合约 | Night-Scholar’s Blog</title>
+<title>Golang实现web3.eth.accounts.sign | Night-Scholar’s Blog</title>
 
 
 
@@ -173,7 +173,7 @@
                         <article class="post-wrap">
                             <header class="post-header">
                                 <h1 class="post-title">
-                                    truffle-flattener扁平化处理合约
+                                    Golang实现web3.eth.accounts.sign
                                 </h1>
                                 
                                     <div class="post-meta">
@@ -186,7 +186,7 @@
 
                                                 
                                                     <span class="post-time">
-                        Date: <a href="#">March 7, 2022&nbsp;&nbsp;19:45:17</a>
+                        Date: <a href="#">March 11, 2022&nbsp;&nbsp;14:58:05</a>
                         </span>
                                                     
                                                         
@@ -202,11 +202,8 @@
                             </header>
 
                             <div class="post-content">
-                                <h1 id="truffle-flattener扁平化处理合约"><a href="#truffle-flattener扁平化处理合约" class="headerlink" title="truffle-flattener扁平化处理合约"></a>truffle-flattener扁平化处理合约</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install truffle-flattener -g</span><br></pre></td></tr></table></figure>
+                                <h1 id="Golang实现web3-eth-accounts-sign"><a href="#Golang实现web3-eth-accounts-sign" class="headerlink" title="Golang实现web3.eth.accounts.sign"></a>Golang实现web3.eth.accounts.sign</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;crypto/ecdsa&quot;</span></span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;github.com/ethereum/go-ethereum/common/hexutil&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;github.com/ethereum/go-ethereum/common&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/ethereum/go-ethereum/crypto&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">prefixHash</span><span class="params">(data []<span class="keyword">byte</span>)</span> <span class="title">common</span>.<span class="title">Hash</span></span> &#123;</span><br><span class="line">	msg := fmt.Sprintf(<span class="string">&quot;\x19Ethereum Signed Message:\n%d%s&quot;</span>, <span class="built_in">len</span>(data), data)</span><br><span class="line">	<span class="keyword">return</span> crypto.Keccak256Hash([]<span class="keyword">byte</span>(msg))</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">signMsg</span><span class="params">(msg, privKeyHex <span class="keyword">string</span>)</span> <span class="params">([]<span class="keyword">byte</span>, ecdsa.PublicKey)</span></span> &#123;</span><br><span class="line">	privKeyECDSA, err := crypto.HexToECDSA(privKeyHex)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	msgHash := prefixHash([]<span class="keyword">byte</span>(msg))</span><br><span class="line">	signature, err := crypto.Sign(msgHash.Bytes(), privKeyECDSA)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> signature[<span class="number">64</span>] &lt; <span class="number">27</span>&#123;</span><br><span class="line">		signature[<span class="number">64</span>] += <span class="number">27</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> signature, privKeyECDSA.PublicKey</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fakeP = <span class="string">&quot;4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	sig, _ := signMsg(<span class="string">&quot;Some data&quot;</span>, fakeP)</span><br><span class="line">	fmt.Println(<span class="string">&quot;signature&quot;</span>, hexutil.Encode(sig))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truffle-flattener 原文件.sol &gt; 新文件.sol</span><br></pre></td></tr></table></figure>
-
-<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>我们将会获得一个全新的合约文件，这个合约文件将多个初始合约扁平化为一个合约帮助我们链上验证</p>
 
                             </div>
 
@@ -238,13 +235,9 @@
                                     </section>
                                     <section class="post-nav">
                                         
-                                            <a class="prev" rel="prev" href="/2022/03/11/Golang%E5%AE%9E%E7%8E%B0web3.eth.accounts.sign/">
-                                                Golang实现web3.eth.accounts.sign
-                                            </a>
-                                            
                                                 
-                                                    <a class="next" rel="next" href="/2022/03/02/Golang%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%85%AC%E9%92%A5%E7%A7%81%E9%92%A5%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2/">
-                                                        以太坊公钥私钥地址转换
+                                                    <a class="next" rel="next" href="/2022/03/07/truffle-flattener%E6%89%81%E5%B9%B3%E5%8C%96%E5%A4%84%E7%90%86%E5%90%88%E7%BA%A6/">
+                                                        truffle-flattener扁平化处理合约
                                                     </a>
                                                     
                                     </section>
