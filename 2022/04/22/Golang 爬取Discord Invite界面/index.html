@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>Golang 爬取Discord Invite界面 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    Golang 爬取Discord Invite界面
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">April 22, 2022&nbsp;&nbsp;16:44:36</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Go%E8%AF%AD%E8%A8%80%E6%A0%B8%E5%BF%83/">Go语言核心</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="Golang-爬取Discord-Invite界面"><a href="#Golang-爬取Discord-Invite界面" class="headerlink" title="Golang 爬取Discord Invite界面"></a>Golang 爬取Discord Invite界面</h1><p>Discord Invite页面是一个延迟加载的页面，我们需要等待页面加载完毕</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> scraper</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;context&quot;</span></span><br><span class="line">	<span class="string">&quot;errors&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/PuerkitoBio/goquery&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/chromedp/chromedp&quot;</span></span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line">	<span class="string">&quot;strconv&quot;</span></span><br><span class="line">	<span class="string">&quot;strings&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Counts <span class="keyword">struct</span> &#123;</span><br><span class="line">	DiscordUrl <span class="keyword">string</span></span><br><span class="line">	ApproximatePresenceCount <span class="keyword">int</span> <span class="comment">//在线人数</span></span><br><span class="line">	ApproximateMemberCount <span class="keyword">int</span>	<span class="comment">//总人数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// GetHttpHtmlContent 获取网站上爬取的数据</span></span><br><span class="line"><span class="comment">// htmlContent 是上面的 html 页面信息，selector 是我们第一步获取的 selector</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetHttpHtmlContent</span><span class="params">(url <span class="keyword">string</span>, selector <span class="keyword">string</span>, sel <span class="keyword">interface</span>&#123;&#125;)</span> <span class="params">(<span class="keyword">string</span>, error)</span></span> &#123;</span><br><span class="line">	options := []chromedp.ExecAllocatorOption&#123;</span><br><span class="line">		chromedp.Flag(<span class="string">&quot;headless&quot;</span>, <span class="literal">true</span>), <span class="comment">// debug使用</span></span><br><span class="line">		chromedp.Flag(<span class="string">&quot;blink-settings&quot;</span>, <span class="string">&quot;imagesEnabled=false&quot;</span>),</span><br><span class="line">		chromedp.UserAgent(<span class="string">`Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36`</span>),</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//初始化参数，先传一个空的数据</span></span><br><span class="line">	options = <span class="built_in">append</span>(chromedp.DefaultExecAllocatorOptions[:], options...)</span><br><span class="line"></span><br><span class="line">	c, _ := chromedp.NewExecAllocator(context.Background(), options...)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// create context</span></span><br><span class="line">	chromeCtx, cancel := chromedp.NewContext(c, chromedp.WithLogf(log.Printf))</span><br><span class="line">	<span class="keyword">defer</span> cancel()</span><br><span class="line">	<span class="comment">// 执行一个空task, 用提前创建Chrome实例</span></span><br><span class="line">	_ = chromedp.Run(chromeCtx, <span class="built_in">make</span>([]chromedp.Action, <span class="number">0</span>, <span class="number">1</span>)...)</span><br><span class="line">	<span class="comment">//创建一个上下文，超时时间为40s  此时间可做更改  调整等待页面加载时间</span></span><br><span class="line">	timeoutCtx, cancel := context.WithTimeout(chromeCtx, <span class="number">10</span>*time.Second)</span><br><span class="line">	<span class="keyword">defer</span> cancel()</span><br><span class="line">	<span class="keyword">var</span> htmlContent <span class="keyword">string</span></span><br><span class="line">	err := chromedp.Run(timeoutCtx,</span><br><span class="line">		chromedp.Navigate(url),</span><br><span class="line">		chromedp.WaitVisible(selector),</span><br><span class="line">		chromedp.OuterHTML(sel, &amp;htmlContent, chromedp.ByJSPath),</span><br><span class="line">	)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;&quot;</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> htmlContent, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// GetSpecialData 得到具体的数据</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetSpecialData</span><span class="params">(htmlContent <span class="keyword">string</span>, selector <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">int</span>,<span class="keyword">int</span>, error)</span></span> &#123;</span><br><span class="line">	dom, err := goquery.NewDocumentFromReader(strings.NewReader(htmlContent))</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>,<span class="number">0</span>,err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> str <span class="keyword">string</span></span><br><span class="line">	selection := dom.Find(selector)</span><br><span class="line">	<span class="comment">//dom.Find(selector).Each(func(i int, selection *goquery.Selection) &#123;</span></span><br><span class="line">	<span class="comment">//	str = selection.Text()</span></span><br><span class="line">	<span class="comment">//&#125;)</span></span><br><span class="line">	str = selection.Text()</span><br><span class="line">	str = strings.Replace(str,<span class="string">&quot;,&quot;</span>,<span class="string">&quot;&quot;</span>,<span class="number">-1</span>)</span><br><span class="line">	str = strings.Replace(str,<span class="string">&quot;人在线&quot;</span>,<span class="string">&quot;&quot;</span>,<span class="number">-1</span>)</span><br><span class="line">	str = strings.Replace(str,<span class="string">&quot;位成员&quot;</span>,<span class="string">&quot;&quot;</span>,<span class="number">-1</span>)</span><br><span class="line">	index := strings.Index(str,<span class="string">&quot; &quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> index != <span class="number">-1</span> &amp;&amp; <span class="built_in">len</span>(str)<span class="number">-1</span> &gt; index + <span class="number">1</span>&#123;</span><br><span class="line">		onlineMembers,err := strconv.Atoi(str[:index])</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>,<span class="number">0</span>,err</span><br><span class="line">		&#125;</span><br><span class="line">		totalMembers,err := strconv.Atoi(str[index+<span class="number">1</span>:<span class="built_in">len</span>(str)<span class="number">-1</span>])</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>,<span class="number">0</span>,err</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> onlineMembers,totalMembers, <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	err = errors.New(<span class="string">&quot;index = -1&quot;</span>)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>,<span class="number">0</span>,err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetMembers</span><span class="params">(url <span class="keyword">string</span>)</span> <span class="params">(*Counts,error)</span></span>&#123;</span><br><span class="line">	<span class="comment">//记住是未登录状态的页面</span></span><br><span class="line">	selector := <span class="string">&quot;body &gt; div &gt; div.app-3xd6d0 &gt;div &gt; div &gt; div &gt; div &gt; div&gt; form &gt; div &gt; div&quot;</span></span><br><span class="line">	param := <span class="string">`document.querySelector(&quot;body &gt; div &gt; div.app-3xd6d0 &gt; div &gt; div &gt; div &gt; div &gt; div &gt; form &gt; div &gt; div&quot;)`</span></span><br><span class="line">	html, err := GetHttpHtmlContent(url, selector, param)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>,err</span><br><span class="line">	&#125;</span><br><span class="line">	onlineMembers,totalMembers,err := GetSpecialData(html,<span class="string">&quot;span&quot;</span>)</span><br><span class="line">	discordMsg := &amp;Counts&#123;</span><br><span class="line">		DiscordUrl:               url,</span><br><span class="line">		ApproximatePresenceCount: onlineMembers,</span><br><span class="line">		ApproximateMemberCount:   totalMembers,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> discordMsg,<span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/Go%E8%AF%AD%E8%A8%80/"># Go语言</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2022/03/11/Golang%E5%AE%9E%E7%8E%B0web3.eth.accounts.sign/">
+                                                        Golang实现web3.eth.accounts.sign
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
