@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>Golang rabbitMQ生产者消费者发送消息和重连 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    Golang rabbitMQ生产者消费者发送消息和重连
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">June 13, 2022&nbsp;&nbsp;16:09:42</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="Golang-rabbitMQ生产者消费者发送消息和重连"><a href="#Golang-rabbitMQ生产者消费者发送消息和重连" class="headerlink" title="Golang rabbitMQ生产者消费者发送消息和重连"></a>Golang rabbitMQ生产者消费者发送消息和重连</h1><h2 id="1-生产者重连"><a href="#1-生产者重连" class="headerlink" title="1. 生产者重连"></a>1. 生产者重连</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> rabbitmq</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;encoding/json&quot;</span></span><br><span class="line">	<span class="string">&quot;errors&quot;</span></span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/streadway/amqp&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Producer <span class="keyword">struct</span> &#123;</span><br><span class="line">	queue         <span class="keyword">string</span></span><br><span class="line">	addr          <span class="keyword">string</span></span><br><span class="line">	exchange      <span class="keyword">string</span></span><br><span class="line">	conn          *amqp.Connection</span><br><span class="line">	channel       *amqp.Channel</span><br><span class="line">	notifyClose   <span class="keyword">chan</span> *amqp.Error</span><br><span class="line">	notifyConfirm <span class="keyword">chan</span> amqp.Confirmation</span><br><span class="line">	done          <span class="keyword">chan</span> <span class="keyword">bool</span></span><br><span class="line">	isConnected   <span class="keyword">bool</span></span><br><span class="line">	isDone        <span class="keyword">bool</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	reconnectDelay = <span class="number">5</span> * time.Second <span class="comment">// 连接失败后多久重连</span></span><br><span class="line">	resendDelay    = <span class="number">1</span> * time.Second <span class="comment">// 消息发送失败后，多久重发</span></span><br><span class="line">	resendTime     = <span class="number">10</span>              <span class="comment">// 消息重发次数</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	producerNotConnected  = errors.New(<span class="string">&quot;not connected to the producer&quot;</span>)</span><br><span class="line">	producerAlreadyClosed = errors.New(<span class="string">&quot;already closed: not connected to the producer&quot;</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewProducer</span><span class="params">(addr <span class="keyword">string</span>, exchange <span class="keyword">string</span>, queue <span class="keyword">string</span>)</span> *<span class="title">Producer</span></span> &#123;</span><br><span class="line">	producer := &amp;Producer&#123;</span><br><span class="line">		exchange: exchange,</span><br><span class="line">		queue:    queue,</span><br><span class="line">		addr:     addr,</span><br><span class="line">		done:     <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">bool</span>),</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">go</span> producer.reconnect()</span><br><span class="line">	<span class="keyword">for</span> !producer.isConnected&#123;&#125;</span><br><span class="line">	<span class="keyword">return</span> producer</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(producer *Producer)</span> <span class="title">reconnect</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		producer.isConnected = <span class="literal">false</span></span><br><span class="line">		fmt.Println(<span class="string">&quot;attempting to connect&quot;</span>)</span><br><span class="line">		<span class="keyword">for</span> !producer.connect() &#123;</span><br><span class="line">			fmt.Println(<span class="string">&quot;failed to connect. Retrying...&quot;</span>)</span><br><span class="line">			time.Sleep(reconnectDelay)</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">select</span> &#123;</span><br><span class="line">		<span class="keyword">case</span> &lt;-producer.done:</span><br><span class="line">			fmt.Println(<span class="string">&quot;producer is done&quot;</span>)</span><br><span class="line">			producer.isDone = <span class="literal">true</span></span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		<span class="keyword">case</span> _ = &lt;-producer.notifyClose:</span><br><span class="line">			<span class="comment">//producer.isConnected = false</span></span><br><span class="line">			<span class="comment">//producer.connect()</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(producer *Producer)</span> <span class="title">connect</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	conn, err := amqp.Dial(producer.addr)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	ch, err := conn.Channel()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	ch.Confirm(<span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line">	_, err = ch.QueueDeclare(</span><br><span class="line">		producer.queue, <span class="comment">// name</span></span><br><span class="line">		<span class="literal">true</span>,           <span class="comment">// durable</span></span><br><span class="line">		<span class="literal">false</span>,          <span class="comment">// delete when unused</span></span><br><span class="line">		<span class="literal">false</span>,          <span class="comment">// exclusive</span></span><br><span class="line">		<span class="literal">false</span>,          <span class="comment">// no-wait</span></span><br><span class="line">		<span class="literal">nil</span>,            <span class="comment">// arguments</span></span><br><span class="line">	)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	producer.changeConnection(conn, ch)</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(producer *Producer)</span> <span class="title">changeConnection</span><span class="params">(conn *amqp.Connection, channel *amqp.Channel)</span></span> &#123;</span><br><span class="line">	producer.conn = conn</span><br><span class="line">	producer.channel = channel</span><br><span class="line">	<span class="comment">// channels没有必要主动关闭。如果没有协程使用它，它会被垃圾收集器收拾</span></span><br><span class="line">	producer.notifyClose = <span class="built_in">make</span>(<span class="keyword">chan</span> *amqp.Error)</span><br><span class="line">	producer.notifyConfirm = <span class="built_in">make</span>(<span class="keyword">chan</span> amqp.Confirmation)</span><br><span class="line">	producer.channel.NotifyClose(producer.notifyClose)</span><br><span class="line">	producer.channel.NotifyPublish(producer.notifyConfirm)</span><br><span class="line">	producer.isConnected = <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(producer *Producer)</span> <span class="title">SendMessage</span><span class="params">(message <span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="comment">//if !producer.isConnected &#123;</span></span><br><span class="line">	<span class="comment">//	return errors.New(&quot;failed to push : not connected&quot;)</span></span><br><span class="line">	<span class="comment">//&#125;</span></span><br><span class="line">	<span class="keyword">var</span> currentTime = <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> producer.isDone&#123;</span><br><span class="line">			<span class="keyword">return</span> errors.New(<span class="string">&quot;producer is done&quot;</span>)</span><br><span class="line">		&#125;</span><br><span class="line">		err := producer.push(message)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			fmt.Println(<span class="string">&quot;push failed. Retrying...&quot;</span>)</span><br><span class="line">			time.Sleep(time.Second)</span><br><span class="line">			currentTime++</span><br><span class="line">			<span class="keyword">if</span> currentTime &gt;= resendTime &#123;</span><br><span class="line">				<span class="keyword">return</span> err</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		ticker := time.NewTicker(resendDelay)</span><br><span class="line">		<span class="keyword">select</span> &#123;</span><br><span class="line">		<span class="keyword">case</span> confirm := &lt;-producer.notifyConfirm:</span><br><span class="line">			<span class="keyword">if</span> confirm.Ack &#123;</span><br><span class="line">				fmt.Println(<span class="string">&quot;push confirmed!&quot;</span>)</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">case</span> &lt;-ticker.C:</span><br><span class="line">		&#125;</span><br><span class="line">		fmt.Println(<span class="string">&quot;push didn&#x27;t confirm. Retrying...&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 发送</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(producer *Producer)</span> <span class="title">push</span><span class="params">(message <span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> !producer.isConnected &#123;</span><br><span class="line">		<span class="keyword">return</span> producerNotConnected</span><br><span class="line">	&#125;</span><br><span class="line">	data, _ := json.Marshal(message)</span><br><span class="line">	<span class="keyword">return</span> producer.channel.Publish(</span><br><span class="line">		producer.exchange, <span class="comment">// Exchange</span></span><br><span class="line">		producer.queue,    <span class="comment">// Routing key</span></span><br><span class="line">		<span class="literal">false</span>,             <span class="comment">// Mandatory</span></span><br><span class="line">		<span class="literal">false</span>,             <span class="comment">// Immediate</span></span><br><span class="line">		amqp.Publishing&#123;</span><br><span class="line">			DeliveryMode: <span class="number">2</span>,</span><br><span class="line">			ContentType:  <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">			Body:         data,</span><br><span class="line">			Timestamp:    time.Now(),</span><br><span class="line">		&#125;,</span><br><span class="line">	)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(producer *Producer)</span> <span class="title">Close</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> !producer.isConnected &#123;</span><br><span class="line">		<span class="keyword">return</span> producerAlreadyClosed</span><br><span class="line">	&#125;</span><br><span class="line">	err := producer.channel.Close()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	err = producer.conn.Close()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	producer.done &lt;- <span class="literal">true</span></span><br><span class="line">	producer.isConnected = <span class="literal">false</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="2-消费者重连"><a href="#2-消费者重连" class="headerlink" title="2. 消费者重连"></a>2. 消费者重连</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> rabbitmq</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">   <span class="string">&quot;errors&quot;</span></span><br><span class="line">   <span class="string">&quot;fmt&quot;</span></span><br><span class="line">   <span class="string">&quot;github.com/streadway/amqp&quot;</span></span><br><span class="line">   <span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Consumer <span class="keyword">struct</span> &#123;</span><br><span class="line">   queue         <span class="keyword">string</span></span><br><span class="line">   addr          <span class="keyword">string</span></span><br><span class="line">   exchange      <span class="keyword">string</span></span><br><span class="line">   conn          *amqp.Connection</span><br><span class="line">   channel       *amqp.Channel</span><br><span class="line">   notifyClose   <span class="keyword">chan</span> *amqp.Error</span><br><span class="line">   notifyConfirm <span class="keyword">chan</span> amqp.Confirmation</span><br><span class="line">   done          <span class="keyword">chan</span> <span class="keyword">bool</span></span><br><span class="line">   isConnected   <span class="keyword">bool</span></span><br><span class="line">   isDone        <span class="keyword">bool</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">   consumerNotConnected  = errors.New(<span class="string">&quot;not connected to the consumer&quot;</span>)</span><br><span class="line">   consumerAlreadyClosed = errors.New(<span class="string">&quot;already closed: not connected to the consumer&quot;</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewConsumer</span><span class="params">(addr <span class="keyword">string</span>, exchange <span class="keyword">string</span>, queue <span class="keyword">string</span>)</span>*<span class="title">Consumer</span></span>&#123;</span><br><span class="line">   consumer := &amp;Consumer&#123;</span><br><span class="line">      exchange: exchange,</span><br><span class="line">      queue:    queue,</span><br><span class="line">      addr:     addr,</span><br><span class="line">      done:     <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">bool</span>),</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">go</span> consumer.reconnect()</span><br><span class="line">   <span class="keyword">for</span> !consumer.isConnected&#123;&#125;</span><br><span class="line">   <span class="keyword">return</span> consumer</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(consumer *Consumer)</span> <span class="title">reconnect</span><span class="params">()</span></span> &#123;</span><br><span class="line">   consumer.isConnected = <span class="literal">false</span></span><br><span class="line">   fmt.Println(<span class="string">&quot;attempting to connect&quot;</span>)</span><br><span class="line">   <span class="keyword">for</span> !consumer.connect() &#123;</span><br><span class="line">      fmt.Println(<span class="string">&quot;failed to connect. Retrying...&quot;</span>)</span><br><span class="line">      time.Sleep(reconnectDelay)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(consumer *Consumer)</span> <span class="title">connect</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">   conn, err := amqp.Dial(consumer.addr)</span><br><span class="line">   <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   ch, err := conn.Channel()</span><br><span class="line">   <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   ch.Confirm(<span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line">   _, err = ch.QueueDeclare(</span><br><span class="line">      consumer.queue, <span class="comment">// name</span></span><br><span class="line">      <span class="literal">true</span>,           <span class="comment">// durable</span></span><br><span class="line">      <span class="literal">false</span>,          <span class="comment">// delete when unused</span></span><br><span class="line">      <span class="literal">false</span>,          <span class="comment">// exclusive</span></span><br><span class="line">      <span class="literal">false</span>,          <span class="comment">// no-wait</span></span><br><span class="line">      <span class="literal">nil</span>,            <span class="comment">// arguments</span></span><br><span class="line">   )</span><br><span class="line">   <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   consumer.changeConnection(conn, ch)</span><br><span class="line">   <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(consumer *Consumer)</span> <span class="title">changeConnection</span><span class="params">(conn *amqp.Connection, channel *amqp.Channel)</span></span> &#123;</span><br><span class="line">   consumer.conn = conn</span><br><span class="line">   consumer.channel = channel</span><br><span class="line">   consumer.notifyClose = <span class="built_in">make</span>(<span class="keyword">chan</span> *amqp.Error)</span><br><span class="line">   consumer.notifyConfirm = <span class="built_in">make</span>(<span class="keyword">chan</span> amqp.Confirmation)</span><br><span class="line">   consumer.channel.NotifyClose(consumer.notifyClose)</span><br><span class="line">   consumer.channel.NotifyPublish(consumer.notifyConfirm)</span><br><span class="line">   consumer.isConnected = <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(consumer *Consumer)</span><span class="title">ReceiveMessage</span><span class="params">()</span></span>&#123;</span><br><span class="line">   msgs, err := consumer.channel.Consume(</span><br><span class="line">      consumer.queue, <span class="comment">// queue</span></span><br><span class="line">      <span class="string">&quot;&quot;</span>,     <span class="comment">// consumer</span></span><br><span class="line">      <span class="literal">true</span>,   <span class="comment">// auto-ack</span></span><br><span class="line">      <span class="literal">false</span>,  <span class="comment">// exclusive</span></span><br><span class="line">      <span class="literal">false</span>,  <span class="comment">// no-local</span></span><br><span class="line">      <span class="literal">false</span>,  <span class="comment">// no-wait</span></span><br><span class="line">      <span class="literal">nil</span>,    <span class="comment">// args</span></span><br><span class="line">   )</span><br><span class="line">   <span class="keyword">if</span> err != <span class="literal">nil</span>&#123;</span><br><span class="line">      fmt.Println(err)</span><br><span class="line">      consumer.reconnect()</span><br><span class="line">      consumer.ReceiveMessage()</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span> !consumer.isDone&#123;</span><br><span class="line">      <span class="keyword">select</span> &#123;</span><br><span class="line">      <span class="keyword">case</span> &lt;-consumer.done:</span><br><span class="line">         fmt.Println(<span class="string">&quot;consumer is done&quot;</span>)</span><br><span class="line">         consumer.isDone = <span class="literal">true</span></span><br><span class="line">      <span class="keyword">case</span> _ = &lt;-consumer.notifyClose:</span><br><span class="line">         fmt.Println(consumerNotConnected)</span><br><span class="line">         consumer.reconnect()</span><br><span class="line">         consumer.ReceiveMessage()</span><br><span class="line">      <span class="keyword">case</span> msg := &lt;- msgs:</span><br><span class="line">         fmt.Println(<span class="keyword">string</span>(msg.Body))</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(consumer *Consumer)</span> <span class="title">Close</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">   <span class="keyword">if</span> !consumer.isConnected &#123;</span><br><span class="line">      <span class="keyword">return</span> consumerAlreadyClosed</span><br><span class="line">   &#125;</span><br><span class="line">   err := consumer.channel.Close()</span><br><span class="line">   <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> err</span><br><span class="line">   &#125;</span><br><span class="line">   err = consumer.conn.Close()</span><br><span class="line">   <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> err</span><br><span class="line">   &#125;</span><br><span class="line">   consumer.done &lt;- <span class="literal">true</span></span><br><span class="line">   consumer.isConnected = <span class="literal">false</span></span><br><span class="line">   <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"># 消息队列</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2022/04/22/Golang%20%E7%88%AC%E5%8F%96Discord%20Invite%E7%95%8C%E9%9D%A2/">
+                                                        Golang 爬取Discord Invite界面
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
