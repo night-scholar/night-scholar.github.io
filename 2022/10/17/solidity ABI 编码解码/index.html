@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Night Scholar">
+
+
+
+
+
+<title>Solidity ABI 编码解码 | Night-Scholar’s Blog</title>
+
+
+
+    <link rel="icon" href="/avatar.jpeg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">夜行书生&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">夜行书生&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://bafybeibjnkt6a5g5mccqyqjb2zdiveizwaueyt522dl2ctgfz642hztx34.ipfs.infura-ipfs.io/">IPFS</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+        
+            <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到首部</a>
+        <a onclick="go_bottom()">直达底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function() {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "全部折叠"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "全部展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+                
+
+                    
+                        <article class="post-wrap">
+                            <header class="post-header">
+                                <h1 class="post-title">
+                                    Solidity ABI 编码解码
+                                </h1>
+                                
+                                    <div class="post-meta">
+                                        
+                                            Author:
+                                            <a itemprop="author" rel="author" href="/">
+                                                Night Scholar
+                                            </a>
+                                            
+
+                                                
+                                                    <span class="post-time">
+                        Date: <a href="#">October 17, 2022&nbsp;&nbsp;15:27:38</a>
+                        </span>
+                                                    
+                                                        
+                                                            <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+                            
+                        </span>
+                                                            
+                                    </div>
+                                    
+                            </header>
+
+                            <div class="post-content">
+                                <h1 id="Solidity-ABI-编码解码"><a href="#Solidity-ABI-编码解码" class="headerlink" title="Solidity ABI 编码解码"></a>Solidity ABI 编码解码</h1><h2 id="ABI编码"><a href="#ABI编码" class="headerlink" title="ABI编码"></a>ABI编码</h2><p><code>Solidity</code>中，<code>ABI编码</code>有4个函数：<code>abi.encode</code>, <code>abi.encodePacked</code>, <code>abi.encodeWithSignature</code>, <code>abi.encodeWithSelector</code>。</p>
+<p>我们将用编码4个变量，他们的类型分别是<code>uint256</code>, <code>address</code>, <code>string</code>, <code>uint256[2]</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uint x = 10;</span><br><span class="line">address addr = 0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71;</span><br><span class="line">string name = &quot;0xAA&quot;;</span><br><span class="line">uint[2] array = [5, 6]; </span><br></pre></td></tr></table></figure>
+
+<h3 id="1-abi-encode"><a href="#1-abi-encode" class="headerlink" title="1. abi.encode"></a>1. abi.encode</h3><p>将给定参数利用<a target="_blank" rel="noopener" href="https://learnblockchain.cn/docs/solidity/abi-spec.html">ABI规则</a>编码。<code>ABI</code>被设计出来跟智能合约交互，他将每个参数转填充为32字节的数据，并拼接在一起。如果你要和合约交互，你要用的就是<code>abi.encode</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function encode() public view returns(bytes memory result) &#123;</span><br><span class="line">    result = abi.encode(x, addr, name, array);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编码的结果为<code>0x000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000007a58c0be72be218b41c608b7fe7c5bb630736c7100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000005000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000043078414100000000000000000000000000000000000000000000000000000000</code>，由于<code>abi.encode</code>将每个数据都填充为32字节，中间有很多<code>0</code>。</p>
+<h3 id="2-abi-encodePacked"><a href="#2-abi-encodePacked" class="headerlink" title="2. abi.encodePacked"></a>2. abi.encodePacked</h3><p>将给定参数根据其所需最低空间编码。它类似 <code>abi.encode</code>，但是会把其中填充的很多<code>0</code>省略。比如，只用1字节来编码<code>uint</code>类型。当你想省空间，并且不与合约交互的时候，可以使用<code>abi.encodePacked</code>，例如算一些数据的<code>hash</code>时。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function encodePacked() public view returns(bytes memory result) &#123;</span><br><span class="line">    result = abi.encodePacked(x, addr, name, array);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编码的结果为<code>0x000000000000000000000000000000000000000000000000000000000000000a7a58c0be72be218b41c608b7fe7c5bb630736c713078414100000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006</code>，由于<code>abi.encodePacked</code>对编码进行了压缩，长度比<code>abi.encode</code>短很多。</p>
+<h3 id="3-abi-encodeWithSignature"><a href="#3-abi-encodeWithSignature" class="headerlink" title="3. abi.encodeWithSignature"></a>3. abi.encodeWithSignature</h3><p>与<code>abi.encode</code>功能类似，只不过第一个参数为<code>函数签名</code>，比如<code>&quot;foo(uint256,address)&quot;</code>。当调用其他合约的时候可以使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function encodeWithSignature() public view returns(bytes memory result) &#123;</span><br><span class="line">    result = abi.encodeWithSignature(&quot;foo(uint256,address,string,uint256[2])&quot;, x, addr, name, array);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编码的结果为<code>0xe87082f1000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000007a58c0be72be218b41c608b7fe7c5bb630736c7100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000005000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000043078414100000000000000000000000000000000000000000000000000000000</code>，等同于在<code>abi.encode</code>编码结果前加上了4字节的<code>函数选择器</code>。</p>
+<h3 id="4-abi-encodeWithSelector"><a href="#4-abi-encodeWithSelector" class="headerlink" title="4. abi.encodeWithSelector"></a>4. abi.encodeWithSelector</h3><p>与<code>abi.encodeWithSignature</code>功能类似，只不过第一个参数为<code>函数选择器</code>，为<code>函数签名</code>Keccak哈希的前4个字节。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function encodeWithSelector() public view returns(bytes memory result) &#123;</span><br><span class="line">    result = abi.encodeWithSelector(bytes4(keccak256(&quot;foo(uint256,address,string,uint256[2])&quot;)), x, addr, name, array);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编码的结果为<code>0xe87082f1000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000007a58c0be72be218b41c608b7fe7c5bb630736c7100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000005000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000043078414100000000000000000000000000000000000000000000000000000000</code>，与<code>abi.encodeWithSignature</code>结果一样。</p>
+<h2 id="ABI解码"><a href="#ABI解码" class="headerlink" title="ABI解码"></a>ABI解码</h2><h3 id="abi-decode"><a href="#abi-decode" class="headerlink" title="abi.decode"></a>abi.decode</h3><p><code>abi.decode</code>用于解码<code>abi.encode</code>生成的二进制编码，将它还原成原本的参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function decode(bytes memory data) public pure returns(uint dx, address daddr, string memory dname, uint[2] memory darray) &#123;</span><br><span class="line">    (dx, daddr, dname, darray) = abi.decode(data, (uint, address, string, uint[2]));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们将<code>abi.encode</code>的二进制编码输入给<code>decode</code>，将解码出原来的参数</p>
+
+                            </div>
+
+                            
+                                <section class="post-copyright">
+                                    
+                                            
+                                                    
+                                                            
+
+                                </section>
+                                
+                                    <section class="post-tags">
+                                        <div>
+                                            <span>标签:</span>
+                                            <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/"># 以太坊</a>
+                    
+                        
+                </span>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:window.history.back();">back</a>
+                                            <span>· </span>
+                                            <a href="/">home</a>
+                                        </div>
+                                    </section>
+                                    <section class="post-nav">
+                                        
+                                                
+                                                    <a class="next" rel="next" href="/2022/07/12/%E6%9C%8D%E5%8A%A1%E5%87%BA%E7%8E%B0too%20many%20open%20files/">
+                                                        服务出现too many open files
+                                                    </a>
+                                                    
+                                    </section>
+
+
+                        </article>
+</div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Night Scholar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
